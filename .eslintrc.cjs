@@ -48,7 +48,8 @@ const onRules = {
   'semi': ['error', 'always'],
   'space-infix-ops': ['error', { int32Hint: false }],
   'key-spacing': ['error', { afterColon: true }],
-  'unused-imports/no-unused-imports': 'error'
+  'unused-imports/no-unused-imports': 'error',
+  "react-compiler/react-compiler": "error"
 };
 
 const offRules = {
@@ -68,18 +69,18 @@ module.exports = {
     'airbnb/hooks',
     'airbnb-typescript',
     'eslint:recommended',
+    'prettier',
     'plugin:@typescript-eslint/recommended',
     'plugin:react/recommended',
     'plugin:react/jsx-runtime',
-    'plugin:react-hooks/recommended',
-    'prettier'
+    'plugin:react-hooks/recommended'
   ],
   ignorePatterns: ['dist', '.eslintrc.cjs', 'node_modules', 'vite.config.ts'],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     project: './tsconfig.json'
   },
-  plugins: ['react-refresh', '@typescript-eslint', 'react', 'prettier', 'unused-imports'],
+  plugins: ['react-refresh', '@typescript-eslint', 'react', 'prettier', 'unused-imports', 'react-compiler'],
   rules: {
     ...onRules,
     ...offRules
