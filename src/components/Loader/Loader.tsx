@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './Loader.scss';
+import '@components/Loader/Loader.scss';
 
 class LoaderComponent extends Component {
   public render(): React.JSX.Element {

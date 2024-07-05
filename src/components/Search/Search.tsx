@@ -1,18 +1,18 @@
 import React, { ChangeEvent, Component } from 'react';
-import './Search.scss';
+import '@components/Search/Search.scss';
 
 interface SearchProps {
-  searchTerm: string;
+  searchQuery: string;
   onInputChange: (event: ChangeEvent<HTMLInputElement>) => void;
   onSearch: () => void;
 }
 
 export class SearchComponent extends Component<SearchProps> {
   public render(): React.JSX.Element {
-    const { searchTerm, onInputChange, onSearch } = this.props;
+    const { searchQuery, onInputChange, onSearch } = this.props;
     return (
       <section className="search">
-        <input type="text" value={searchTerm} onChange={onInputChange} placeholder="Enter search term" />
+        <input type="text" value={searchQuery} onChange={onInputChange} placeholder="Enter search query" />
         <button onClick={onSearch}>Search</button>
       </section>
     );

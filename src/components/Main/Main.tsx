@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { Result, ResultsComponent } from '@components/Results';
+import { ResultsComponent } from '@components/Results/Results';
 import { ErrorBoundary } from '@components/ErrorBoundary';
-import LoaderComponent from '@components/Loader';
-import './Main.scss';
+import LoaderComponent from '@components/Loader/Loader';
+import '@components/Main/Main.scss';
+import { Result } from '@models/result.model';
 
 interface MainProps {
   results: Result[];

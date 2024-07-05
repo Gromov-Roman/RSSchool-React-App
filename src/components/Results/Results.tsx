@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
-import './Results.scss';
-
-export interface Result {
-  name: string;
-  birth_year: string;
-}
+import '@components/Results/Results.scss';
+import { Result } from '@models/result.model';
 
 interface ResultsProps {
   results: Result[];

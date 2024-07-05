@@ -1,22 +1,22 @@
 import React, { Component, ChangeEvent } from 'react';
-import { SearchComponent } from '@components/Search';
+import { SearchComponent } from '@components/Search/Search';
 import { ErrorButton } from '@components/ErrorButton';
-import './Header.scss';
+import '@components/Header/Header.scss';
 
 interface HeaderProps {
-  searchTerm: string;
+  searchQuery: string;
   onInputChange: (event: ChangeEvent<HTMLInputElement>) => void;
   onSearch: () => void;
 }
 
 class HeaderComponent extends Component<HeaderProps> {
   public render(): React.JSX.Element {
-    const { searchTerm, onInputChange, onSearch } = this.props;
+    const { searchQuery, onInputChange, onSearch } = this.props;
 
     return (
       <header className="header">
         <ErrorButton />
-        <SearchComponent searchTerm={searchTerm} onInputChange={onInputChange} onSearch={onSearch} />
+        <SearchComponent searchQuery={searchQuery} onInputChange={onInputChange} onSearch={onSearch} />
       </header>
     );
   }
