@@ -22,6 +22,7 @@
     "validate:all": "npm run lint && npm run prettier && npm run types-check"
   },
   "dependencies": {
+    "modern-normalize": "^2.0.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
