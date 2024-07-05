@@ -1,14 +1,8 @@
 import React, { Component } from 'react';
 import './Loader.scss';
 
-// interface LoaderProps {
-//   size?: number;
-// }
-
 class LoaderComponent extends Component {
   public render(): React.JSX.Element {
-    // const { size = 40 } = this.props;
-
     return (
       <div className="loader">
         <div className="bb-8">
@@ -60,7 +54,6 @@ class LoaderComponent extends Component {
           </div>
           <div className="bb-8__body-shadow" />
         </div>
-        {/* <div className="loader__spinner" style={{ width: size, height: size }} /> */}
       </div>
     );
   }
