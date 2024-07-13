@@ -1,70 +1,49 @@
-import './App.scss';
-
-import React, { Component, ChangeEvent } from 'react';
-import { ErrorBoundary } from '@components/ErrorBoundary';
+import { useState, useEffect, ChangeEvent } from 'react';
+import ErrorBoundary from '@components/ErrorBoundary';
 import MainComponent from '@components/Main/Main';
 import HeaderComponent from '@components/Header/Header';
 import { Result } from '@models/result.model';
 import { API_URL } from '@constants/api.const';
+import './App.scss';
 
-interface AppState {
-  searchQuery: string;
-  results: Result[];
-  loading: boolean;
-  error: unknown | null;
-}
+function App() {
+  const [searchQuery, setSearchQuery] = useState('');
+  const [results, setResults] = useState<Result[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<unknown | null>(null);
 
-class App extends Component<unknown, AppState> {
-  constructor(props: unknown) {
-    super(props);
-    this.state = {
-      searchQuery: '',
-      results: [],
-      loading: false,
-      error: null,
-    };
-  }
-
-  public componentDidMount(): void {
-    const searchQuery = localStorage.getItem('searchQuery') || '';
-    this.setState({ searchQuery }, () => this.fetchData(searchQuery));
-  }
-
-  private fetchData = async (searchQuery: string = ''): Promise<void> => {
+  const fetchData = async (query: string = '') => {
     try {
-      this.setState({ loading: true });
-      const response = await fetch(`${API_URL}?search=${searchQuery}`);
+      setLoading(true);
+      const response = await fetch(`${API_URL}?search=${query}`);
       const data = await response.json();
-      this.setState({ results: data.results, loading: false });
-      localStorage.setItem('searchQuery', searchQuery);
-    } catch (error) {
-      this.setState({ error, loading: false });
+      setResults(data.results);
+      setLoading(false);
+      localStorage.setItem('searchQuery', query);
+    } catch (err) {
+      setError(err);
+      setLoading(false);
     }
   };
 
-  private handleSearch = (): void => {
-    const { searchQuery } = this.state;
-    this.fetchData(searchQuery.trim());
+  useEffect(() => {
+    const storedSearchQuery = localStorage.getItem('searchQuery') || '';
+    setSearchQuery(storedSearchQuery);
+    fetchData(storedSearchQuery);
+  }, []);
+
+  const handleSearch = () => fetchData(searchQuery.trim());
+
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(event.target.value);
   };
 
-  private handleInputChange = (event: ChangeEvent<HTMLInputElement>): void => {
-    this.setState({ searchQuery: event.target.value });
-  };
-
-  public render(): React.JSX.Element {
-    const { searchQuery, results, loading, error } = this.state;
-
-    return (
-      <ErrorBoundary fallback={<div>Oops! Something went wrong.</div>}>
-        <HeaderComponent
-          searchQuery={searchQuery}
-          onInputChange={this.handleInputChange}
-          onSearch={this.handleSearch}
-        />
-        <MainComponent results={results} loading={loading} error={error} />
-      </ErrorBoundary>
-    );
-  }
+  return (
+    <ErrorBoundary fallback={<div>Oops! Something went wrong.</div>}>
+      <HeaderComponent searchQuery={searchQuery} onInputChange={handleInputChange} onSearch={handleSearch} />
+      <MainComponent results={results} loading={loading} error={error} />
+    </ErrorBoundary>
+  );
 }
 
 export default App;

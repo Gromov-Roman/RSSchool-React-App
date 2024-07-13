@@ -1,5 +1,5 @@
-import React, { ChangeEvent, Component } from 'react';
-import '@components/Search/Search.scss';
+import { ChangeEvent } from 'react';
+import './Search.scss';
 
 interface SearchProps {
   searchQuery: string;
@@ -7,14 +7,11 @@ interface SearchProps {
   onSearch: () => void;
 }
 
-export class SearchComponent extends Component<SearchProps> {
-  public render(): React.JSX.Element {
-    const { searchQuery, onInputChange, onSearch } = this.props;
-    return (
-      <section className="search">
-        <input type="text" value={searchQuery} onChange={onInputChange} placeholder="Enter search query" />
-        <button onClick={onSearch}>Search</button>
-      </section>
-    );
-  }
+export default function SearchComponent({ searchQuery, onInputChange, onSearch }: SearchProps) {
+  return (
+    <section className="search">
+      <input type="text" value={searchQuery} onChange={onInputChange} placeholder="Enter search query" />
+      <button onClick={onSearch}>Search</button>
+    </section>
+  );
 }
