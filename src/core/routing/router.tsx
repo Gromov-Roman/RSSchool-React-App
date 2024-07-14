@@ -1,5 +1,5 @@
 import { createBrowserRouter } from 'react-router-dom';
-import { detailLoader, resultsLoader } from '@core/routing/loaders';
+import { detailLoader } from '@core/routing/loaders';
 import { Suspense } from 'react';
 import LoaderComponent from '@components/Loader/Loader';
 import DetailPage from '@pages/Detail/Detail.page';
@@ -13,7 +13,6 @@ export const router = createBrowserRouter([
         <MainPage />
       </Suspense>
     ),
-    loader: resultsLoader,
     children: [
       {
         index: true,

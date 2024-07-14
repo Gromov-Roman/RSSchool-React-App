@@ -1,8 +1,8 @@
 import './Pagination.scss';
 import { useState } from 'react';
 
-const PAGINATION_OFFSET = 2;
-const PAGINATION_LIMIT = 4;
+const PAGINATION_OFFSET = 1;
+const PAGINATION_LIMIT = 2;
 
 interface PaginationProps {
   length: number;
@@ -48,23 +48,35 @@ export default function PaginationComponent({ length, page, onPageChange }: Pagi
         disabled={currentPage === 1}
         onClick={() => handlePageChange(currentPage - 1)}
       >
-        Previous
+        ⬅️
       </button>
+      {pages[0] !== 1 && (
+        <>
+          <button onClick={() => handlePageChange(1)}>{1}</button>
+          <span>...</span>
+        </>
+      )}
       {pages.map((p) => (
         <button
           key={p}
-          className={currentPage === p ? 'pagination__button active' : 'pagination__button'}
+          className={currentPage === p ? 'pagination__page-button active' : 'pagination__page-button'}
           onClick={() => handlePageChange(p)}
         >
           {p}
         </button>
       ))}
+      {pages.at(-1) !== length && (
+        <>
+          <span>...</span>
+          <button onClick={() => handlePageChange(length)}>{length}</button>
+        </>
+      )}
       <button
         className="pagination__button"
         disabled={currentPage === length}
         onClick={() => handlePageChange(currentPage + 1)}
       >
-        Next
+        ➡️
       </button>
     </nav>
   );

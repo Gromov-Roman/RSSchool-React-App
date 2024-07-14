@@ -13,9 +13,18 @@
     padding: 0 1rem;
     overflow: auto;
     scrollbar-width: thin;
+    scrollbar-gutter: stable;
 
     &-item {
       list-style: none;
     }
   }
+}
+
+.empty {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
 }

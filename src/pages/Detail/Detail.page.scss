@@ -1,15 +1,16 @@
 .detail {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 1rem;
   position: relative;
   width: 40%;
   padding: 0 1rem;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-gutter: stable;
 
   .close-button {
-    position: absolute;
-    top: -10px;
-    right: -10px;
     border-radius: 50%;
     height: 40px;
     width: 40px;
@@ -19,6 +20,7 @@
 
   &__image {
     width: 100%;
+    max-width: 350px;
     border-radius: 1rem;
   }
 
@@ -38,5 +40,17 @@
   &__info-block-title,
   &__info-block-text {
     margin: 0;
+  }
+
+  &__title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    position: sticky;
+    top: 0;
+    background-color: darkgray;
+    border-radius: 1rem;
+    padding: 3px 10px;
   }
 }
