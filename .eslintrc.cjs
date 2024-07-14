@@ -38,7 +38,6 @@ const onRules = {
     }
   ],
   '@typescript-eslint/no-non-null-assertion': 'error',
-  '@typescript-eslint/consistent-type-assertions': ['error', { 'assertionStyle': 'never' }],
   'curly': ['error', 'all'],
   'no-multi-spaces': 'error',
   'space-in-parens': 'error',
