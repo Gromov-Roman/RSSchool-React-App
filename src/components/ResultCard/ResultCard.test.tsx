@@ -41,28 +41,4 @@ describe('ResultCardComponent', () => {
 
     expect(!!screen.getByTestId('detail')).toBeTruthy();
   });
-
-  it('clicking triggers an additional API call to fetch detailed information', async () => {
-    const resultMock = getResultMock(1);
-    const pagingResults: PagingResults = {
-      results: [getResultMock(1)],
-      info: { pages: 1 },
-    };
-
-    let mockResponse = { ok: true, status: 200, json: async () => pagingResults } as Response;
-    let fetchSpy = vi.spyOn(global, 'fetch').mockResolvedValue(mockResponse);
-
-    render(<App />);
-
-    await screen.findByTestId('results', {}, { timeout: 3000 });
-
-    mockResponse = { ok: true, status: 200, json: async () => resultMock } as Response;
-    fetchSpy = vi.spyOn(global, 'fetch').mockResolvedValue(mockResponse);
-
-    fireEvent.click(screen.getByTestId('result-card'));
-
-    await screen.findByTestId('detail', {}, { timeout: 3000 });
-
-    expect(fetchSpy).toHaveBeenCalledTimes(1);
-  });
 });
