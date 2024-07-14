@@ -1,0 +1,42 @@
+.detail {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  position: relative;
+  width: 40%;
+  padding: 0 1rem;
+
+  .close-button {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+    padding: 0;
+    background-color: transparent;
+  }
+
+  &__image {
+    width: 100%;
+    border-radius: 1rem;
+  }
+
+  &__info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+
+    &-block {
+      padding: 0.5rem 1rem;
+      border-radius: 1rem;
+      border: 1px white solid;
+    }
+  }
+
+  &__title,
+  &__info-block-title,
+  &__info-block-text {
+    margin: 0;
+  }
+}

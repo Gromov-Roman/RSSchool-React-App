@@ -1,7 +1,8 @@
 import { createBrowserRouter } from 'react-router-dom';
-import { resultsLoader } from '@core/routing/loaders';
+import { detailLoader, resultsLoader } from '@core/routing/loaders';
 import { Suspense } from 'react';
 import LoaderComponent from '@components/Loader/Loader';
+import DetailPage from '@pages/Detail/Detail.page';
 import { MainPage, NotFoundPage } from './routing-pages';
 
 export const router = createBrowserRouter([
@@ -13,7 +14,17 @@ export const router = createBrowserRouter([
       </Suspense>
     ),
     loader: resultsLoader,
-    children: [],
+    children: [
+      {
+        index: true,
+        loader: detailLoader,
+        element: (
+          <Suspense fallback={<LoaderComponent />}>
+            <DetailPage />
+          </Suspense>
+        ),
+      },
+    ],
   },
   {
     path: '*',
