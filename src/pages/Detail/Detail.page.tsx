@@ -1,12 +1,10 @@
 import { DetailLoaderData } from '@core/routing/loaders';
-import { useLoaderData, useNavigation, useSearchParams } from 'react-router-dom';
+import { useLoaderData, useSearchParams } from 'react-router-dom';
 import './Detail.page.scss';
-import LoaderComponent from '@components/Loader/Loader';
 
 export default function DetailPage() {
   const { detail } = useLoaderData() as DetailLoaderData;
   const [searchParams, setSearchParams] = useSearchParams();
-  const { state } = useNavigation();
 
   function handleClose() {
     searchParams.delete('detail');
@@ -19,42 +17,36 @@ export default function DetailPage() {
 
   return (
     <section className="detail">
-      {state === 'loading' && <LoaderComponent />}
+      <h3 className="detail__title">
+        <span>{detail.name}</span>
+        <button className="close-button" onClick={handleClose}>
+          ❌
+        </button>
+      </h3>
 
-      {state !== 'loading' && (
-        <>
-          <h3 className="detail__title">
-            <span>{detail.name}</span>
-            <button className="close-button" onClick={handleClose}>
-              ❌
-            </button>
-          </h3>
+      <img alt={detail.name} src={detail.image} className="detail__image" />
 
-          <img alt={detail.name} src={detail.image} className="detail__image" />
+      <div className="detail__info">
+        <div className="detail__info-block">
+          <h4 className="detail__info-block-title">Status:</h4>
+          <p className="detail__info-block-text">{detail.status}</p>
+        </div>
 
-          <div className="detail__info">
-            <div className="detail__info-block">
-              <h4 className="detail__info-block-title">Status:</h4>
-              <p className="detail__info-block-text">{detail.status}</p>
-            </div>
+        <div className="detail__info-block">
+          <h4 className="detail__info-block-title">Gender:</h4>
+          <p className="detail__info-block-text">{detail.gender}</p>
+        </div>
 
-            <div className="detail__info-block">
-              <h4 className="detail__info-block-title">Gender:</h4>
-              <p className="detail__info-block-text">{detail.gender}</p>
-            </div>
+        <div className="detail__info-block">
+          <h4 className="detail__info-block-title">Origin:</h4>
+          <p className="detail__info-block-text">{detail.origin.name}</p>
+        </div>
 
-            <div className="detail__info-block">
-              <h4 className="detail__info-block-title">Origin:</h4>
-              <p className="detail__info-block-text">{detail.origin.name}</p>
-            </div>
-
-            <div className="detail__info-block">
-              <h4 className="detail__info-block-title">Location:</h4>
-              <p className="detail__info-block-text">{detail.location.name}</p>
-            </div>
-          </div>
-        </>
-      )}
+        <div className="detail__info-block">
+          <h4 className="detail__info-block-title">Location:</h4>
+          <p className="detail__info-block-text">{detail.location.name}</p>
+        </div>
+      </div>
     </section>
   );
 }
