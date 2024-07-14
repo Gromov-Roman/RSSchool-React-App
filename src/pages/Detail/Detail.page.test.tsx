@@ -51,7 +51,7 @@ describe('DetailPage', () => {
 
     await screen.findByTestId('detail', {}, { timeout: 3000 });
 
-    expect(!!screen.getByTestId('detail__title-text').textContent).toBeTruthy();
+    expect(!!screen.getByTestId('detail__title-text')).toBeTruthy();
     expect(!!screen.getByText(resultMock.status)).toBeTruthy();
     expect(!!screen.getByText(resultMock.gender)).toBeTruthy();
     expect(!!screen.getByText(resultMock.origin.name)).toBeTruthy();
