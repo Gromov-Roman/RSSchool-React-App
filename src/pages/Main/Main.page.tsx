@@ -21,7 +21,10 @@ export default function MainPage() {
         return;
       }
 
-      if (!['IMG', 'BUTTON'].includes((event.target as Element).tagName)) {
+      const { tagName } = event.target as Element;
+      const { classList } = event.target as Element;
+
+      if (tagName !== 'IMG' && (tagName !== 'BUTTON' || !classList.contains('result-card'))) {
         searchParams.delete('detail');
         setSearchParams(searchParams);
       }
