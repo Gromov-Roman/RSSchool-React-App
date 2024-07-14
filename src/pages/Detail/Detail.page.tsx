@@ -16,7 +16,7 @@ export default function DetailPage() {
   }
 
   return (
-    <section className="detail">
+    <section className="detail" data-testid="detail">
       <h3 className="detail__title">
         <span>{detail.name}</span>
         <button className="close-button" onClick={handleClose}>

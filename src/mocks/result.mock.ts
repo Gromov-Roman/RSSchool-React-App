@@ -15,6 +15,6 @@ export const getResultMock = (id?: number) => ({
   },
   image: 'https://rickandmortyapi.com/api/character/avatar/662.jpeg',
   episode: ['https://rickandmortyapi.com/api/episode/40'],
-  url: 'https://rickandmortyapi.com/api/character/662',
+  url: `https://rickandmortyapi.com/api/character/${id || Math.random()}`,
   created: '2020-08-13T11:43:23.485Z',
 });

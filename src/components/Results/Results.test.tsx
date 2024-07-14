@@ -12,11 +12,7 @@ describe('ResultComponent', () => {
       info: { pages: 1 },
     };
 
-    render(
-      <BrowserRouter>
-        <ResultComponent pagingResults={pagingResults} />
-      </BrowserRouter>,
-    );
+    render(<ResultComponent pagingResults={pagingResults} />, { wrapper: BrowserRouter });
 
     const cards = screen.getAllByTestId('results__list-item');
     expect(cards).toHaveLength(pagingResults.results.length);
@@ -28,11 +24,7 @@ describe('ResultComponent', () => {
       info: { pages: 0 },
     };
 
-    render(
-      <BrowserRouter>
-        <ResultComponent pagingResults={pagingResults} />
-      </BrowserRouter>,
-    );
+    render(<ResultComponent pagingResults={pagingResults} />, { wrapper: BrowserRouter });
 
     const message = screen.getByText(/No results found/i);
     expect(!!message).toBeTruthy();

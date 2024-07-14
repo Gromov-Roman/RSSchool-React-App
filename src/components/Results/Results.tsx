@@ -32,7 +32,7 @@ export default function ResultsComponent({ pagingResults }: ResultsProps) {
       )}
 
       {!!pagingResults?.results?.length && (
-        <section className="results">
+        <section className="results" data-testid="results">
           <ul className="results__list">
             {pagingResults.results.map((result) => (
               <li key={result.id} className="results__list-item" data-testid="results__list-item">
