@@ -35,7 +35,7 @@ export default function ResultsComponent({ pagingResults }: ResultsProps) {
         <section className="results">
           <ul className="results__list">
             {pagingResults.results.map((result) => (
-              <li key={result.id} className="results__list-item">
+              <li key={result.id} className="results__list-item" data-testid="results__list-item">
                 <ResultCardComponent key={result.id} result={result} />
               </li>
             ))}

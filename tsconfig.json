@@ -25,6 +25,7 @@
       "@constants/*": ["./src/constants/*"],
       "@utils/*": ["./src/utils/*"],
       "@hooks/*": ["./src/hooks/*"],
+      "@mocks/*": ["./src/mocks/*"],
     },
 
     /* Linting */

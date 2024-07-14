@@ -7,6 +7,9 @@ export default defineConfig({
   plugins: [react()],
   test: {
     environment: 'jsdom',
+    coverage: {
+      provider: 'istanbul', // or 'v8'
+    },
   },
   resolve: {
     alias: {
@@ -18,6 +21,7 @@ export default defineConfig({
       '@constants': resolve(__dirname, './src/constants/'),
       '@utils': resolve(__dirname, './src/utils/'),
       '@hooks': resolve(__dirname, './src/hooks/'),
+      '@mocks': resolve(__dirname, './src/mocks/'),
     },
   },
 });

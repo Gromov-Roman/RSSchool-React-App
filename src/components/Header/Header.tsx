@@ -12,7 +12,7 @@ export default function HeaderComponent() {
   const handleSearch = () => {
     const page = searchParams.get('page');
 
-    if (page) {
+    if (page === '1') {
       searchParams.delete('page');
     } else {
       searchParams.set('page', '1');
