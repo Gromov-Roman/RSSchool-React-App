@@ -19,7 +19,8 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "prettier": "prettier --check --ignore-unknown src/",
     "types-check": "tsc --noEmit",
-    "validate:all": "npm run lint && npm run prettier && npm run types-check"
+    "validate:all": "npm run lint && npm run prettier && npm run types-check",
+    "test": "vitest"
   },
   "dependencies": {
     "modern-normalize": "^2.0.0",
@@ -50,6 +51,7 @@
     "prettier": "^3.2.5",
     "sass": "^1.76.0",
     "typescript": "^5.2.2",
-    "vite": "^5.3.1"
+    "vite": "^5.3.1",
+    "vitest": "^2.0.2"
   }
 }
