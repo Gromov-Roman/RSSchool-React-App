@@ -1,5 +1,4 @@
 import { createBrowserRouter } from 'react-router-dom';
-import { detailLoader } from '@core/routing/loaders';
 import { Suspense } from 'react';
 import LoaderComponent from '@components/Loader/Loader';
 import DetailPage from '@pages/Detail/Detail.page';
@@ -16,7 +15,6 @@ export const router = createBrowserRouter([
     children: [
       {
         index: true,
-        loader: detailLoader,
         element: (
           <Suspense fallback={<LoaderComponent />}>
             <DetailPage />

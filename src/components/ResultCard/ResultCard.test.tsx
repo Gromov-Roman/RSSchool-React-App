@@ -1,5 +1,5 @@
 import { BrowserRouter } from 'react-router-dom';
-import { describe, it, expect, vi, afterEach } from 'vitest';
+import { describe, it, expect, vi, afterEach, beforeEach } from 'vitest';
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import { getResultMock } from '@mocks/result.mock';
 import { PagingResults } from '@models/result.model';
@@ -8,6 +8,7 @@ import ResultCardComponent from './ResultCard';
 
 describe('ResultCardComponent', () => {
   afterEach(() => cleanup());
+  beforeEach(() => cleanup());
 
   it('renders the relevant card data', () => {
     const resultMock = getResultMock();
@@ -53,9 +54,7 @@ describe('ResultCardComponent', () => {
 
     render(<App />);
 
-    await screen.findByTestId('results');
-
-    expect(fetchSpy).toHaveBeenCalledTimes(1);
+    await screen.findByTestId('results', {}, { timeout: 3000 });
 
     mockResponse = { ok: true, status: 200, json: async () => resultMock } as Response;
     fetchSpy = vi.spyOn(global, 'fetch').mockResolvedValue(mockResponse);

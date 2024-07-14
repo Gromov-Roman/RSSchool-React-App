@@ -6,11 +6,11 @@ export const getResultMock = (id?: number) => ({
   type: 'Planet',
   gender: 'Female',
   origin: {
-    name: 'Gaia',
+    name: 'Gaia1',
     url: 'https://rickandmortyapi.com/api/location/106',
   },
   location: {
-    name: 'Gaia',
+    name: 'Gaia2',
     url: 'https://rickandmortyapi.com/api/location/106',
   },
   image: 'https://rickandmortyapi.com/api/character/avatar/662.jpeg',
