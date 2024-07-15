@@ -16,11 +16,11 @@
     "prettier:fix": "prettier --write --ignore-unknown src/",
     "lint:fix": "eslint src/ --fix",
     "format:fix": "npm run lint:fix && npm run prettier:fix",
-    "lint": "eslint . --ext ts,tsx --ignore-pattern '*.test.tsx' --report-unused-disable-directives --max-warnings 0",
+    "lint": "eslint . --ext ts,tsx --ignore-pattern '*.test.tsx' --ignore-pattern 'setupVitest.ts' --ignore-pattern 'mock-fetch-result.ts' --report-unused-disable-directives --max-warnings 0",
     "prettier": "prettier --check --ignore-unknown src/",
     "types-check": "tsc --noEmit",
     "validate:all": "npm run lint && npm run prettier && npm run types-check",
-    "test": "vitest run --coverage"
+    "test": "vitest run --coverage --coverage.exclude='.eslintrc.cjs' --coverage.exclude='./src/mocks' --coverage.exclude='./src/main.tsx'"
   },
   "dependencies": {
     "@testing-library/react": "^16.0.0",
@@ -35,8 +35,8 @@
     "@types/react-dom": "^18.3.0",
     "@typescript-eslint/eslint-plugin": "^7.13.1",
     "@typescript-eslint/parser": "^7.13.1",
-    "@vitest/coverage-istanbul": "^2.0.2",
     "@vitejs/plugin-react": "^4.3.1",
+    "@vitest/coverage-istanbul": "^2.0.2",
     "eslint": "^8.57.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-airbnb-typescript": "^18.0.0",
@@ -55,6 +55,7 @@
     "sass": "^1.76.0",
     "typescript": "^5.2.2",
     "vite": "^5.3.1",
-    "vitest": "^2.0.2"
+    "vitest": "^2.0.2",
+    "vitest-fetch-mock": "^0.3.0"
   }
 }

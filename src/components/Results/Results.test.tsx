@@ -1,13 +1,12 @@
 import { BrowserRouter } from 'react-router-dom';
-import { describe, it, expect, afterEach, beforeEach } from 'vitest';
+import { describe, it, expect, afterEach } from 'vitest';
 import { cleanup, render, screen } from '@testing-library/react';
 import { PagingResults } from '@models/result.model';
 import { getResultMock } from '@mocks/result.mock';
 import ResultComponent from './Results';
 
 describe('ResultComponent', () => {
-  afterEach(() => cleanup());
-  beforeEach(() => cleanup());
+  afterEach(cleanup);
 
   it('renders the specified number of cards', () => {
     const pagingResults: PagingResults = {

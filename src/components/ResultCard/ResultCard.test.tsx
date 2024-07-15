@@ -1,14 +1,12 @@
 import { BrowserRouter } from 'react-router-dom';
-import { describe, it, expect, vi, afterEach, beforeEach } from 'vitest';
+import { describe, it, expect, vi, afterEach } from 'vitest';
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import { getResultMock } from '@mocks/result.mock';
-import { PagingResults } from '@models/result.model';
 import App from '../../App';
 import ResultCardComponent from './ResultCard';
 
 describe('ResultCardComponent', () => {
-  afterEach(() => cleanup());
-  beforeEach(() => cleanup());
+  afterEach(cleanup);
 
   it('renders the relevant card data', () => {
     const resultMock = getResultMock();
@@ -19,26 +17,31 @@ describe('ResultCardComponent', () => {
   });
 
   it('clicking on a card opens a detailed card component', async () => {
-    const resultMock = getResultMock(1);
-    const pagingResults: PagingResults = {
-      results: [getResultMock(1)],
-      info: { pages: 1 },
-    };
+    render(<App />);
 
-    let mockResponse = { ok: true, status: 200, json: async () => pagingResults } as Response;
-    vi.spyOn(global, 'fetch').mockResolvedValue(mockResponse);
+    await screen.findByTestId('results');
+
+    fireEvent.click(screen.getByTestId('result-card'));
+
+    await screen.findByTestId('detail');
+
+    expect(!!screen.getByTestId('detail')).toBeTruthy();
+  });
+
+  it('clicking triggers an additional API call to fetch detailed information', async () => {
+    const resultMock = getResultMock(1);
+    const fetchSpy = vi.spyOn(global, 'fetch');
 
     render(<App />);
 
     await screen.findByTestId('results');
 
-    mockResponse = { ok: true, status: 200, json: async () => resultMock } as Response;
-    vi.spyOn(global, 'fetch').mockResolvedValue(mockResponse);
+    expect(fetchSpy).toHaveBeenCalledWith(new URL('https://rickandmortyapi.com/api/character'));
 
     fireEvent.click(screen.getByTestId('result-card'));
 
-    await screen.findByTestId('detail', {}, { timeout: 3000 });
+    await screen.findByTestId('detail');
 
-    expect(!!screen.getByTestId('detail')).toBeTruthy();
+    expect(fetchSpy).toHaveBeenCalledWith(new URL(resultMock.url));
   });
 });

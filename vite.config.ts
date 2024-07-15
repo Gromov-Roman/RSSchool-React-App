@@ -10,6 +10,7 @@ export default defineConfig({
     coverage: {
       provider: 'istanbul', // or 'v8'
     },
+    setupFiles: ['./setupVitest.ts'],
   },
   resolve: {
     alias: {

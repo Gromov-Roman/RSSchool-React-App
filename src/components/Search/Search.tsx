@@ -16,13 +16,16 @@ export default function SearchComponent({ searchQuery, onInputChange, onSearch }
         onChange={onInputChange}
         placeholder="Enter search query"
         className="search__input"
+        data-testid="search-input"
         onKeyDown={({ key }) => {
           if (key === 'Enter') {
             onSearch();
           }
         }}
       />
-      <button onClick={onSearch}>Search</button>
+      <button onClick={onSearch} data-testid="search-button">
+        Search
+      </button>
     </section>
   );
 }

@@ -68,12 +68,12 @@ export default function DetailPage() {
 
             <div className="detail__info-block">
               <h4 className="detail__info-block-title">Origin:</h4>
-              <p className="detail__info-block-text">{detail.origin?.name}</p>
+              <p className="detail__info-block-text">{detail.origin.name}</p>
             </div>
 
             <div className="detail__info-block">
               <h4 className="detail__info-block-title">Location:</h4>
-              <p className="detail__info-block-text">{detail.location?.name}</p>
+              <p className="detail__info-block-text">{detail.location.name}</p>
             </div>
           </div>
         </section>
