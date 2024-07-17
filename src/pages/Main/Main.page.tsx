@@ -8,27 +8,27 @@ import { API_URL } from '@constants/api.const';
 import './Main.page.scss';
 
 export default function MainPage() {
-  const [searchParams] = useSearchParams();
+  const [params] = useSearchParams();
   const [pagingResults, setPagingResults] = useState<PagingResults | null>(null);
-  const [getStoredValue] = useLocalStorage<string>('searchQuery');
-  const page = searchParams.get('page') || null;
-  const searchQuery = getStoredValue();
+  const { getValue: getSearchQuery } = useLocalStorage<string>('searchQuery');
+  const page = params.get('page') || null;
+  const searchQuery = getSearchQuery();
 
   useEffect(() => {
     setPagingResults(null);
 
     const requestUrl = new URL(API_URL);
-    const params = new URLSearchParams();
+    const urlParams = new URLSearchParams();
 
     if (page) {
-      params.set('page', page);
+      urlParams.set('page', page);
     }
 
     if (searchQuery) {
-      params.set('name', searchQuery);
+      urlParams.set('name', searchQuery);
     }
 
-    requestUrl.search = params.toString();
+    requestUrl.search = urlParams.toString();
 
     const fetchData = async () => {
       const response = await fetch(requestUrl);

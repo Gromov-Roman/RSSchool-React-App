@@ -1,12 +1,20 @@
-export default function useLocalStorage<T>(key: string): [() => T | null, (newValue: T | null) => void] {
-  const getStoredValue = (): T | null => {
-    const storedValue = localStorage.getItem(key);
-    return storedValue ? (JSON.parse(storedValue) as T) : null;
+import { useEffect, useState } from 'react';
+
+interface UseLocalStorage<T> {
+  value: T | null;
+  getValue: () => T | null;
+  setValue: (newValue: T | null) => void;
+}
+
+export default function useLocalStorage<T>(key: string): UseLocalStorage<T> {
+  const getValue = () => {
+    const itemValue = localStorage.getItem(key);
+    return itemValue ? (JSON.parse(itemValue) as T) : null;
   };
 
-  const setStoredValue = (newValue: T | null) => {
-    localStorage.setItem(key, JSON.stringify(newValue));
-  };
+  const [value, setValue] = useState(getValue);
 
-  return [getStoredValue, setStoredValue];
+  useEffect(() => localStorage.setItem(key, JSON.stringify(value)), [value, key]);
+
+  return { value, getValue, setValue };
 }
