@@ -17,6 +17,7 @@
     "esModuleInterop": true,
 
     "paths": {
+      "@src/*": ["./src/*"],
       "@core/*": ["./src/core/*"],
       "@pages/*": ["./src/pages/*"],
       "@components/*": ["./src/components/*"],

@@ -1,5 +1,6 @@
 import { ChangeEvent } from 'react';
 import './Search.scss';
+import Button from '@components/Button/Button';
 
 interface SearchProps {
   searchQuery: string;
@@ -23,9 +24,7 @@ export default function SearchComponent({ searchQuery, onInputChange, onSearch }
           }
         }}
       />
-      <button onClick={onSearch} data-testid="search-button">
-        Search
-      </button>
+      <Button className="close-button" onClick={() => onSearch()} text="Search" data-testid="search-button" />
     </section>
   );
 }

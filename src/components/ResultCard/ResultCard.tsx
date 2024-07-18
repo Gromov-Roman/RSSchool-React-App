@@ -1,6 +1,7 @@
 import { Result } from '@models/result.model';
 import { useLocation, useNavigate } from 'react-router-dom';
 import './ResultCard.scss';
+import Button from '@components/Button/Button';
 
 interface ResultCardProps {
   result: Result;
@@ -17,9 +18,9 @@ export default function ResultCardComponent({ result }: ResultCardProps) {
   }
 
   return (
-    <button onClick={handleDetailUpdate} className="result-card" data-testid="result-card">
+    <Button className="result-card" onClick={() => handleDetailUpdate()}>
       <p className="result-card__name">{result.name}</p>
       <img alt={result.name} src={result.image} className="result-card__image" data-testid="result-card__image" />
-    </button>
+    </Button>
   );
 }

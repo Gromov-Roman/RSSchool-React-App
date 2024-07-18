@@ -4,6 +4,7 @@ import { API_URL } from '@constants/api.const';
 import { useEffect, useState } from 'react';
 import { Result } from '@models/result.model';
 import LoaderComponent from '@components/Loader/Loader';
+import Button from '@components/Button/Button';
 
 export default function DetailPage() {
   const [detail, setDetail] = useState<Result | null>(null);
@@ -48,9 +49,7 @@ export default function DetailPage() {
         <section className="detail" data-testid="detail">
           <h3 className="detail__title">
             <span data-testid="detail__title-text">{detail.name}</span>
-            <button className="close-button" onClick={handleClose}>
-              ❌
-            </button>
+            <Button className="close-button" onClick={() => handleClose()} text="❌" />
           </h3>
 
           <img alt={detail.name} src={detail.image} className="detail__image" data-testid="detail__image" />
