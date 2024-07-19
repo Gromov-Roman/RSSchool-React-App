@@ -9,7 +9,7 @@
     height: 300px;
     width: 300px;
     border-radius: 50%;
-    animation: spin 2s linear infinite;
+    animation: spinLoader 2s linear infinite;
     background: radial-gradient(circle at 77% 80%, #fdfeb4 2.5%, transparent 2.5%),
       radial-gradient(circle at 75% 83%, #fdfeb4 2%, transparent 2%),
       radial-gradient(circle at 79% 83%, #fdfeb4 1%, transparent 1%),
@@ -53,12 +53,12 @@
     img {
       width: 100%;
       height: auto;
-      animation: bounce 2s infinite;
+      animation: bounceLoader 2s infinite;
     }
   }
 }
 
-@keyframes spin {
+@keyframes spinLoader {
   0% {
     transform: translate(-50%, -50%) rotate(0deg);
   }
@@ -67,7 +67,7 @@
   }
 }
 
-@keyframes bounce {
+@keyframes bounceLoader {
   0%,
   20%,
   50%,

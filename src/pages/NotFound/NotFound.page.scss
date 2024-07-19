@@ -48,7 +48,7 @@
         background-repeat: no-repeat;
         background-size: contain;
         background-position: center;
-        animation: rotateIn 0.5s ease-out;
+        animation: rotateInNotFound 0.5s ease-out;
       }
     }
 
@@ -73,17 +73,7 @@
   }
 }
 
-@keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(-360deg);
-  }
-}
-
-@keyframes rotateIn {
+@keyframes rotateInNotFound {
   from {
     transform: rotate(0deg) scale(0.2);
     opacity: 0;
