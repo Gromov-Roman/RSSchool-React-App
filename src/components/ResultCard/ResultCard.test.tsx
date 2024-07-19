@@ -13,13 +13,13 @@ describe('ResultCardComponent', () => {
     render(<ResultCardComponent result={resultMock} />, { wrapper: BrowserRouter });
 
     expect(screen.getByText(resultMock.name).textContent).toBe('Gaia');
-    expect(!!screen.getByTestId('result-card__image')).toBeTruthy;
+    expect(!!screen.getByTestId('result-card__image')).toBeTruthy();
   });
 
   it('clicking on a card opens a detailed card component', async () => {
     render(<App />);
 
-    await screen.findByTestId('results');
+    await screen.findByTestId('result-card');
 
     fireEvent.click(screen.getByTestId('result-card'));
 

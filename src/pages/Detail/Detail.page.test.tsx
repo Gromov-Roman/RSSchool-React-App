@@ -32,8 +32,8 @@ describe('DetailPage', () => {
   it('hides the component when the close button is clicked', async () => {
     await screen.findByTestId('detail');
 
-    fireEvent.click(screen.getByText('❌'));
+    fireEvent.click(screen.getByTestId('close-button'));
 
-    expect(!!screen.queryByTestId('detail')).toBeFalsy;
+    expect(!!screen.queryByTestId('detail')).toBeFalsy();
   });
 });
