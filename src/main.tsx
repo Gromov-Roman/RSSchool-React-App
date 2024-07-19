@@ -8,6 +8,9 @@ import './index.scss';
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <ThemeContextProvider>
+      <div id="stars" />
+      <div id="stars2" />
+      <div id="stars3" />
       <App />
     </ThemeContextProvider>
   </React.StrictMode>,

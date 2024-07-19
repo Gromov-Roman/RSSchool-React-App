@@ -1,38 +1,16 @@
-import './Pagination.scss';
 import { useState } from 'react';
 import Button from '@components/Button/Button';
-
-const PAGINATION_OFFSET = 1;
-const PAGINATION_LIMIT = 2;
+import { generatePages } from '@utils/generate-pages';
+import './Pagination.scss';
 
 interface PaginationProps {
   length: number;
   page: number;
   onPageChange: (page: number) => void;
+  disabled?: boolean;
 }
 
-const generatePages = (page: number, length: number) => {
-  const pages = [];
-
-  let startPage = Math.max(1, page - PAGINATION_OFFSET);
-  let endPage = Math.min(length, page + PAGINATION_OFFSET);
-
-  if (endPage - startPage < PAGINATION_LIMIT) {
-    if (startPage === 1) {
-      endPage = Math.min(length, startPage + PAGINATION_LIMIT);
-    } else if (endPage === length) {
-      startPage = Math.max(1, endPage - PAGINATION_LIMIT);
-    }
-  }
-
-  for (let i = startPage; i <= endPage; i += 1) {
-    pages.push(i);
-  }
-
-  return pages;
-};
-
-export default function PaginationComponent({ length, page, onPageChange }: PaginationProps) {
+export default function PaginationComponent({ length, page, onPageChange, disabled }: PaginationProps) {
   const [pages, setPages] = useState(generatePages(page, length));
   const [currentPage, setCurrentPage] = useState(page);
 
@@ -43,23 +21,24 @@ export default function PaginationComponent({ length, page, onPageChange }: Pagi
   };
 
   return (
-    <nav className="pagination">
+    <nav className={`pagination ${disabled ? 'disabled' : ''}`}>
       <Button
         className="pagination__button"
         disabled={currentPage === 1}
         onClick={() => handlePageChange(currentPage - 1)}
-        text="⬅️"
-      />
+      >
+        <img alt="close" src="left-arrow.svg" width="20px" />
+      </Button>
       {pages[0] !== 1 && (
         <>
-          <Button onClick={() => handlePageChange(1)} text={String(1)} />
+          <Button onClick={() => handlePageChange(1)} text={String(1)} className="pagination__button" />
           <span>...</span>
         </>
       )}
       {pages.map((p) => (
         <Button
           key={p}
-          className={currentPage === p ? 'pagination__page-button active' : 'pagination__page-button'}
+          className={currentPage === p ? 'pagination__button active' : 'pagination__button'}
           disabled={currentPage === p}
           onClick={() => handlePageChange(p)}
           text={String(p)}
@@ -68,16 +47,17 @@ export default function PaginationComponent({ length, page, onPageChange }: Pagi
       {pages.at(-1) !== length && (
         <>
           <span>...</span>
-          <Button onClick={() => handlePageChange(length)} text={String(length)} />
+          <Button onClick={() => handlePageChange(length)} text={String(length)} className="pagination__button" />
         </>
       )}
       <Button
         className="pagination__button"
         disabled={currentPage === length}
         onClick={() => handlePageChange(currentPage + 1)}
-        text="➡️"
         testId="next-page"
-      />
+      >
+        <img alt="close" src="right-arrow.svg" width="20px" />
+      </Button>
     </nav>
   );
 }

@@ -41,15 +41,14 @@
     justify-content: center;
     width: 40px;
     height: 40px;
-    content: '☀️';
+    content: '';
+    background: center no-repeat url('sun.webp');
     border-radius: 50%;
-    background-color: white;
     color: yellow;
     font-size: 1.5rem;
     transition:
       transform 200ms,
       background-color 200ms;
-    box-shadow: -3px 3px 8px rgba(0, 0, 0, 0.4);
   }
 }
 
@@ -57,9 +56,13 @@
   background-color: lightSlateGray;
   box-shadow: -10px 0 5px 1px $gray-light;
 
-  span::after {
-    transform: translateX(40px);
-    content: '\263E';
-    color: lightSlateGray;
+  span {
+    left: -5px;
+
+    &::after {
+      transform: translateX(40px);
+      background: left / 90% no-repeat url('moon.webp');
+      color: lightSlateGray;
+    }
   }
 }

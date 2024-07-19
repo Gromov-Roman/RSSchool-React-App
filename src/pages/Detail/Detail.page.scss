@@ -63,6 +63,7 @@
 
   &.dark {
     background-color: $light-secondary-background;
+    box-shadow: 0 0 10px 5px $gray-light;
 
     .detail__title {
       background-color: $light-background;

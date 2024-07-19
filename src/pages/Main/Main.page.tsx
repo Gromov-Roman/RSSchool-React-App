@@ -5,8 +5,8 @@ import { useContext, useEffect, useState } from 'react';
 import { PagingResults } from '@models/result.model';
 import useLocalStorage from '@hooks/LocalStorage';
 import { API_URL } from '@constants/api.const';
-import './Main.page.scss';
 import { ThemeContext } from '@context/ThemeContext';
+import './Main.page.scss';
 
 export default function MainPage() {
   const { theme } = useContext(ThemeContext);
@@ -17,7 +17,12 @@ export default function MainPage() {
   const searchQuery = getSearchQuery();
 
   useEffect(() => {
-    setPagingResults(null);
+    setPagingResults((prevPagingResults) => {
+      const nextPagingResults = { ...prevPagingResults };
+      nextPagingResults.results = null;
+
+      return nextPagingResults as PagingResults;
+    });
 
     const requestUrl = new URL(API_URL);
     const urlParams = new URLSearchParams();

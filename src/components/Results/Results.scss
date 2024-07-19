@@ -1,3 +1,5 @@
+@import '../../variables';
+
 .results-container {
   flex: 1;
   display: flex;
@@ -14,6 +16,7 @@
       justify-content: center;
       align-items: center;
       gap: 1rem;
+      flex: 1;
       margin: 0;
       padding: 1rem 1rem;
       overflow: auto;
@@ -28,6 +31,16 @@
         flex: 1;
       }
     }
+
+    &__footer {
+      position: sticky;
+      bottom: 0;
+      background-color: $light-background;
+      display: flex;
+      justify-content: space-between;
+      padding: min(1dvw, 10px);
+      border-radius: 1rem;
+    }
   }
 
   .empty {
@@ -36,5 +49,12 @@
     justify-content: center;
     align-items: center;
     flex: 1;
+  }
+
+  &.dark {
+    .results__footer {
+      background-color: $dark-background;
+      z-index: 2;
+    }
   }
 }

@@ -3,23 +3,28 @@
 .pagination {
   display: flex;
   justify-content: center;
-  gap: 5px;
+  gap: min(1dvw, 10px);
+
+  &.disabled {
+    pointer-events: none;
+    opacity: 0.5;
+  }
 
   &__button {
+    width: min(50px, 10dvw);
+    padding: 0.5rem;
+
     &:disabled {
       cursor: default;
       opacity: 0.5;
     }
-  }
-
-  &__page-button {
-    width: 50px;
-    padding: 0;
 
     &.active {
+      opacity: 1;
       font-weight: bold;
       box-shadow: 0 0 5px 1px white;
       cursor: default;
+      transform: scale(1.1);
     }
   }
 }

@@ -1,11 +1,11 @@
 import { useSearchParams } from 'react-router-dom';
-import './Detail.page.scss';
 import { API_URL } from '@constants/api.const';
 import { useContext, useEffect, useState } from 'react';
 import { Result } from '@models/result.model';
 import LoaderComponent from '@components/Loader/Loader';
 import Button from '@components/Button/Button';
 import { ThemeContext } from '@context/ThemeContext';
+import './Detail.page.scss';
 
 export default function DetailPage() {
   const [detail, setDetail] = useState<Result | null>(null);
@@ -50,7 +50,9 @@ export default function DetailPage() {
         <>
           <h3 className="detail__title">
             <span data-testid="detail__title-text">{detail.name}</span>
-            <Button className="close-button" onClick={() => handleClose()} text="❌" />
+            <Button className="close-button" onClick={() => handleClose()}>
+              <img alt="close" src="close.svg" width="20px" />
+            </Button>
           </h3>
 
           <img alt={detail.name} src={detail.image} className="detail__image" data-testid="detail__image" />

@@ -17,6 +17,6 @@ export interface Info {
 }
 
 export interface PagingResults {
-  results: Result[];
+  results: Result[] | null;
   info: Info;
 }

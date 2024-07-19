@@ -17,7 +17,7 @@ describe('ResultComponent', () => {
     render(<ResultComponent pagingResults={pagingResults} />, { wrapper: BrowserRouter });
 
     const cards = screen.getAllByTestId('results__list-item');
-    expect(cards).toHaveLength(pagingResults.results.length);
+    expect(cards).toHaveLength(Number(pagingResults.results?.length));
   });
 
   it('displays an appropriate message if no cards are present', () => {

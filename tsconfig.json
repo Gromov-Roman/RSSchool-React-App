@@ -15,9 +15,10 @@
     "jsx": "react-jsx",
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
-
+    
     "paths": {
       "@src/*": ["./src/*"],
+      "@assets/*": ["./src/assets/*"],
       "@core/*": ["./src/core/*"],
       "@pages/*": ["./src/pages/*"],
       "@components/*": ["./src/components/*"],

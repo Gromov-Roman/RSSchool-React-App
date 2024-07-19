@@ -4,7 +4,8 @@ import { useSearchParams } from 'react-router-dom';
 import { PagingResults } from '@models/result.model';
 import LoaderComponent from '@components/Loader/Loader';
 import './Results.scss';
-import { useEffect, useRef } from 'react';
+import { useContext, useEffect, useRef } from 'react';
+import { ThemeContext } from '@context/ThemeContext';
 
 interface ResultsProps {
   pagingResults: PagingResults | null;
@@ -12,6 +13,7 @@ interface ResultsProps {
 
 export default function ResultsComponent({ pagingResults }: ResultsProps) {
   const [searchParams, setSearchParams] = useSearchParams();
+  const { theme } = useContext(ThemeContext);
 
   function handleUpdatePage(page: number) {
     searchParams.set('page', String(page));
@@ -40,21 +42,21 @@ export default function ResultsComponent({ pagingResults }: ResultsProps) {
   }, []);
 
   return (
-    <div ref={containerRef} className="results-container">
-      {!pagingResults && (
-        <section className="empty">
-          <LoaderComponent />
-        </section>
-      )}
-
-      {!!pagingResults && !pagingResults?.results?.length && (
+    <div ref={containerRef} className={`results-container ${theme}`}>
+      {!!pagingResults?.results && !pagingResults.results.length && (
         <section className="empty">
           <h2>No results found</h2>
         </section>
       )}
 
-      {!!pagingResults?.results?.length && (
-        <section className="results" data-testid="results">
+      <section className="results" data-testid="results">
+        {!pagingResults?.results && (
+          <section className="empty">
+            <LoaderComponent />
+          </section>
+        )}
+
+        {!!pagingResults?.results?.length && (
           <ul className="results__list">
             {pagingResults.results.map((result) => (
               <li key={result.id} className="results__list-item" data-testid="results__list-item">
@@ -62,13 +64,20 @@ export default function ResultsComponent({ pagingResults }: ResultsProps) {
               </li>
             ))}
           </ul>
-          <PaginationComponent
-            length={pagingResults.info.pages}
-            page={Number(searchParams.get('page')) || 1}
-            onPageChange={(page) => handleUpdatePage(page)}
-          />
-        </section>
-      )}
+        )}
+
+        {pagingResults?.info && (
+          <footer className="results__footer">
+            <PaginationComponent
+              disabled={!pagingResults.results}
+              length={pagingResults.info.pages}
+              page={Number(searchParams.get('page')) || 1}
+              onPageChange={(page) => handleUpdatePage(page)}
+            />
+            <div />
+          </footer>
+        )}
+      </section>
     </div>
   );
 }
