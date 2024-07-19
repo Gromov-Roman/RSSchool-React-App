@@ -60,6 +60,7 @@ export default function PaginationComponent({ length, page, onPageChange }: Pagi
         <Button
           key={p}
           className={currentPage === p ? 'pagination__page-button active' : 'pagination__page-button'}
+          disabled={currentPage === p}
           onClick={() => handlePageChange(p)}
           text={String(p)}
         />

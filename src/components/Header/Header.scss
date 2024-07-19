@@ -1,9 +1,17 @@
+@import '../../variables';
+
 .header {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
   padding: 1rem;
   border-radius: 1rem;
-  background-color: gray;
+  background-color: $light-secondary-background;
+
+  &.dark {
+    background-color: $dark-secondary-background;
+  }
 }
 
 @media (max-width: 800px) {

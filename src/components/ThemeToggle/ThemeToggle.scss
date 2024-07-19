@@ -1,0 +1,63 @@
+@import url('https://fonts.googleapis.com/css?family=Merriweather:400,400i,700');
+
+.theme-switch__input,
+.theme-switch__label {
+  position: relative;
+  z-index: 1;
+
+  &:hover,
+  &:focus {
+    span::after {
+      box-shadow: 0 0 10px 10px rgba(0, 0, 0, 0.2);
+    }
+  }
+}
+
+.theme-switch__input {
+  display: none;
+}
+
+.theme-switch__label {
+  transition: background-color 200ms ease-in-out;
+  width: 80px;
+  height: 40px;
+  border-radius: 50px;
+  text-align: center;
+  background-color: yellow;
+  box-shadow: 10px 0 10px 0 black;
+  cursor: pointer;
+
+  span {
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    width: 50px;
+    height: 50px;
+  }
+
+  span::after {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    content: '☀️';
+    border-radius: 50%;
+    background-color: white;
+    color: yellow;
+    font-size: 2rem;
+    transition:
+      transform 200ms,
+      background-color 200ms;
+    box-shadow: -3px 3px 8px rgba(0, 0, 0, 0.4);
+  }
+}
+
+.theme-switch__input:checked ~ .theme-switch__label {
+  background-color: lightSlateGray;
+  box-shadow: -10px 0 10px 0 white;
+
+  span::after {
+    transform: translateX(40px);
+    content: '\263E';
+    color: lightSlateGray;
+  }
+}

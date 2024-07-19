@@ -26,6 +26,7 @@
       "@constants/*": ["./src/constants/*"],
       "@utils/*": ["./src/utils/*"],
       "@hooks/*": ["./src/hooks/*"],
+      "@context/*": ["./src/context/*"],
       "@mocks/*": ["./src/mocks/*"],
     },
 

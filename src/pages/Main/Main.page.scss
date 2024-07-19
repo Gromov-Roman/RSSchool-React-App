@@ -1,14 +1,20 @@
-.main {
+@import '../../variables';
+
+.main-page {
   display: flex;
   flex: 1;
-  padding: 1rem;
+  padding: 0.5rem;
   border-radius: 1rem;
-  background-color: gray;
+  background-color: $light-secondary-background;
   overflow: hidden;
+
+  &.dark {
+    background-color: $dark-secondary-background;
+  }
 }
 
 @media (max-width: 800px) {
-  .main {
+  .main-page {
     flex-direction: column-reverse;
     overflow: visible;
   }

@@ -2,16 +2,19 @@ import { RouterProvider } from 'react-router-dom';
 import ErrorBoundary from '@components/ErrorBoundary';
 import { router } from '@core/routing/router';
 import LoaderComponent from '@components/Loader/Loader';
-import ThemeContextProvider from '@src/context/ThemeContext';
+import { ThemeContext } from '@context/ThemeContext';
+import { useContext } from 'react';
 import './App.scss';
 
 function App() {
+  const { theme } = useContext(ThemeContext);
+
   return (
-    <ThemeContextProvider>
-      <ErrorBoundary fallback={<div>Oops! Something went wrong.</div>}>
+    <ErrorBoundary fallback={<div>Oops! Something went wrong.</div>}>
+      <main className={`main ${theme}`}>
         <RouterProvider router={router} fallbackElement={<LoaderComponent />} />
-      </ErrorBoundary>
-    </ThemeContextProvider>
+      </main>
+    </ErrorBoundary>
   );
 }
 

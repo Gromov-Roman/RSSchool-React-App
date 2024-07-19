@@ -23,6 +23,7 @@ export default defineConfig({
       '@constants': resolve(__dirname, './src/constants/'),
       '@utils': resolve(__dirname, './src/utils/'),
       '@hooks': resolve(__dirname, './src/hooks/'),
+      '@context': resolve(__dirname, './src/context/'),
       '@mocks': resolve(__dirname, './src/mocks/'),
     },
   },

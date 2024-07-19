@@ -1,14 +1,15 @@
 import { useSearchParams } from 'react-router-dom';
 import './Detail.page.scss';
 import { API_URL } from '@constants/api.const';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Result } from '@models/result.model';
 import LoaderComponent from '@components/Loader/Loader';
 import Button from '@components/Button/Button';
+import { ThemeContext } from '@context/ThemeContext';
 
 export default function DetailPage() {
   const [detail, setDetail] = useState<Result | null>(null);
-  // const { detail } = useLoaderData() as DetailLoaderData;
+  const { theme } = useContext(ThemeContext);
   const [searchParams, setSearchParams] = useSearchParams();
   const detailParam = searchParams.get('detail');
 
@@ -46,7 +47,7 @@ export default function DetailPage() {
         </section>
       )}
       {!!detail && (
-        <section className="detail" data-testid="detail">
+        <section className={`detail ${theme}`} data-testid="detail">
           <h3 className="detail__title">
             <span data-testid="detail__title-text">{detail.name}</span>
             <Button className="close-button" onClick={() => handleClose()} text="❌" />

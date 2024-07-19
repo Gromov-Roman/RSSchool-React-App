@@ -1,5 +1,6 @@
 import { ReactNode, useContext } from 'react';
-import { ThemeContext } from '@src/context/ThemeContext';
+import { ThemeContext } from '@context/ThemeContext';
+import './Button.scss';
 
 interface ButtonProps {
   onClick: () => void;
@@ -10,7 +11,7 @@ interface ButtonProps {
 }
 
 export default function Button({ onClick, children, text, className, disabled = false }: ButtonProps) {
-  const theme = useContext(ThemeContext);
+  const { theme } = useContext(ThemeContext);
 
   return (
     <button className={`button ${theme} ${className}`} onClick={onClick} disabled={disabled}>

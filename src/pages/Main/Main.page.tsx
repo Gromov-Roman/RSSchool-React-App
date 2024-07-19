@@ -1,13 +1,15 @@
 import ResultsComponent from '@components/Results/Results';
 import { Outlet, useSearchParams } from 'react-router-dom';
 import HeaderComponent from '@components/Header/Header';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { PagingResults } from '@models/result.model';
 import useLocalStorage from '@hooks/LocalStorage';
 import { API_URL } from '@constants/api.const';
 import './Main.page.scss';
+import { ThemeContext } from '@context/ThemeContext';
 
 export default function MainPage() {
+  const { theme } = useContext(ThemeContext);
   const [params] = useSearchParams();
   const [pagingResults, setPagingResults] = useState<PagingResults | null>(null);
   const { getValue: getSearchQuery } = useLocalStorage<string>('searchQuery');
@@ -43,10 +45,10 @@ export default function MainPage() {
     <>
       <HeaderComponent />
 
-      <main className="main">
+      <article className={`main-page ${theme}`}>
         <ResultsComponent pagingResults={pagingResults} />
         <Outlet />
-      </main>
+      </article>
     </>
   );
 }

@@ -61,6 +61,7 @@ const offRules = {
   'react/button-has-type': 'off',
   'react/prefer-stateless-function': 'off',
   'react-hooks/exhaustive-deps': 'off',
+  'jsx-a11y/label-has-associated-control': 'off',
 };
 
 module.exports = {

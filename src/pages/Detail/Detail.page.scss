@@ -1,3 +1,5 @@
+@import '../../variables';
+
 .detail {
   display: flex;
   flex-direction: column;
@@ -5,7 +7,7 @@
   gap: 1rem;
   position: relative;
   width: 40%;
-  padding: 0 1rem;
+  padding: 1rem;
   overflow-y: auto;
   scrollbar-width: thin;
   scrollbar-gutter: stable;
@@ -15,13 +17,14 @@
     height: 40px;
     width: 40px;
     padding: 0;
-    background-color: transparent;
+    background-color: transparent !important;
   }
 
   &__image {
     width: 100%;
     max-width: 350px;
     border-radius: 1rem;
+    box-shadow: 0 0 10px 5px $light-accent;
   }
 
   &__info {
@@ -32,7 +35,9 @@
     &-block {
       padding: 0.5rem 1rem;
       border-radius: 1rem;
-      border: 1px white solid;
+      border: 2px $light-accent solid;
+      background-color: $dark-background;
+      color: $dark-text-primary;
     }
   }
 
@@ -49,9 +54,27 @@
     width: 100%;
     position: sticky;
     top: 0;
-    background-color: darkgray;
+    background-color: $dark-background;
+    color: $dark-text-primary;
     border-radius: 1rem;
     padding: 3px 10px;
+  }
+
+  &.dark {
+    .detail__title {
+      background-color: $light-background;
+      color: $light-text-primary;
+    }
+
+    .detail__info-block {
+      background-color: $light-background;
+      color: $light-text-primary;
+      border-color: $dark-accent;
+    }
+
+    .detail__image {
+      box-shadow: 0 0 10px 5px $dark-accent;
+    }
   }
 }
 

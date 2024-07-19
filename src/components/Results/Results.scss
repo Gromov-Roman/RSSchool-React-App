@@ -9,18 +9,23 @@
     flex: 1;
 
     &__list {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
       align-items: center;
       gap: 1rem;
       margin: 0;
-      padding: 0 1rem;
+      padding: 1rem 1rem;
       overflow: auto;
       scrollbar-width: thin;
       scrollbar-gutter: stable;
+      box-shadow: inset 0 -10px 10px -5px rgba(0, 0, 0, 0.3);
 
       &-item {
         list-style: none;
+        min-width: min(300px, 90dvw);
+        max-width: 400px;
+        flex: 1;
       }
     }
   }

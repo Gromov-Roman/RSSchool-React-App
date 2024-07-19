@@ -1,10 +1,13 @@
-import { ChangeEvent } from 'react';
+import { ChangeEvent, useContext } from 'react';
 import SearchComponent from '@components/Search/Search';
 import './Header.scss';
 import useLocalStorage from '@hooks/LocalStorage';
 import { useSearchParams } from 'react-router-dom';
+import ThemeToggle from '@components/ThemeToggle/ThemeToggle';
+import { ThemeContext } from '@context/ThemeContext';
 
 export default function HeaderComponent() {
+  const { theme } = useContext(ThemeContext);
   const { value: searchQuery, setValue: setSearchQuery } = useLocalStorage<string>('searchQuery');
   const [params, setParams] = useSearchParams();
 
@@ -26,7 +29,8 @@ export default function HeaderComponent() {
   };
 
   return (
-    <header className="header">
+    <header className={`header ${theme}`}>
+      <ThemeToggle />
       <SearchComponent searchQuery={searchQuery || ''} onInputChange={handleInputChange} onSearch={handleSearch} />
     </header>
   );
