@@ -10,7 +10,7 @@ describe('DetailPage', () => {
 
   beforeEach(async () => {
     render(<App />);
-    await screen.findByTestId('results');
+    await screen.findByTestId('result-card');
     fireEvent.click(screen.getByTestId('result-card'));
   });
 
