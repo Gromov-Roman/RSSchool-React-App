@@ -76,7 +76,7 @@ export default function PaginationComponent({ length, page, onPageChange }: Pagi
         disabled={currentPage === length}
         onClick={() => handlePageChange(currentPage + 1)}
         text="➡️"
-        data-testid="next-page"
+        testId="next-page"
       />
     </nav>
   );

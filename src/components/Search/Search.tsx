@@ -15,7 +15,7 @@ export default function SearchComponent({ searchQuery, onInputChange, onSearch }
         type="text"
         value={searchQuery}
         onChange={onInputChange}
-        placeholder="Enter search query"
+        placeholder="Search..."
         className="search__input"
         data-testid="search-input"
         onKeyDown={({ key }) => {
@@ -24,7 +24,7 @@ export default function SearchComponent({ searchQuery, onInputChange, onSearch }
           }
         }}
       />
-      <Button className="close-button" onClick={() => onSearch()} text="Search" data-testid="search-button" />
+      <Button className="search__button" onClick={() => onSearch()} text="Search" testId="search-button" />
     </section>
   );
 }

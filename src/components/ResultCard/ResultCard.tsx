@@ -18,7 +18,7 @@ export default function ResultCardComponent({ result }: ResultCardProps) {
   }
 
   return (
-    <Button className="result-card" onClick={() => handleDetailUpdate()}>
+    <Button className="result-card" onClick={() => handleDetailUpdate()} testId="result-card">
       <p className="result-card__name">{result.name}</p>
       <img alt={result.name} src={result.image} className="result-card__image" data-testid="result-card__image" />
     </Button>

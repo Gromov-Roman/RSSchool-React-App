@@ -40,14 +40,14 @@ export default function DetailPage() {
   }
 
   return (
-    <>
+    <section className={`detail ${theme}`} data-testid="detail">
       {!detail && (
         <section className="empty-detail">
           <LoaderComponent />
         </section>
       )}
       {!!detail && (
-        <section className={`detail ${theme}`} data-testid="detail">
+        <>
           <h3 className="detail__title">
             <span data-testid="detail__title-text">{detail.name}</span>
             <Button className="close-button" onClick={() => handleClose()} text="❌" />
@@ -76,8 +76,8 @@ export default function DetailPage() {
               <p className="detail__info-block-text">{detail.location.name}</p>
             </div>
           </div>
-        </section>
+        </>
       )}
-    </>
+    </section>
   );
 }

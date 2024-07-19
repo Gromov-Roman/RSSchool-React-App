@@ -11,6 +11,9 @@
   overflow-y: auto;
   scrollbar-width: thin;
   scrollbar-gutter: stable;
+  box-shadow: 0 0 10px 5px $gray-dark;
+  border-radius: 1rem;
+  background-color: $dark-secondary-background;
 
   .close-button {
     border-radius: 50%;
@@ -52,8 +55,6 @@
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    position: sticky;
-    top: 0;
     background-color: $dark-background;
     color: $dark-text-primary;
     border-radius: 1rem;
@@ -61,6 +62,8 @@
   }
 
   &.dark {
+    background-color: $light-secondary-background;
+
     .detail__title {
       background-color: $light-background;
       color: $light-text-primary;
@@ -76,12 +79,4 @@
       box-shadow: 0 0 10px 5px $dark-accent;
     }
   }
-}
-
-.empty-detail {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 40%;
 }
