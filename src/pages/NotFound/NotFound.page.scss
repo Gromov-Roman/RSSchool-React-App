@@ -37,10 +37,11 @@
       overflow: hidden;
       width: fit-content;
       height: max-content;
+      line-height: 110%;
 
       &:before {
         content: '';
-        background-image: url('./rick-and-morty.webp');
+        background-image: url('/rick-and-morty.webp');
         position: absolute;
         height: 100%;
         width: 100%;
