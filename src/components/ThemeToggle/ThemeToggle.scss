@@ -42,7 +42,7 @@
     width: 40px;
     height: 40px;
     content: '';
-    background: center no-repeat url('sun.webp');
+    background: center no-repeat url('./sun.webp');
     border-radius: 50%;
     color: yellow;
     font-size: 1.5rem;
@@ -61,7 +61,7 @@
 
     &::after {
       transform: translateX(40px);
-      background: left / 90% no-repeat url('moon.webp');
+      background: left / 90% no-repeat url('./moon.webp');
       color: lightSlateGray;
     }
   }
