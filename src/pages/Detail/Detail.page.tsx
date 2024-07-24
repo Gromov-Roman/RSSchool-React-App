@@ -1,39 +1,30 @@
 import { useSearchParams } from 'react-router-dom';
-import { API_URL } from '@constants/api.const';
-import { useContext, useEffect, useState } from 'react';
-import { Result } from '@models/result.model';
+import { useContext, useEffect } from 'react';
 import LoaderComponent from '@components/Loader/Loader';
 import Button from '@components/Button/Button';
 import { ThemeContext } from '@context/ThemeContext';
+import { useGetItemDetailsQuery } from '@core/slices/api';
 import './Detail.page.scss';
+import { useDispatch } from 'react-redux';
+import { detailActions } from '@core/slices/detail';
 
 export default function DetailPage() {
-  const [detail, setDetail] = useState<Result | null>(null);
+  const dispatch = useDispatch();
   const { theme } = useContext(ThemeContext);
   const [searchParams, setSearchParams] = useSearchParams();
   const detailParam = searchParams.get('detail');
+  const { data: detail, isFetching } = useGetItemDetailsQuery(detailParam, { skip: !detailParam });
+  const { setIsFetching, setDetail } = detailActions;
+
+  useEffect(() => {
+    dispatch(setIsFetching(isFetching));
+    dispatch(setDetail(detail));
+  }, [detail, isFetching, dispatch]);
 
   function handleClose() {
     searchParams.delete('detail');
     setSearchParams(searchParams);
   }
-
-  useEffect(() => {
-    if (!detailParam) {
-      return;
-    }
-
-    setDetail(null);
-
-    const requestUrl = new URL(`${API_URL}/${detailParam}`);
-    const fetchData = async () => {
-      const response = await fetch(requestUrl);
-      const data = await response.json();
-      setDetail(data);
-    };
-
-    fetchData();
-  }, [detailParam]);
 
   if (!detailParam) {
     return null;
@@ -41,12 +32,12 @@ export default function DetailPage() {
 
   return (
     <section className={`detail ${theme}`} data-testid="detail">
-      {!detail && (
+      {isFetching && (
         <section className="empty-detail">
           <LoaderComponent />
         </section>
       )}
-      {!!detail && (
+      {!isFetching && !!detail && (
         <>
           <h3 className="detail__title">
             <span data-testid="detail__title-text">{detail.name}</span>

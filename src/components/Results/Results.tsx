@@ -1,17 +1,15 @@
 import ResultCardComponent from '@components/ResultCard/ResultCard';
 import PaginationComponent from '@components/Pagination/Pagination';
 import { useSearchParams } from 'react-router-dom';
-import { PagingResults } from '@models/result.model';
 import LoaderComponent from '@components/Loader/Loader';
 import './Results.scss';
 import { useContext, useEffect, useRef } from 'react';
 import { ThemeContext } from '@context/ThemeContext';
+import { useSelector } from 'react-redux';
+import { RootState } from '@core/store';
 
-interface ResultsProps {
-  pagingResults: PagingResults | null;
-}
-
-export default function ResultsComponent({ pagingResults }: ResultsProps) {
+export default function ResultsComponent() {
+  const { pagingResults, isFetching } = useSelector((state: RootState) => state.pagingResultsReducer);
   const [searchParams, setSearchParams] = useSearchParams();
   const { theme } = useContext(ThemeContext);
 
@@ -43,20 +41,20 @@ export default function ResultsComponent({ pagingResults }: ResultsProps) {
 
   return (
     <div ref={containerRef} className={`results-container ${theme}`}>
-      {!!pagingResults?.results && !pagingResults.results.length && (
+      {!isFetching && !pagingResults?.results?.length && (
         <section className="empty">
           <h2>No results found</h2>
         </section>
       )}
 
       <section className="results" data-testid="results">
-        {!pagingResults?.results && (
+        {isFetching && (
           <section className="empty">
             <LoaderComponent />
           </section>
         )}
 
-        {!!pagingResults?.results?.length && (
+        {!isFetching && !!pagingResults?.results?.length && (
           <ul className="results__list">
             {pagingResults.results.map((result) => (
               <li key={result.id} className="results__list-item" data-testid="results__list-item">

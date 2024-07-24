@@ -2,6 +2,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { describe, it, expect, vi, afterEach } from 'vitest';
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import { getResultMock } from '@mocks/result.mock';
+import { renderWithProviders } from '@mocks/test-utils';
 import App from '../../App';
 import ResultCardComponent from './ResultCard';
 
@@ -17,7 +18,7 @@ describe('ResultCardComponent', () => {
   });
 
   it('clicking on a card opens a detailed card component', async () => {
-    render(<App />);
+    renderWithProviders(<App />);
 
     await screen.findByTestId('result-card');
 
@@ -32,16 +33,20 @@ describe('ResultCardComponent', () => {
     const resultMock = getResultMock(1);
     const fetchSpy = vi.spyOn(global, 'fetch');
 
-    render(<App />);
+    renderWithProviders(<App />);
 
     await screen.findByTestId('results');
 
-    expect(fetchSpy).toHaveBeenCalledWith(new URL('https://rickandmortyapi.com/api/character'));
+    expect(fetchSpy).toHaveBeenCalledWith(
+      new Request(new URL('https://rickandmortyapi.com/api/character'), { signal: AbortSignal.timeout(1) }),
+    );
+
+    await screen.findByTestId('result-card');
 
     fireEvent.click(screen.getByTestId('result-card'));
 
     await screen.findByTestId('detail');
 
-    expect(fetchSpy).toHaveBeenCalledWith(new URL(resultMock.url));
+    expect(fetchSpy).toHaveBeenCalledWith(new Request(new URL(resultMock.url), { signal: AbortSignal.timeout(1) }));
   });
 });

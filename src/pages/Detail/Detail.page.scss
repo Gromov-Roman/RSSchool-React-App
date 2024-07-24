@@ -26,6 +26,7 @@
   &__image {
     width: 100%;
     max-width: 350px;
+    min-height: 350px;
     border-radius: 1rem;
     box-shadow: 0 0 10px 5px $light-accent;
   }

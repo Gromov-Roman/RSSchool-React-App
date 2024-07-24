@@ -62,6 +62,7 @@ const offRules = {
   'react/prefer-stateless-function': 'off',
   'react-hooks/exhaustive-deps': 'off',
   'jsx-a11y/label-has-associated-control': 'off',
+  'no-param-reassign': 'off',
 };
 
 module.exports = {

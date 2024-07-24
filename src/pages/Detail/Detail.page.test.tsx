@@ -1,6 +1,7 @@
 import { describe, it, expect, afterEach, beforeEach } from 'vitest';
-import { cleanup, fireEvent, render, screen } from '@testing-library/react';
+import { cleanup, fireEvent, screen } from '@testing-library/react';
 import { getResultMock } from '@mocks/result.mock';
+import { renderWithProviders } from '@mocks/test-utils';
 import App from '../../App';
 
 const resultMock = getResultMock(1);
@@ -9,7 +10,7 @@ describe('DetailPage', () => {
   afterEach(cleanup);
 
   beforeEach(async () => {
-    render(<App />);
+    renderWithProviders(<App />);
     await screen.findByTestId('result-card');
     fireEvent.click(screen.getByTestId('result-card'));
   });
