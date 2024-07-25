@@ -24,4 +24,5 @@ export const pagingResultsSlice = createSlice({
   },
 });
 
+export const pagingResultsReducer = pagingResultsSlice.reducer;
 export const pagingResultsActions = pagingResultsSlice.actions;

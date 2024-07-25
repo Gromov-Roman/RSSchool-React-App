@@ -25,4 +25,5 @@ export const detailSlice = createSlice({
   },
 });
 
+export const detailReducer = detailSlice.reducer;
 export const detailActions = detailSlice.actions;

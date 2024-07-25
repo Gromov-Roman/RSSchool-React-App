@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import Button from '@components/Button/Button';
 import { generatePages } from '@utils/generate-pages';
 import './Pagination.scss';
+import { ThemeContext } from '@context/ThemeContext';
 
 interface PaginationProps {
   length: number;
@@ -13,6 +14,7 @@ interface PaginationProps {
 export default function PaginationComponent({ length, page, onPageChange, disabled }: PaginationProps) {
   const [pages, setPages] = useState(generatePages(page, length));
   const [currentPage, setCurrentPage] = useState(page);
+  const { theme } = useContext(ThemeContext);
 
   const handlePageChange = (p: number) => {
     setCurrentPage(p);
@@ -21,7 +23,7 @@ export default function PaginationComponent({ length, page, onPageChange, disabl
   };
 
   return (
-    <nav className={`pagination ${disabled ? 'disabled' : ''}`}>
+    <nav className={`pagination ${disabled ? 'disabled' : ''} ${theme}`}>
       <Button
         className="pagination__button"
         disabled={currentPage === 1}

@@ -4,6 +4,7 @@
   display: flex;
   justify-content: center;
   gap: min(2dvw, 10px);
+  padding: 0.5rem;
 
   &.disabled {
     pointer-events: none;
@@ -22,9 +23,15 @@
     &.active {
       opacity: 1;
       font-weight: bold;
-      box-shadow: 0 0 5px 1px white;
+      box-shadow: 0 0 5px 2px $gray-dark;
       cursor: default;
       transform: scale(1.1);
+    }
+  }
+
+  &.dark {
+    .pagination__button.active {
+      box-shadow: 0 0 5px 2px $gray-light;
     }
   }
 }

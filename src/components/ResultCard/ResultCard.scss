@@ -1,3 +1,5 @@
+@import '../../variables';
+
 .result-card {
   position: relative;
   z-index: 1;
@@ -8,20 +10,48 @@
   width: 100%;
   border-radius: 1rem;
 
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    gap: 1rem;
+  }
+
+  &__favorite {
+    border-radius: 50%;
+    padding: 5px;
+    background-color: $gray-light;
+    box-shadow: 0 0 6px 3px $dark-accent;
+    transition: 0.3s;
+
+    &.active {
+      background-color: $dark-accent;
+      box-shadow: 0 0 6px 3px $gray-light;
+    }
+
+    &-image {
+      width: 50px;
+      height: 50px;
+    }
+
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+
   &__name {
     margin: 0;
     font-size: 1.2rem;
     font-weight: bold;
+    flex: 1;
+    height: 100%;
   }
 
   &__image {
     width: 90%;
     min-height: 200px;
     border-radius: 1rem;
-  }
-
-  &:hover {
-    transform: scale(0.99);
   }
 }
 

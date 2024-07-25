@@ -20,8 +20,24 @@
     box-shadow: inset 0 0 5px 2px $gray-dark;
   }
 
+  &__accent {
+    background-color: $dark-accent;
+  }
+
+  &__secondary {
+    background-color: $light-secondary;
+  }
+
   &.dark {
     background-color: $dark-primary;
     color: $dark-text-primary;
+
+    &.button__accent {
+      background-color: $light-accent;
+    }
+
+    &.button__secondary {
+      background-color: $dark-secondary;
+    }
   }
 }
