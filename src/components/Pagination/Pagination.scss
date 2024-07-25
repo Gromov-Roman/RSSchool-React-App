@@ -31,7 +31,6 @@
 
 @media (max-width: 800px) {
   .pagination__delimiter {
-    width: 3px;
-    overflow: hidden;
+    display: none;
   }
 }
