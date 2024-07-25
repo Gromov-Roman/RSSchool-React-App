@@ -72,7 +72,6 @@ export default function ResultsComponent() {
               page={Number(searchParams.get('page')) || 1}
               onPageChange={(page) => handleUpdatePage(page)}
             />
-            <div />
           </footer>
         )}
       </section>

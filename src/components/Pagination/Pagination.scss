@@ -3,7 +3,7 @@
 .pagination {
   display: flex;
   justify-content: center;
-  gap: min(1dvw, 10px);
+  gap: min(2dvw, 10px);
 
   &.disabled {
     pointer-events: none;
@@ -12,7 +12,7 @@
 
   &__button {
     width: min(50px, 10dvw);
-    padding: 0.5rem;
+    padding: min(0.5rem, 1dvw);
 
     &:disabled {
       cursor: default;
@@ -26,5 +26,12 @@
       cursor: default;
       transform: scale(1.1);
     }
+  }
+}
+
+@media (max-width: 800px) {
+  .pagination__delimiter {
+    width: 3px;
+    overflow: hidden;
   }
 }

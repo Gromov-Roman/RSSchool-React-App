@@ -26,20 +26,23 @@
 
       &-item {
         list-style: none;
-        min-width: min(300px, 90dvw);
+        min-width: 300px;
         max-width: 400px;
         flex: 1;
       }
     }
 
     &__footer {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
       position: sticky;
       bottom: 0;
       background-color: $light-background;
-      display: flex;
       justify-content: space-between;
-      padding: min(1dvw, 10px);
+      padding: min(2dvw, 10px);
       border-radius: 1rem;
+      z-index: 2;
     }
   }
 
@@ -54,7 +57,25 @@
   &.dark {
     .results__footer {
       background-color: $dark-background;
-      z-index: 2;
+    }
+  }
+}
+
+@media (max-width: 800px) {
+  .results-container {
+    .results {
+      &__list {
+        gap: 0.5rem;
+        padding: 0;
+        box-shadow: none;
+
+        &-item {
+          list-style: none;
+          min-width: 200px;
+          max-width: 100%;
+          flex: 1;
+        }
+      }
     }
   }
 }

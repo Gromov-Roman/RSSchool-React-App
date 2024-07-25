@@ -8,6 +8,7 @@
   padding: 1rem;
   border-radius: 1rem;
   background-color: $light-secondary-background;
+  z-index: 2;
 
   &.dark {
     background-color: $dark-secondary-background;

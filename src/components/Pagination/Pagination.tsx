@@ -32,7 +32,7 @@ export default function PaginationComponent({ length, page, onPageChange, disabl
       {pages[0] !== 1 && (
         <>
           <Button onClick={() => handlePageChange(1)} text={String(1)} className="pagination__button" />
-          <span>...</span>
+          <span className="pagination__delimiter">...</span>
         </>
       )}
       {pages.map((p) => (
@@ -46,7 +46,7 @@ export default function PaginationComponent({ length, page, onPageChange, disabl
       ))}
       {pages.at(-1) !== length && (
         <>
-          <span>...</span>
+          <span className="pagination__delimiter">...</span>
           <Button onClick={() => handlePageChange(length)} text={String(length)} className="pagination__button" />
         </>
       )}
