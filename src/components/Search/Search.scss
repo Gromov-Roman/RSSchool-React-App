@@ -6,7 +6,6 @@
 
   &__input {
     flex: 1;
-    margin-right: 85px;
     max-width: calc(100dvw - 250px);
   }
 
@@ -20,6 +19,11 @@
 
 @media (max-width: 800px) {
   .search__input {
-    max-width: calc(100dvw - 210px);
+    max-width: calc(100dvw - 180px);
+    padding: 0.3rem 0.6rem;
+  }
+
+  .search__button {
+    padding: 0.3rem 0.6rem;
   }
 }

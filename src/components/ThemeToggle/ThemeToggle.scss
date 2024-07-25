@@ -66,3 +66,13 @@
     }
   }
 }
+
+@media (max-width: 800px) {
+  .theme-switch__label {
+    height: 20px;
+
+    span {
+      top: -10px;
+    }
+  }
+}
