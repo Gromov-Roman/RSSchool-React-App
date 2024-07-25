@@ -37,6 +37,7 @@ export default function ResultCardComponent({ result }: ResultCardProps) {
         <div
           className={`result-card__favorite ${isFavorite ? 'active' : ''}`}
           onClick={(event) => handleToggleFavorite(event)}
+          data-testid="result-card__favorite"
         >
           <img alt="favorite" src="poopybutthole.webp" className="result-card__favorite-image" />
         </div>

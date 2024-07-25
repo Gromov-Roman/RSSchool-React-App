@@ -16,17 +16,17 @@ describe('DetailPage', () => {
   });
 
   it('displays a loading indicator while fetching data', async () => {
-    expect(!!screen.getByTestId('loader')).toBeTruthy();
+    expect(screen.getByTestId('loader')).toBeDefined();
   });
 
   it('correctly displays the detailed card data', async () => {
     await screen.findByTestId('detail');
 
     expect(screen.getByTestId('detail__title-text').textContent).toBe(resultMock.name);
-    expect(!!screen.getByText(resultMock.status)).toBeTruthy();
-    expect(!!screen.getByText(resultMock.gender)).toBeTruthy();
-    expect(!!screen.getByText(resultMock.origin.name)).toBeTruthy();
-    expect(!!screen.getByText(resultMock.location.name)).toBeTruthy();
+    expect(screen.getByText(resultMock.status)).toBeDefined();
+    expect(screen.getByText(resultMock.gender)).toBeDefined();
+    expect(screen.getByText(resultMock.origin.name)).toBeDefined();
+    expect(screen.getByText(resultMock.location.name)).toBeDefined();
     expect(screen.getByTestId('detail__image').getAttribute('src')).toBe(resultMock.image);
   });
 

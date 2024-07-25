@@ -13,7 +13,9 @@ export default function NotFoundPage() {
         </div>
         <p>The page you are trying to search has been</p>
         <p>moved to another universe.</p>
-        <Button onClick={() => navigate('/')}>GET ME HOME</Button>
+        <Button onClick={() => navigate('/')} testId="to-home-button">
+          GET ME HOME
+        </Button>
       </div>
     </div>
   );

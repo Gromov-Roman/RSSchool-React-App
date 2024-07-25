@@ -1,12 +1,15 @@
 import { BrowserRouter } from 'react-router-dom';
 import { describe, it, expect, afterEach } from 'vitest';
-import { cleanup, screen } from '@testing-library/react';
+import { cleanup, fireEvent, screen } from '@testing-library/react';
 import MainPage from '@pages/Main/Main.page';
 import { pagingResultsMock } from '@mocks/mock-fetch-result';
 import { renderWithProviders } from '@mocks/test-utils';
 
 describe('ResultComponent', () => {
-  afterEach(cleanup);
+  afterEach(() => {
+    cleanup();
+    localStorage.removeItem('searchQuery');
+  });
 
   it('renders the specified number of cards', async () => {
     renderWithProviders(
@@ -17,8 +20,7 @@ describe('ResultComponent', () => {
 
     await screen.findByTestId('result-card');
 
-    const cards = screen.getAllByTestId('results__list-item');
-    expect(cards).toHaveLength(Number(pagingResultsMock.results?.length));
+    expect(screen.getAllByTestId('results__list-item')).toHaveLength(Number(pagingResultsMock.results?.length));
   });
 
   it('displays an appropriate message if no cards are present', async () => {
@@ -32,7 +34,21 @@ describe('ResultComponent', () => {
 
     await screen.findByText(/No results found/i);
 
-    const message = screen.getByText(/No results found/i);
-    expect(!!message).toBeTruthy();
+    expect(screen.getByText(/No results found/i)).toBeDefined();
+  });
+
+  it('displays unselect and download buttons', async () => {
+    renderWithProviders(
+      <BrowserRouter>
+        <MainPage />
+      </BrowserRouter>,
+    );
+
+    await screen.findByTestId('result-card');
+
+    fireEvent.click(screen.getByTestId('result-card__favorite'));
+
+    expect(screen.getByTestId('unselect-button')).toBeDefined();
+    expect(screen.getByTestId('download-button')).toBeDefined();
   });
 });

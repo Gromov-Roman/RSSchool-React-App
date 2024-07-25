@@ -75,7 +75,7 @@ export default function ResultsComponent() {
           </ul>
         )}
 
-        {pagingResults?.info && (
+        {!!pagingResults?.info && (
           <footer className="results__footer">
             <PaginationComponent
               disabled={!pagingResults.results}
@@ -86,14 +86,14 @@ export default function ResultsComponent() {
 
             {!!favorites.length && (
               <div className="results__actions">
-                <Button onClick={handleUnselectAll} text="Unselect all" type="secondary" />
+                <Button onClick={handleUnselectAll} text="Unselect all" type="secondary" testId="unselect-button" />
 
                 <CSVLink
                   data={csvData}
                   filename={`${csvData.length}_characters.csv`}
                   className="results__download-button"
                 >
-                  <Button type="accent" text="Download">
+                  <Button type="accent" text="Download" testId="download-button">
                     Download
                   </Button>
                 </CSVLink>

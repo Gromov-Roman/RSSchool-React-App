@@ -1,6 +1,6 @@
 import { BrowserRouter } from 'react-router-dom';
 import { describe, it, expect, vi, afterEach } from 'vitest';
-import { cleanup, fireEvent, render, screen } from '@testing-library/react';
+import { cleanup, fireEvent, screen } from '@testing-library/react';
 import { getResultMock } from '@mocks/result.mock';
 import { renderWithProviders } from '@mocks/test-utils';
 import App from '../../App';
@@ -11,10 +11,14 @@ describe('ResultCardComponent', () => {
 
   it('renders the relevant card data', () => {
     const resultMock = getResultMock();
-    render(<ResultCardComponent result={resultMock} />, { wrapper: BrowserRouter });
+    renderWithProviders(
+      <BrowserRouter>
+        <ResultCardComponent result={resultMock} />
+      </BrowserRouter>,
+    );
 
     expect(screen.getByText(resultMock.name).textContent).toBe('Gaia');
-    expect(!!screen.getByTestId('result-card__image')).toBeTruthy();
+    expect(screen.getByTestId('result-card__image')).toBeDefined();
   });
 
   it('clicking on a card opens a detailed card component', async () => {
@@ -26,7 +30,7 @@ describe('ResultCardComponent', () => {
 
     await screen.findByTestId('detail');
 
-    expect(!!screen.getByTestId('detail')).toBeTruthy();
+    expect(screen.getByTestId('detail')).toBeDefined();
   });
 
   it('clicking triggers an additional API call to fetch detailed information', async () => {
