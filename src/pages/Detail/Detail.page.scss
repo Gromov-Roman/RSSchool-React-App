@@ -15,6 +15,7 @@
   border-radius: 1rem;
   background-color: $dark-secondary-background;
   z-index: 2;
+  animation: slideLeft 0.7s ease-in-out;
 
   .close-button {
     border-radius: 50%;
@@ -84,6 +85,10 @@
 }
 
 @media (max-width: 800px) {
+  .detail {
+    animation: slideDown 0.7s ease-in-out;
+  }
+
   .detail,
   .empty-detail {
     width: 100%;
@@ -96,5 +101,47 @@
 
   .detail__image {
     min-height: auto;
+  }
+}
+
+@keyframes slideLeft {
+  0% {
+    transform: translateX(150%);
+  }
+  50% {
+    transform: translateX(-8%);
+  }
+  65% {
+    transform: translateX(4%);
+  }
+  80% {
+    transform: translateX(-4%);
+  }
+  95% {
+    transform: translateX(2%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+@keyframes slideDown {
+  0% {
+    transform: translateY(-100%);
+  }
+  50% {
+    transform: translateY(8%);
+  }
+  65% {
+    transform: translateY(-4%);
+  }
+  80% {
+    transform: translateY(4%);
+  }
+  95% {
+    transform: translateY(-2%);
+  }
+  100% {
+    transform: translateY(0%);
   }
 }
