@@ -53,9 +53,12 @@
 
     &__actions {
       display: flex;
-      gap: 10%;
+      flex-wrap: wrap;
+      gap: 0.5rem;
       align-items: center;
-      justify-content: center;
+      text-align: center;
+      font-weight: bold;
+      color: $dark-text-primary;
       background-color: $dark-secondary-background;
       border-radius: 1rem;
       padding: 0.5rem 2rem;
@@ -63,6 +66,17 @@
 
       > * {
         flex: 1;
+      }
+
+      &-buttons {
+        display: flex;
+        gap: min(10%, 2dvw);
+        align-items: center;
+        justify-content: center;
+
+        > * {
+          flex: 1;
+        }
       }
     }
 
