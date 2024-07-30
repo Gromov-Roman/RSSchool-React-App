@@ -1,22 +1,43 @@
+@import '../../variables';
+
 .pagination {
   display: flex;
   justify-content: center;
-  gap: 5px;
+  gap: min(2dvw, 10px);
+  padding: 0.5rem;
+
+  &.disabled {
+    pointer-events: none;
+    opacity: 0.5;
+  }
 
   &__button {
+    width: min(50px, 10dvw);
+    padding: min(0.5rem, 1dvw);
+
     &:disabled {
-      cursor: not-allowed;
+      cursor: default;
       opacity: 0.5;
+    }
+
+    &.active {
+      opacity: 1;
+      font-weight: bold;
+      box-shadow: 0 0 5px 2px $gray-dark;
+      cursor: default;
+      transform: scale(1.1);
     }
   }
 
-  &__page-button {
-    width: 50px;
-    padding: 0;
-
-    &.active {
-      font-weight: bold;
-      box-shadow: 0 0 5px 1px white;
+  &.dark {
+    .pagination__button.active {
+      box-shadow: 0 0 5px 2px $gray-light;
     }
+  }
+}
+
+@media (max-width: 800px) {
+  .pagination__delimiter {
+    display: none;
   }
 }

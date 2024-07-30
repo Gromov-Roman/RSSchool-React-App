@@ -1,34 +1,54 @@
 import { BrowserRouter } from 'react-router-dom';
 import { describe, it, expect, afterEach } from 'vitest';
-import { cleanup, render, screen } from '@testing-library/react';
-import { PagingResults } from '@models/result.model';
-import { getResultMock } from '@mocks/result.mock';
-import ResultComponent from './Results';
+import { cleanup, fireEvent, screen } from '@testing-library/react';
+import MainPage from '@pages/Main/Main.page';
+import { pagingResultsMock } from '@mocks/mock-fetch-result';
+import { renderWithProviders } from '@mocks/test-utils';
 
 describe('ResultComponent', () => {
-  afterEach(cleanup);
-
-  it('renders the specified number of cards', () => {
-    const pagingResults: PagingResults = {
-      results: [getResultMock(), getResultMock(), getResultMock()],
-      info: { pages: 1 },
-    };
-
-    render(<ResultComponent pagingResults={pagingResults} />, { wrapper: BrowserRouter });
-
-    const cards = screen.getAllByTestId('results__list-item');
-    expect(cards).toHaveLength(pagingResults.results.length);
+  afterEach(() => {
+    cleanup();
+    localStorage.removeItem('searchQuery');
   });
 
-  it('displays an appropriate message if no cards are present', () => {
-    const pagingResults: PagingResults = {
-      results: [],
-      info: { pages: 0 },
-    };
+  it('renders the specified number of cards', async () => {
+    renderWithProviders(
+      <BrowserRouter>
+        <MainPage />
+      </BrowserRouter>,
+    );
 
-    render(<ResultComponent pagingResults={pagingResults} />, { wrapper: BrowserRouter });
+    await screen.findByTestId('result-card');
 
-    const message = screen.getByText(/No results found/i);
-    expect(!!message).toBeTruthy();
+    expect(screen.getAllByTestId('results__list-item')).toHaveLength(Number(pagingResultsMock.results?.length));
+  });
+
+  it('displays an appropriate message if no cards are present', async () => {
+    renderWithProviders(
+      <BrowserRouter>
+        <MainPage />
+      </BrowserRouter>,
+    );
+
+    localStorage.setItem('searchQuery', '"no-items"');
+
+    await screen.findByText(/No results found/i);
+
+    expect(screen.getByText(/No results found/i)).toBeDefined();
+  });
+
+  it('displays unselect and download buttons', async () => {
+    renderWithProviders(
+      <BrowserRouter>
+        <MainPage />
+      </BrowserRouter>,
+    );
+
+    await screen.findByTestId('result-card');
+
+    fireEvent.click(screen.getByTestId('result-card__favorite'));
+
+    expect(screen.getByTestId('unselect-button')).toBeDefined();
+    expect(screen.getByTestId('download-button')).toBeDefined();
   });
 });

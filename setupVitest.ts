@@ -1,23 +1,26 @@
-import { getResultMock } from '@mocks/result.mock.js';
 import createFetchMock from 'vitest-fetch-mock';
 import { vi } from 'vitest';
+import { emptyPagingResultsMock, pagingResultsMock, resultMock } from '@mocks/mock-fetch-result';
 
 const fetchMocker = createFetchMock(vi);
 
 fetchMocker.mockIf(/^https?:\/\/rickandmortyapi.com\/api\/character.*$/, (req: Request) => {
-  if (req.url.endsWith('character')) {
-    return JSON.stringify({
-      results: [getResultMock(1)],
-      info: { pages: 1 },
-    });
-  } else if (req.url.endsWith('/1')) {
-    return JSON.stringify(getResultMock(1));
-  } else {
-    return {
-      status: 404,
-      body: 'Not Found',
-    };
+  if (req.url.endsWith('name=no-items')) {
+    return JSON.stringify(emptyPagingResultsMock);
   }
+
+  if (req.url.endsWith('character')) {
+    return JSON.stringify(pagingResultsMock);
+  }
+
+  if (req.url.endsWith('/1')) {
+    return JSON.stringify(resultMock);
+  }
+
+  return {
+    status: 404,
+    body: 'Not Found',
+  };
 });
 
 fetchMocker.enableMocks();

@@ -6,10 +6,10 @@ interface UseLocalStorage<T> {
   setValue: (newValue: T | null) => void;
 }
 
-export default function useLocalStorage<T>(key: string): UseLocalStorage<T> {
+export default function useLocalStorage<T>(key: string, defaultValue: T | null = null): UseLocalStorage<T> {
   const getValue = () => {
     const itemValue = localStorage.getItem(key);
-    return itemValue ? (JSON.parse(itemValue) as T) : null;
+    return itemValue ? (JSON.parse(itemValue) as T) : defaultValue;
   };
 
   const [value, setValue] = useState(getValue);

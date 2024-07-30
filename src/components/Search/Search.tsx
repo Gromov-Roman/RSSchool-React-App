@@ -1,5 +1,6 @@
 import { ChangeEvent } from 'react';
 import './Search.scss';
+import Button from '@components/Button/Button';
 
 interface SearchProps {
   searchQuery: string;
@@ -14,7 +15,7 @@ export default function SearchComponent({ searchQuery, onInputChange, onSearch }
         type="text"
         value={searchQuery}
         onChange={onInputChange}
-        placeholder="Enter search query"
+        placeholder="Search..."
         className="search__input"
         data-testid="search-input"
         onKeyDown={({ key }) => {
@@ -23,9 +24,7 @@ export default function SearchComponent({ searchQuery, onInputChange, onSearch }
           }
         }}
       />
-      <button onClick={onSearch} data-testid="search-button">
-        Search
-      </button>
+      <Button className="search__button" onClick={() => onSearch()} text="Search" testId="search-button" />
     </section>
   );
 }

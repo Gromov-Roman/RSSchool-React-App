@@ -1,23 +1,23 @@
 import { describe, it, expect, afterEach } from 'vitest';
-import { cleanup, fireEvent, render, screen } from '@testing-library/react';
+import { cleanup, fireEvent, screen } from '@testing-library/react';
+import MainPage from '@pages/Main/Main.page';
+import { renderWithProviders } from '@mocks/test-utils';
 import { BrowserRouter } from 'react-router-dom';
-import { PagingResults } from '@models/result.model';
-import { getResultMock } from '@mocks/result.mock';
-import ResultComponent from '@components/Results/Results';
 
 describe('PaginationComponent', () => {
   afterEach(cleanup);
 
   it('updates URL query parameter when page changes', async () => {
-    const pagingResults: PagingResults = {
-      results: [getResultMock(), getResultMock(), getResultMock()],
-      info: { pages: 10 },
-    };
+    renderWithProviders(
+      <BrowserRouter>
+        <MainPage />
+      </BrowserRouter>,
+    );
 
-    render(<ResultComponent pagingResults={pagingResults} />, { wrapper: BrowserRouter });
+    await screen.findByTestId('result-card');
 
     fireEvent.click(screen.getByTestId('next-page'));
 
-    expect(location.search).toBe('?page=2');
+    expect(document.location.search).toBe('?page=2');
   });
 });

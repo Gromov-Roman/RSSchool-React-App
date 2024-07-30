@@ -1,14 +1,24 @@
+@import '../../variables';
+
 .header {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
   padding: 1rem;
   border-radius: 1rem;
-  background-color: gray;
+  background-color: $light-secondary-background;
+  z-index: 2;
+
+  &.dark {
+    background-color: $dark-secondary-background;
+  }
 }
 
 @media (max-width: 800px) {
   .header {
     position: sticky;
-    top: -1rem;
+    top: -0.5rem;
+    padding: 0.5rem;
   }
 }

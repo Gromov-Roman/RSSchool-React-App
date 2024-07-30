@@ -1,22 +1,29 @@
 import ResultCardComponent from '@components/ResultCard/ResultCard';
 import PaginationComponent from '@components/Pagination/Pagination';
 import { useSearchParams } from 'react-router-dom';
-import { PagingResults } from '@models/result.model';
 import LoaderComponent from '@components/Loader/Loader';
+import { useContext, useEffect, useRef, useState } from 'react';
+import { ThemeContext } from '@context/ThemeContext';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '@core/store';
+import Button from '@components/Button/Button';
+import { favoritesActions } from '@core/slices/favorites';
+import { CSVLink } from 'react-csv';
 import './Results.scss';
-import { useEffect, useRef } from 'react';
 
-interface ResultsProps {
-  pagingResults: PagingResults | null;
-}
-
-export default function ResultsComponent({ pagingResults }: ResultsProps) {
+export default function ResultsComponent() {
+  const dispatch = useDispatch();
+  const { clearFavorites } = favoritesActions;
+  const { favorites } = useSelector((state: RootState) => state.favoritesReducer);
+  const { pagingResults, isFetching } = useSelector((state: RootState) => state.pagingResultsReducer);
   const [searchParams, setSearchParams] = useSearchParams();
+  const [csvData, setCsvData] = useState<Array<{ id: number; name: string; image: string }>>([]);
+  const { theme } = useContext(ThemeContext);
 
-  function handleUpdatePage(page: number) {
+  const handleUpdatePage = (page: number) => {
     searchParams.set('page', String(page));
     setSearchParams(searchParams);
-  }
+  };
 
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -39,22 +46,26 @@ export default function ResultsComponent({ pagingResults }: ResultsProps) {
     return () => containerRef?.current?.removeEventListener('click', handleClick);
   }, []);
 
-  return (
-    <div ref={containerRef} className="results-container">
-      {!pagingResults && (
-        <section className="empty">
-          <LoaderComponent />
-        </section>
-      )}
+  useEffect(() => setCsvData(favorites.map(({ id, name, image }) => ({ id, name, image }))), [favorites]);
 
-      {!!pagingResults && !pagingResults?.results?.length && (
+  const handleUnselectAll = () => dispatch(clearFavorites());
+
+  return (
+    <div ref={containerRef} className={`results-container ${theme}`}>
+      {!isFetching && !pagingResults?.results?.length && (
         <section className="empty">
           <h2>No results found</h2>
         </section>
       )}
 
-      {!!pagingResults?.results?.length && (
-        <section className="results" data-testid="results">
+      <section className="results" data-testid="results">
+        {isFetching && (
+          <section className="empty">
+            <LoaderComponent />
+          </section>
+        )}
+
+        {!isFetching && !!pagingResults?.results?.length && (
           <ul className="results__list">
             {pagingResults.results.map((result) => (
               <li key={result.id} className="results__list-item" data-testid="results__list-item">
@@ -62,13 +73,35 @@ export default function ResultsComponent({ pagingResults }: ResultsProps) {
               </li>
             ))}
           </ul>
-          <PaginationComponent
-            length={pagingResults.info.pages}
-            page={Number(searchParams.get('page')) || 1}
-            onPageChange={(page) => handleUpdatePage(page)}
-          />
-        </section>
-      )}
+        )}
+
+        {!!pagingResults?.info && (
+          <footer className="results__footer">
+            <PaginationComponent
+              disabled={!pagingResults.results}
+              length={pagingResults.info.pages}
+              page={Number(searchParams.get('page')) || 1}
+              onPageChange={(page) => handleUpdatePage(page)}
+            />
+
+            {!!favorites.length && (
+              <div className="results__actions">
+                <Button onClick={handleUnselectAll} text="Unselect all" type="secondary" testId="unselect-button" />
+
+                <CSVLink
+                  data={csvData}
+                  filename={`${csvData.length}_characters.csv`}
+                  className="results__download-button"
+                >
+                  <Button type="accent" text="Download" testId="download-button">
+                    Download
+                  </Button>
+                </CSVLink>
+              </div>
+            )}
+          </footer>
+        )}
+      </section>
     </div>
   );
 }

@@ -1,39 +1,20 @@
+import { useContext, useState } from 'react';
+import Button from '@components/Button/Button';
+import { generatePages } from '@utils/generate-pages';
 import './Pagination.scss';
-import { useState } from 'react';
-
-const PAGINATION_OFFSET = 1;
-const PAGINATION_LIMIT = 2;
+import { ThemeContext } from '@context/ThemeContext';
 
 interface PaginationProps {
   length: number;
   page: number;
   onPageChange: (page: number) => void;
+  disabled?: boolean;
 }
 
-const generatePages = (page: number, length: number) => {
-  const pages = [];
-
-  let startPage = Math.max(1, page - PAGINATION_OFFSET);
-  let endPage = Math.min(length, page + PAGINATION_OFFSET);
-
-  if (endPage - startPage < PAGINATION_LIMIT) {
-    if (startPage === 1) {
-      endPage = Math.min(length, startPage + PAGINATION_LIMIT);
-    } else if (endPage === length) {
-      startPage = Math.max(1, endPage - PAGINATION_LIMIT);
-    }
-  }
-
-  for (let i = startPage; i <= endPage; i += 1) {
-    pages.push(i);
-  }
-
-  return pages;
-};
-
-export default function PaginationComponent({ length, page, onPageChange }: PaginationProps) {
+export default function PaginationComponent({ length, page, onPageChange, disabled }: PaginationProps) {
   const [pages, setPages] = useState(generatePages(page, length));
   const [currentPage, setCurrentPage] = useState(page);
+  const { theme } = useContext(ThemeContext);
 
   const handlePageChange = (p: number) => {
     setCurrentPage(p);
@@ -42,43 +23,43 @@ export default function PaginationComponent({ length, page, onPageChange }: Pagi
   };
 
   return (
-    <nav className="pagination">
-      <button
+    <nav className={`pagination ${disabled ? 'disabled' : ''} ${theme}`}>
+      <Button
         className="pagination__button"
         disabled={currentPage === 1}
         onClick={() => handlePageChange(currentPage - 1)}
       >
-        ⬅️
-      </button>
+        <img alt="close" src="left-arrow.svg" width="20px" />
+      </Button>
       {pages[0] !== 1 && (
         <>
-          <button onClick={() => handlePageChange(1)}>{1}</button>
-          <span>...</span>
+          <Button onClick={() => handlePageChange(1)} text={String(1)} className="pagination__button" />
+          <span className="pagination__delimiter">...</span>
         </>
       )}
       {pages.map((p) => (
-        <button
+        <Button
           key={p}
-          className={currentPage === p ? 'pagination__page-button active' : 'pagination__page-button'}
+          className={currentPage === p ? 'pagination__button active' : 'pagination__button'}
+          disabled={currentPage === p}
           onClick={() => handlePageChange(p)}
-        >
-          {p}
-        </button>
+          text={String(p)}
+        />
       ))}
       {pages.at(-1) !== length && (
         <>
-          <span>...</span>
-          <button onClick={() => handlePageChange(length)}>{length}</button>
+          <span className="pagination__delimiter">...</span>
+          <Button onClick={() => handlePageChange(length)} text={String(length)} className="pagination__button" />
         </>
       )}
-      <button
+      <Button
         className="pagination__button"
         disabled={currentPage === length}
         onClick={() => handlePageChange(currentPage + 1)}
-        data-testid="next-page"
+        testId="next-page"
       >
-        ➡️
-      </button>
+        <img alt="close" src="right-arrow.svg" width="20px" />
+      </Button>
     </nav>
   );
 }
