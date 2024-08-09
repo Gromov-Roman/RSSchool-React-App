@@ -19,7 +19,7 @@ export default function HeaderComponent() {
       router.query.page = '1';
     }
 
-    router.push(router);
+    router.push({ pathname: router.pathname, query: router.query });
   };
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {

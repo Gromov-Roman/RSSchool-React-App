@@ -35,7 +35,7 @@ export default function ResultsComponent() {
 
   const handleUpdatePage = (page: number) => {
     router.query.page = String(page);
-    router.push(router);
+    router.push({ pathname: router.pathname, query: router.query });
   };
 
   const containerRef = useRef<HTMLDivElement>(null);
@@ -51,7 +51,7 @@ export default function ResultsComponent() {
 
       if (tagName !== 'IMG' && (tagName !== 'BUTTON' || !classList.contains('result-card'))) {
         delete router.query.detail;
-        router.push(router);
+        router.push({ pathname: router.pathname, query: router.query });
       }
     };
 

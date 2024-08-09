@@ -41,7 +41,7 @@ export default function DetailPage() {
 
   function handleClose() {
     delete router.query.detail;
-    router.push(router);
+    router.push({ pathname: router.pathname, query: router.query });
   }
 
   if (!detailParam) {

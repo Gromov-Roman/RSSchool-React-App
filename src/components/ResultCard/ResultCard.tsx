@@ -20,7 +20,7 @@ export default function ResultCardComponent({ result }: ResultCardProps) {
 
   function handleDetailUpdate() {
     router.query.detail = result.id.toString();
-    router.push(router);
+    router.push({ pathname: router.pathname, query: router.query });
   }
 
   function handleToggleFavorite(event: MouseEvent<HTMLDivElement>) {
