@@ -48,7 +48,7 @@ const onRules = {
   'space-infix-ops': ['error', { int32Hint: false }],
   'key-spacing': ['error', { afterColon: true }],
   'unused-imports/no-unused-imports': 'error',
-  "react-compiler/react-compiler": "error"
+  'react-compiler/react-compiler': 'error'
 };
 
 const offRules = {
@@ -96,7 +96,15 @@ module.exports = {
   parserOptions: {
     project: './tsconfig.json'
   },
-  plugins: ['react-refresh', '@typescript-eslint', 'react', 'prettier', 'unused-imports', 'react-compiler'],
+  plugins: [
+    'react-refresh',
+    '@typescript-eslint',
+    'react',
+    'prettier',
+    'unused-imports',
+    'react-compiler',
+    '@next/next'
+  ],
   rules: {
     ...onRules,
     ...offRules
