@@ -14,6 +14,7 @@ export default function App({ Component, pageProps }: AppProps) {
     <>
       <Head>
         <title>Rick and Morty</title>
+        <link rel="shortcut icon" href="favicon.ico" />
       </Head>
       <React.StrictMode>
         <ErrorBoundary fallback={<div>Oops! Something went wrong.</div>}>
