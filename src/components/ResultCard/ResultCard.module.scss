@@ -25,7 +25,7 @@
     box-shadow: 0 0 6px 3px $dark-accent;
     transition: 0.3s;
 
-    &.active {
+    &-active {
       background-color: $dark-accent;
       box-shadow: 0 0 6px 3px $gray-light;
     }

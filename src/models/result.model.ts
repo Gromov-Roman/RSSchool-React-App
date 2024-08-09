@@ -6,6 +6,8 @@ export interface Result {
   image: string;
   origin: Location;
   location: Location;
+  species: string;
+  episode: string[];
 }
 
 export interface Location {

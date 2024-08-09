@@ -1,20 +1,24 @@
 import ResultsComponent from '@components/Results/Results';
-import { Outlet, useSearchParams } from 'react-router-dom';
 import HeaderComponent from '@components/Header/Header';
 import { useContext, useEffect } from 'react';
 import useLocalStorage from '@hooks/LocalStorage';
 import { ThemeContext } from '@context/ThemeContext';
 import { useGetItemsQuery } from '@core/slices/api';
-import './Main.page.scss';
 import { pagingResultsActions } from '@core/slices/pagingResults';
 import { useDispatch } from 'react-redux';
+import { useRouter } from 'next/router';
+import DetailPage from '@pages/Detail/Detail.page';
+import styles from './MainPage.module.scss';
 
 export default function MainPage() {
   const dispatch = useDispatch();
   const { theme } = useContext(ThemeContext);
-  const [params] = useSearchParams();
+  const mainTheme = `main__${theme}`;
+  const mainPageTheme = `main-page__${theme}`;
+
+  const router = useRouter();
   const { getValue: getSearchQuery } = useLocalStorage<string>('searchQuery');
-  const page = params.get('page') || null;
+  const page = (router.query.page as string) || null;
   const searchQuery = getSearchQuery();
   const { data: pagingResults, isFetching } = useGetItemsQuery({ page, searchQuery });
   const { setIsFetching, setPagingResults } = pagingResultsActions;
@@ -25,13 +29,13 @@ export default function MainPage() {
   }, [pagingResults, isFetching, dispatch]);
 
   return (
-    <>
+    <main className={`${styles.main} ${mainTheme}`}>
       <HeaderComponent />
 
-      <article className={`main-page ${theme}`}>
+      <article className={`${styles['main-page']} ${styles[mainPageTheme]}`}>
         <ResultsComponent />
-        <Outlet />
+        {!!router.query.detail && <DetailPage />}
       </article>
-    </>
+    </main>
   );
 }

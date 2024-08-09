@@ -1,8 +1,8 @@
 import { useContext, useState } from 'react';
 import Button from '@components/Button/Button';
 import { generatePages } from '@utils/generate-pages';
-import './Pagination.scss';
 import { ThemeContext } from '@context/ThemeContext';
+import styles from './Pagination.module.scss';
 
 interface PaginationProps {
   length: number;
@@ -15,6 +15,7 @@ export default function PaginationComponent({ length, page, onPageChange, disabl
   const [pages, setPages] = useState(generatePages(page, length));
   const [currentPage, setCurrentPage] = useState(page);
   const { theme } = useContext(ThemeContext);
+  const paginationTheme = `pagination__${theme}`;
 
   const handlePageChange = (p: number) => {
     setCurrentPage(p);
@@ -23,9 +24,9 @@ export default function PaginationComponent({ length, page, onPageChange, disabl
   };
 
   return (
-    <nav className={`pagination ${disabled ? 'disabled' : ''} ${theme}`}>
+    <nav className={`${styles.pagination} ${disabled ? styles.pagination__disabled : ''} ${styles[paginationTheme]}`}>
       <Button
-        className="pagination__button"
+        className={styles.pagination_button}
         disabled={currentPage === 1}
         onClick={() => handlePageChange(currentPage - 1)}
       >
@@ -33,14 +34,18 @@ export default function PaginationComponent({ length, page, onPageChange, disabl
       </Button>
       {pages[0] !== 1 && (
         <>
-          <Button onClick={() => handlePageChange(1)} text={String(1)} className="pagination__button" />
-          <span className="pagination__delimiter">...</span>
+          <Button onClick={() => handlePageChange(1)} text={String(1)} className={styles.pagination_button} />
+          <span className={styles.pagination_delimiter}>...</span>
         </>
       )}
       {pages.map((p) => (
         <Button
           key={p}
-          className={currentPage === p ? 'pagination__button active' : 'pagination__button'}
+          className={
+            currentPage === p
+              ? `${styles.pagination_button} ${styles.pagination_button__active}`
+              : styles.pagination_button
+          }
           disabled={currentPage === p}
           onClick={() => handlePageChange(p)}
           text={String(p)}
@@ -48,12 +53,12 @@ export default function PaginationComponent({ length, page, onPageChange, disabl
       ))}
       {pages.at(-1) !== length && (
         <>
-          <span className="pagination__delimiter">...</span>
-          <Button onClick={() => handlePageChange(length)} text={String(length)} className="pagination__button" />
+          <span className={styles.pagination_delimiter}>...</span>
+          <Button onClick={() => handlePageChange(length)} text={String(length)} className="pagination_button" />
         </>
       )}
       <Button
-        className="pagination__button"
+        className={styles.pagination_button}
         disabled={currentPage === length}
         onClick={() => handlePageChange(currentPage + 1)}
         testId="next-page"

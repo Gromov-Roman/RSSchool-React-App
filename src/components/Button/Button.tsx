@@ -1,6 +1,6 @@
 import { ReactNode, useContext, MouseEvent } from 'react';
 import { ThemeContext } from '@context/ThemeContext';
-import './Button.scss';
+import styles from './Button.module.scss';
 
 interface ButtonProps {
   onClick?: (event: MouseEvent<HTMLButtonElement>) => void;
@@ -14,11 +14,12 @@ interface ButtonProps {
 
 export default function Button({ onClick, children, text, className, disabled = false, testId, type }: ButtonProps) {
   const { theme } = useContext(ThemeContext);
+  const buttonTheme = `button__${theme}`;
   const buttonType = type ? `button__${type}` : '';
 
   return (
     <button
-      className={`button ${theme} ${className || ''} ${buttonType}`}
+      className={`${styles.button} ${styles[buttonTheme]} ${className || ''} ${buttonType}`}
       onClick={onClick}
       disabled={disabled}
       data-testid={testId}

@@ -1,6 +1,5 @@
 import ResultCardComponent from '@components/ResultCard/ResultCard';
 import PaginationComponent from '@components/Pagination/Pagination';
-import { useSearchParams } from 'react-router-dom';
 import LoaderComponent from '@components/Loader/Loader';
 import { useContext, useEffect, useRef, useState } from 'react';
 import { ThemeContext } from '@context/ThemeContext';
@@ -9,20 +8,35 @@ import { RootState } from '@core/store';
 import Button from '@components/Button/Button';
 import { favoritesActions } from '@core/slices/favorites';
 import { CSVLink } from 'react-csv';
-import './Results.scss';
+import { useRouter } from 'next/router';
+import styles from './Results.module.scss';
+
+interface CsvDataItem {
+  id: number;
+  name: string;
+  image: string;
+  status: string;
+  gender: string;
+  origin: string;
+  location: string;
+  species: string;
+  episodes: string;
+}
 
 export default function ResultsComponent() {
   const dispatch = useDispatch();
   const { clearFavorites } = favoritesActions;
   const { favorites } = useSelector((state: RootState) => state.favoritesReducer);
   const { pagingResults, isFetching } = useSelector((state: RootState) => state.pagingResultsReducer);
-  const [searchParams, setSearchParams] = useSearchParams();
-  const [csvData, setCsvData] = useState<Array<{ id: number; name: string; image: string }>>([]);
+  const router = useRouter();
+  const [csvData, setCsvData] = useState<CsvDataItem[]>([]);
   const { theme } = useContext(ThemeContext);
+  const resultsTheme = `results__${theme}`;
 
   const handleUpdatePage = (page: number) => {
-    searchParams.set('page', String(page));
-    setSearchParams(searchParams);
+    const queryParams = new URLSearchParams(router.query as Record<string, string>);
+    queryParams.set('page', String(page));
+    router.push({ pathname: router.pathname, query: queryParams.toString() });
   };
 
   const containerRef = useRef<HTMLDivElement>(null);
@@ -37,8 +51,9 @@ export default function ResultsComponent() {
       const { classList } = event.target as Element;
 
       if (tagName !== 'IMG' && (tagName !== 'BUTTON' || !classList.contains('result-card'))) {
-        searchParams.delete('detail');
-        setSearchParams(searchParams);
+        const queryParams = new URLSearchParams(router.query as Record<string, string>);
+        queryParams.delete('detail');
+        router.push({ pathname: router.pathname, query: queryParams.toString() });
       }
     };
 
@@ -46,29 +61,45 @@ export default function ResultsComponent() {
     return () => containerRef?.current?.removeEventListener('click', handleClick);
   }, []);
 
-  useEffect(() => setCsvData(favorites.map(({ id, name, image }) => ({ id, name, image }))), [favorites]);
+  useEffect(
+    () =>
+      setCsvData(
+        favorites.map(({ id, name, image, status, gender, origin, location, species, episode }) => ({
+          id,
+          name,
+          image,
+          status,
+          gender,
+          origin: origin.name,
+          location: location.name,
+          species,
+          episodes: episode.length.toString(),
+        })),
+      ),
+    [favorites],
+  );
 
   const handleUnselectAll = () => dispatch(clearFavorites());
 
   return (
-    <div ref={containerRef} className={`results-container ${theme}`}>
+    <div ref={containerRef} className={`${styles.results} ${styles[resultsTheme]}`}>
       {!isFetching && !pagingResults?.results?.length && (
-        <section className="empty">
+        <section className={styles.empty}>
           <h2>No results found</h2>
         </section>
       )}
 
-      <section className="results" data-testid="results">
+      <section className={styles.results_container} data-testid="results">
         {isFetching && (
-          <section className="empty">
+          <section className={styles.empty}>
             <LoaderComponent />
           </section>
         )}
 
         {!isFetching && !!pagingResults?.results?.length && (
-          <ul className="results__list">
+          <ul className={styles.results_list}>
             {pagingResults.results.map((result) => (
-              <li key={result.id} className="results__list-item" data-testid="results__list-item">
+              <li key={result.id} className={styles['results_list-item']} data-testid="results__list-item">
                 <ResultCardComponent key={result.id} result={result} />
               </li>
             ))}
@@ -76,19 +107,19 @@ export default function ResultsComponent() {
         )}
 
         {!!pagingResults?.info && (
-          <footer className="results__footer">
+          <footer className={styles.results_footer}>
             <PaginationComponent
               disabled={!pagingResults.results}
               length={pagingResults.info.pages}
-              page={Number(searchParams.get('page')) || 1}
+              page={Number(router.query.page) || 1}
               onPageChange={(page) => handleUpdatePage(page)}
             />
 
             {!!favorites.length && (
-              <div className="results__actions">
+              <div className={styles.results_actions}>
                 <span>Selected&nbsp;{csvData.length}&nbsp;items</span>
 
-                <div className="results__actions-buttons">
+                <div className={styles['results_actions-buttons']}>
                   <Button
                     onClick={handleUnselectAll}
                     text="Unselect&nbsp;all"
@@ -99,7 +130,7 @@ export default function ResultsComponent() {
                   <CSVLink
                     data={csvData}
                     filename={`${csvData.length}_characters.csv`}
-                    className="results__download-button"
+                    className={styles['results_download-button']}
                   >
                     <Button type="accent" text="Download" testId="download-button">
                       Download

@@ -1,6 +1,6 @@
 import { ChangeEvent } from 'react';
-import './Search.scss';
 import Button from '@components/Button/Button';
+import styles from './Search.module.scss';
 
 interface SearchProps {
   searchQuery: string;
@@ -10,13 +10,13 @@ interface SearchProps {
 
 export default function SearchComponent({ searchQuery, onInputChange, onSearch }: SearchProps) {
   return (
-    <section className="search">
+    <section className={styles.search}>
       <input
         type="text"
         value={searchQuery}
         onChange={onInputChange}
         placeholder="Search..."
-        className="search__input"
+        className={styles.search__input}
         data-testid="search-input"
         onKeyDown={({ key }) => {
           if (key === 'Enter') {
@@ -24,7 +24,7 @@ export default function SearchComponent({ searchQuery, onInputChange, onSearch }
           }
         }}
       />
-      <Button className="search__button" onClick={() => onSearch()} text="Search" testId="search-button" />
+      <Button className={styles.search__button} onClick={() => onSearch()} text="Search" testId="search-button" />
     </section>
   );
 }

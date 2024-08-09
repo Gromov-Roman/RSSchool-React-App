@@ -1,26 +1,28 @@
 import { ChangeEvent, useContext } from 'react';
 import SearchComponent from '@components/Search/Search';
-import './Header.scss';
 import useLocalStorage from '@hooks/LocalStorage';
-import { useSearchParams } from 'react-router-dom';
 import ThemeToggle from '@components/ThemeToggle/ThemeToggle';
 import { ThemeContext } from '@context/ThemeContext';
+import { useRouter } from 'next/router';
+import styles from './Header.module.scss';
 
 export default function HeaderComponent() {
   const { theme } = useContext(ThemeContext);
+  const headerTheme = `header__${theme}`;
   const { value: searchQuery, setValue: setSearchQuery } = useLocalStorage<string>('searchQuery');
-  const [params, setParams] = useSearchParams();
+  const router = useRouter();
 
   const handleSearch = () => {
-    const page = params.get('page');
+    const queryParams = new URLSearchParams(router.query as Record<string, string>);
+    const page = queryParams.get('page');
 
     if (page === '1') {
-      params.delete('page');
+      queryParams.delete('page');
     } else {
-      params.set('page', '1');
+      queryParams.set('page', '1');
     }
 
-    setParams(params);
+    router.push({ pathname: router.pathname, query: queryParams.toString() });
   };
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -29,7 +31,7 @@ export default function HeaderComponent() {
   };
 
   return (
-    <header className={`header ${theme}`}>
+    <header className={`${styles.header} ${styles[headerTheme]}`}>
       <ThemeToggle />
       <SearchComponent searchQuery={searchQuery || ''} onInputChange={handleInputChange} onSearch={handleSearch} />
     </header>

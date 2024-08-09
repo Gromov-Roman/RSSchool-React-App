@@ -1,12 +1,15 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Result } from '@models/result.model';
+import { isClient } from '@utils/is-client';
 
 interface FavoritesState {
   favorites: Result[];
 }
 
+const initialFavorites = isClient ? window.localStorage.getItem('favorites') : null;
+
 const initialState: FavoritesState = {
-  favorites: JSON.parse(localStorage.getItem('favorites') || '[]'),
+  favorites: JSON.parse(initialFavorites || '[]'),
 };
 
 export const favoritesSlice = createSlice({
@@ -15,7 +18,9 @@ export const favoritesSlice = createSlice({
   reducers: {
     clearFavorites: (state) => {
       state.favorites = [];
-      localStorage.setItem('favorites', '[]');
+      if (isClient) {
+        localStorage.setItem('favorites', '[]');
+      }
     },
     toggleFavorite: (state, action: PayloadAction<Result>) => {
       const index = state.favorites.findIndex(({ id }) => id === action.payload.id);
@@ -26,7 +31,9 @@ export const favoritesSlice = createSlice({
         state.favorites?.push(action.payload);
       }
 
-      localStorage.setItem('favorites', JSON.stringify(state.favorites));
+      if (isClient) {
+        localStorage.setItem('favorites', JSON.stringify(state.favorites));
+      }
     },
   },
 });

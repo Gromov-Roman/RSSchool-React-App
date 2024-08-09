@@ -1,28 +1,27 @@
 import { Result } from '@models/result.model';
-import { useLocation, useNavigate } from 'react-router-dom';
 import Button from '@components/Button/Button';
 import { MouseEvent } from 'react';
-import './ResultCard.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@core/store';
 import { favoritesActions } from '@core/slices/favorites';
+import { useRouter } from 'next/router';
+import styles from './ResultCard.module.scss';
 
 interface ResultCardProps {
   result: Result;
 }
 
 export default function ResultCardComponent({ result }: ResultCardProps) {
+  const router = useRouter();
   const dispatch = useDispatch();
   const { toggleFavorite } = favoritesActions;
-  const location = useLocation();
-  const navigate = useNavigate();
-  const queryParams = new URLSearchParams(location.search);
   const { favorites } = useSelector((state: RootState) => state.favoritesReducer);
   const isFavorite = favorites?.some(({ id }) => id === result.id);
 
   function handleDetailUpdate() {
+    const queryParams = new URLSearchParams(router.query as Record<string, string>);
     queryParams.set('detail', String(result.id));
-    navigate({ search: `?${queryParams.toString()}` });
+    router.push({ pathname: router.pathname, query: queryParams.toString() });
   }
 
   function handleToggleFavorite(event: MouseEvent<HTMLDivElement>) {
@@ -31,19 +30,24 @@ export default function ResultCardComponent({ result }: ResultCardProps) {
   }
 
   return (
-    <Button className="result-card" onClick={() => handleDetailUpdate()} testId="result-card">
-      <div className="result-card__header">
-        <div className="result-card__name">{result.name}</div>
+    <Button className={styles['result-card']} onClick={() => handleDetailUpdate()} testId="result-card">
+      <div className={styles['result-card__header']}>
+        <div className={styles['result-card__name']}>{result.name}</div>
         <div
-          className={`result-card__favorite ${isFavorite ? 'active' : ''}`}
+          className={`${styles['result-card__favorite']} ${isFavorite ? styles['result-card__favorite-active'] : ''}`}
           onClick={(event) => handleToggleFavorite(event)}
           data-testid="result-card__favorite"
         >
-          <img alt="favorite" src="poopybutthole.webp" className="result-card__favorite-image" />
+          <img alt="favorite" src="poopybutthole.webp" className={styles['result-card__favorite-image']} />
         </div>
       </div>
 
-      <img alt={result.name} src={result.image} className="result-card__image" data-testid="result-card__image" />
+      <img
+        alt={result.name}
+        src={result.image}
+        className={styles['result-card__image']}
+        data-testid="result-card__image"
+      />
     </Button>
   );
 }

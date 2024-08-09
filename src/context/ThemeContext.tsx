@@ -1,6 +1,7 @@
 import { Theme } from '@enums/Theme.enum';
 import { createContext, ReactNode, useMemo } from 'react';
 import useLocalStorage from '@hooks/LocalStorage';
+import { isClient } from '@utils/is-client';
 
 interface ThemeContextProps {
   theme: Theme;
@@ -19,7 +20,7 @@ interface ThemeContextProviderProps {
 }
 
 function ThemeContextProvider({ children }: ThemeContextProviderProps) {
-  const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const isDark = isClient ? window.matchMedia('(prefers-color-scheme: dark)').matches : true;
   const { value: theme, setValue: setTheme } = useLocalStorage<Theme>('_theme', isDark ? Theme.dark : Theme.light);
 
   const defaultContext: ThemeContextProps = useMemo(
