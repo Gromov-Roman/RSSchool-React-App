@@ -13,16 +13,13 @@ export default function HeaderComponent() {
   const router = useRouter();
 
   const handleSearch = () => {
-    const queryParams = new URLSearchParams(router.query as Record<string, string>);
-    const page = queryParams.get('page');
-
-    if (page === '1') {
-      queryParams.delete('page');
+    if (router.query.page) {
+      delete router.query.page;
     } else {
-      queryParams.set('page', '1');
+      router.query.page = '1';
     }
 
-    router.push({ pathname: router.pathname, query: queryParams.toString() });
+    router.push(router);
   };
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {

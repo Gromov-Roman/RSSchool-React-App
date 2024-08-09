@@ -40,9 +40,8 @@ export default function DetailPage() {
   }, [detail, isFetching, dispatch]);
 
   function handleClose() {
-    const queryParams = new URLSearchParams(router.query as Record<string, string>);
-    queryParams.delete('detail');
-    router.push({ pathname: router.pathname, query: queryParams.toString() });
+    delete router.query.detail;
+    router.push(router);
   }
 
   if (!detailParam) {

@@ -1,27 +1,10 @@
-import { describe, it, expect, afterEach } from 'vitest';
+import { describe, it, expect, afterEach, vi } from 'vitest';
 import { render, screen, fireEvent, cleanup } from '@testing-library/react';
+import SearchComponent from './Search';
 import HeaderComponent from '@components/Header/Header';
-import { BrowserRouter } from 'react-router-dom';
 
-const localStorageMock = (function () {
-  let store: Record<string, string> = {};
-
-  return {
-    getItem(key: string) {
-      return store[key] ? JSON.parse(store[key]) : null;
-    },
-    setItem(key: string, value: unknown) {
-      store[key] = JSON.stringify(value);
-    },
-    clear() {
-      store = {};
-    },
-  };
-})();
-
-Object.defineProperty(window, 'localStorage', {
-  value: localStorageMock,
-});
+const onInputChange = vi.fn();
+const onSearch = vi.fn();
 
 describe('SearchComponent', () => {
   afterEach(() => {
@@ -30,7 +13,7 @@ describe('SearchComponent', () => {
   });
 
   it('saves the entered value to local storage when the search button is clicked', () => {
-    render(<HeaderComponent />, { wrapper: BrowserRouter });
+    render(<HeaderComponent />);
     const searchInput = screen.getByTestId('search-input');
     const searchButton = screen.getByTestId('search-button');
 
@@ -42,9 +25,33 @@ describe('SearchComponent', () => {
 
   it('retrieves the value from local storage upon mounting', () => {
     window.localStorage.setItem('searchQuery', '"previous query"');
-    render(<HeaderComponent />, { wrapper: BrowserRouter });
+    render(<SearchComponent searchQuery="previous query" onInputChange={onInputChange} onSearch={onSearch} />);
 
     const searchInput = screen.getByTestId('search-input') as HTMLInputElement;
     expect(searchInput.value).toBe('previous query');
+  });
+
+  it('calls onInputChange when the input value changes', () => {
+    render(<SearchComponent searchQuery="" onInputChange={onInputChange} onSearch={onSearch} />);
+    const searchInput = screen.getByTestId('search-input');
+
+    fireEvent.change(searchInput, { target: { value: 'new query' } });
+    expect(onInputChange).toHaveBeenCalled();
+  });
+
+  it('calls onSearch when the Enter key is pressed', () => {
+    render(<SearchComponent searchQuery="" onInputChange={onInputChange} onSearch={onSearch} />);
+    const searchInput = screen.getByTestId('search-input');
+
+    fireEvent.keyDown(searchInput, { key: 'Enter', code: 'Enter', charCode: 13 });
+    expect(onSearch).toHaveBeenCalled();
+  });
+
+  it('calls onSearch when the search button is clicked', () => {
+    render(<SearchComponent searchQuery="" onInputChange={onInputChange} onSearch={onSearch} />);
+    const searchButton = screen.getByTestId('search-button');
+
+    fireEvent.click(searchButton);
+    expect(onSearch).toHaveBeenCalled();
   });
 });

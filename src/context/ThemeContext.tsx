@@ -19,7 +19,7 @@ interface ThemeContextProviderProps {
   children: ReactNode;
 }
 
-function ThemeContextProvider({ children }: ThemeContextProviderProps) {
+export function ThemeContextProvider({ children }: ThemeContextProviderProps) {
   const isDark = isClient ? window.matchMedia('(prefers-color-scheme: dark)').matches : true;
   const { value: theme, setValue: setTheme } = useLocalStorage<Theme>('_theme', isDark ? Theme.dark : Theme.light);
 

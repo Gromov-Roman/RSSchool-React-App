@@ -34,9 +34,8 @@ export default function ResultsComponent() {
   const resultsTheme = `results__${theme}`;
 
   const handleUpdatePage = (page: number) => {
-    const queryParams = new URLSearchParams(router.query as Record<string, string>);
-    queryParams.set('page', String(page));
-    router.push({ pathname: router.pathname, query: queryParams.toString() });
+    router.query.page = String(page);
+    router.push(router);
   };
 
   const containerRef = useRef<HTMLDivElement>(null);
@@ -51,9 +50,8 @@ export default function ResultsComponent() {
       const { classList } = event.target as Element;
 
       if (tagName !== 'IMG' && (tagName !== 'BUTTON' || !classList.contains('result-card'))) {
-        const queryParams = new URLSearchParams(router.query as Record<string, string>);
-        queryParams.delete('detail');
-        router.push({ pathname: router.pathname, query: queryParams.toString() });
+        delete router.query.detail;
+        router.push(router);
       }
     };
 

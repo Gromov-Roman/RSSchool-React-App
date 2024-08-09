@@ -19,9 +19,8 @@ export default function ResultCardComponent({ result }: ResultCardProps) {
   const isFavorite = favorites?.some(({ id }) => id === result.id);
 
   function handleDetailUpdate() {
-    const queryParams = new URLSearchParams(router.query as Record<string, string>);
-    queryParams.set('detail', String(result.id));
-    router.push({ pathname: router.pathname, query: queryParams.toString() });
+    router.query.detail = result.id.toString();
+    router.push(router);
   }
 
   function handleToggleFavorite(event: MouseEvent<HTMLDivElement>) {

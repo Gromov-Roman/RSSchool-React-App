@@ -7,7 +7,7 @@ import styles from './Pagination.module.scss';
 interface PaginationProps {
   length: number;
   page: number;
-  onPageChange: (page: number) => void;
+  onPageChange?: (page: number) => void;
   disabled?: boolean;
 }
 
@@ -20,7 +20,7 @@ export default function PaginationComponent({ length, page, onPageChange, disabl
   const handlePageChange = (p: number) => {
     setCurrentPage(p);
     setPages(generatePages(p, length));
-    onPageChange(p);
+    onPageChange?.(p);
   };
 
   return (
@@ -29,12 +29,18 @@ export default function PaginationComponent({ length, page, onPageChange, disabl
         className={styles.pagination_button}
         disabled={currentPage === 1}
         onClick={() => handlePageChange(currentPage - 1)}
+        testId="prev-page"
       >
         <img alt="close" src="left-arrow.svg" width="20px" />
       </Button>
       {pages[0] !== 1 && (
         <>
-          <Button onClick={() => handlePageChange(1)} text={String(1)} className={styles.pagination_button} />
+          <Button
+            onClick={() => handlePageChange(1)}
+            text={String(1)}
+            className={styles.pagination_button}
+            testId="first-page"
+          />
           <span className={styles.pagination_delimiter}>...</span>
         </>
       )}
@@ -54,7 +60,12 @@ export default function PaginationComponent({ length, page, onPageChange, disabl
       {pages.at(-1) !== length && (
         <>
           <span className={styles.pagination_delimiter}>...</span>
-          <Button onClick={() => handlePageChange(length)} text={String(length)} className="pagination_button" />
+          <Button
+            onClick={() => handlePageChange(length)}
+            text={String(length)}
+            className="pagination_button"
+            testId="last-page"
+          />
         </>
       )}
       <Button

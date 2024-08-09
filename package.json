@@ -15,11 +15,11 @@
     "prettier:fix": "prettier --write --ignore-unknown src/",
     "lint:fix": "eslint src/ --fix",
     "format:fix": "npm run lint:fix && npm run prettier:fix",
-    "lint": "eslint . --ext ts,tsx --ignore-pattern '*.test.tsx' --ignore-pattern 'setupVitest.ts' --ignore-pattern 'mock-fetch-result.ts' --report-unused-disable-directives --max-warnings 0",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "prettier": "prettier --check --ignore-unknown src/",
     "types-check": "tsc --noEmit",
     "validate:all": "npm run lint && npm run prettier && npm run types-check",
-    "test": "vitest run --coverage --coverage.exclude='.eslintrc.cjs' --coverage.exclude='./src/mocks' --coverage.exclude='./src/main.tsx'"
+    "test": "vitest run --coverage"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.2.6",
@@ -56,6 +56,7 @@
     "eslint-plugin-unused-imports": "^3.2.0",
     "husky": "^9.0.11",
     "jsdom": "^24.1.0",
+    "next-router-mock": "^0.9.13",
     "prettier": "^3.2.5",
     "sass": "^1.76.0",
     "typescript": "^5.2.2",

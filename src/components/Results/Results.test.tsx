@@ -1,21 +1,24 @@
-import { BrowserRouter } from 'react-router-dom';
 import { describe, it, expect, afterEach } from 'vitest';
 import { cleanup, fireEvent, screen } from '@testing-library/react';
 import MainPage from '@pages/Main/Main.page';
 import { pagingResultsMock } from '@mocks/mock-fetch-result';
 import { renderWithProviders } from '@mocks/test-utils';
+import { Provider } from 'react-redux';
+import { setupStore } from '@core/store';
+
+const store = setupStore();
 
 describe('ResultComponent', () => {
   afterEach(() => {
     cleanup();
-    localStorage.removeItem('searchQuery');
+    localStorage.clear();
   });
 
   it('renders the specified number of cards', async () => {
     renderWithProviders(
-      <BrowserRouter>
+      <Provider store={store}>
         <MainPage />
-      </BrowserRouter>,
+      </Provider>,
     );
 
     await screen.findByTestId('result-card');
@@ -24,13 +27,13 @@ describe('ResultComponent', () => {
   });
 
   it('displays an appropriate message if no cards are present', async () => {
-    renderWithProviders(
-      <BrowserRouter>
-        <MainPage />
-      </BrowserRouter>,
-    );
-
     localStorage.setItem('searchQuery', '"no-items"');
+
+    renderWithProviders(
+      <Provider store={store}>
+        <MainPage />
+      </Provider>,
+    );
 
     await screen.findByText(/No results found/i);
 
@@ -39,9 +42,9 @@ describe('ResultComponent', () => {
 
   it('displays unselect and download buttons', async () => {
     renderWithProviders(
-      <BrowserRouter>
+      <Provider store={store}>
         <MainPage />
-      </BrowserRouter>,
+      </Provider>,
     );
 
     await screen.findByTestId('result-card');
