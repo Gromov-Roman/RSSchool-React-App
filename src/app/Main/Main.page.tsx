@@ -7,7 +7,7 @@ import { useGetItemsQuery } from '@core/slices/api';
 import { pagingResultsActions } from '@core/slices/pagingResults';
 import { useDispatch } from 'react-redux';
 import { useSearchParams } from 'next/navigation';
-import DetailPage from '@pages/Detail/Detail.page';
+import DetailPage from '@src/app/Detail/Detail.page';
 import styles from './MainPage.module.scss';
 
 export default function MainPage() {

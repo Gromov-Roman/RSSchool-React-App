@@ -1,9 +1,14 @@
 'use client';
 
-import MainPage from '@pages/Main/Main.page';
+import MainPage from '@src/app/Main/Main.page';
+import { Suspense } from 'react';
 
 function AppPage() {
-  return <MainPage />;
+  return (
+    <Suspense>
+      <MainPage />
+    </Suspense>
+  );
 }
 
 export default AppPage;

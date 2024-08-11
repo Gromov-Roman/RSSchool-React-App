@@ -2,8 +2,8 @@
 
 import Button from '@components/Button/Button';
 import { useRouter } from 'next/navigation';
-import styles from '@pages/NotFound/NotFoundPage.module.scss';
 import ThemeContextProvider from '@context/ThemeContext';
+import styles from './NotFoundPage.module.scss';
 
 export default function NotFoundCatchAll() {
   const router = useRouter();
