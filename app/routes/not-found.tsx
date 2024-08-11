@@ -1,7 +1,7 @@
 import Button from '@components/Button/Button';
 import ThemeContextProvider from '@context/ThemeContext';
 import { useNavigate } from 'react-router-dom';
-import styles from './NotFoundPage.module.scss';
+import styles from '@pages/NotFoundPage.module.scss';
 
 export default function NotFoundPage() {
   const navigate = useNavigate();
