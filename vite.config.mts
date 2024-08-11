@@ -2,6 +2,7 @@ import { defineConfig } from 'vitest/config';
 import { resolve } from 'node:path';
 import { vitePlugin as remix } from '@remix-run/dev';
 import tsconfigPaths from 'vite-tsconfig-paths';
+import { netlifyPlugin } from '@netlify/remix-adapter/plugin';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -13,6 +14,7 @@ export default defineConfig({
         v3_throwAbortReason: true,
       },
     }),
+    netlifyPlugin(),
     tsconfigPaths(),
   ],
   base: '',
