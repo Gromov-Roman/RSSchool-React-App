@@ -1,3 +1,5 @@
+'use client';
+
 import MainPage from '@pages/Main/Main.page';
 
 function AppPage() {

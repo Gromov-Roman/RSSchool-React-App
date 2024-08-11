@@ -5,7 +5,7 @@ import { ThemeContext } from '@context/ThemeContext';
 import { useGetItemDetailsQuery } from '@core/slices/api';
 import { useDispatch } from 'react-redux';
 import { detailActions } from '@core/slices/detail';
-import { useRouter } from 'next/router';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import styles from './DetailPage.module.scss';
 
 interface DetailBlock {
@@ -16,9 +16,10 @@ interface DetailBlock {
 export default function DetailPage() {
   const dispatch = useDispatch();
   const { theme } = useContext(ThemeContext);
-  const detailTheme = `detail__${theme}`;
   const router = useRouter();
-  const detailParam = router.query.detail as string;
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const detailParam = searchParams?.get('detail') || '';
   const { data: detail, isFetching } = useGetItemDetailsQuery(detailParam, { skip: !detailParam });
   const { setIsFetching, setDetail } = detailActions;
   const [detailBlocks, setDetailBlocks] = useState<DetailBlock[]>([]);
@@ -40,8 +41,9 @@ export default function DetailPage() {
   }, [detail, isFetching, dispatch]);
 
   function handleClose() {
-    delete router.query.detail;
-    router.push({ pathname: router.pathname, query: router.query });
+    const params = new URLSearchParams(searchParams?.toString());
+    params.delete('detail');
+    router.push(`${pathname}?${params.toString()}`);
   }
 
   if (!detailParam) {
@@ -49,7 +51,7 @@ export default function DetailPage() {
   }
 
   return (
-    <section className={`${styles.detail} ${styles[detailTheme]}`} data-testid="detail">
+    <section className={`${styles.detail} ${styles[theme]}`} data-testid="detail">
       {isFetching && (
         <section className={styles['empty-detail']}>
           <LoaderComponent />

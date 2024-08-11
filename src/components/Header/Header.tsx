@@ -1,25 +1,33 @@
-import { ChangeEvent, useContext } from 'react';
+'use client';
+
+import { ChangeEvent, useContext, useEffect, useState } from 'react';
 import SearchComponent from '@components/Search/Search';
 import useLocalStorage from '@hooks/LocalStorage';
 import ThemeToggle from '@components/ThemeToggle/ThemeToggle';
 import { ThemeContext } from '@context/ThemeContext';
-import { useRouter } from 'next/router';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import styles from './Header.module.scss';
 
 export default function HeaderComponent() {
   const { theme } = useContext(ThemeContext);
-  const headerTheme = `header__${theme}`;
   const { value: searchQuery, setValue: setSearchQuery } = useLocalStorage<string>('searchQuery');
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const [themeClass, setThemeClass] = useState('');
+
+  useEffect(() => setThemeClass(styles[theme]), [theme]);
 
   const handleSearch = () => {
-    if (router.query.page) {
-      delete router.query.page;
+    const params = new URLSearchParams(searchParams?.toString());
+
+    if (params.get('page')) {
+      params.delete('page');
     } else {
-      router.query.page = '1';
+      params.set('page', '1');
     }
 
-    router.push({ pathname: router.pathname, query: router.query });
+    router.push(`${pathname}?${params.toString()}`);
   };
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -28,7 +36,7 @@ export default function HeaderComponent() {
   };
 
   return (
-    <header className={`${styles.header} ${styles[headerTheme]}`}>
+    <header className={`${styles.header} ${themeClass}`}>
       <ThemeToggle />
       <SearchComponent searchQuery={searchQuery || ''} onInputChange={handleInputChange} onSearch={handleSearch} />
     </header>

@@ -1,7 +1,7 @@
 @import 'modern-normalize/modern-normalize.css';
 @import 'variables';
 
-#__next {
+body {
   width: 100dvw;
   height: 100dvh;
   overflow: hidden;
@@ -19,11 +19,11 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  &:has(.main__dark) {
+  &:has(.dark) {
     background: radial-gradient(ellipse at bottom, $light-accent 0%, $dark-background 100%);
   }
 
-  &:has(.main__light) {
+  &:has(.light) {
     background: radial-gradient(ellipse at bottom, $dark-accent 0%, $dark-secondary-background 100%);
   }
 }

@@ -30,7 +30,7 @@
     }
   }
 
-  &__dark {
+  &.dark {
     .pagination__button.active {
       box-shadow: 0 0 5px 2px $gray-light;
     }

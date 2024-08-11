@@ -1,3 +1,5 @@
+'use client';
+
 import ResultCardComponent from '@components/ResultCard/ResultCard';
 import PaginationComponent from '@components/Pagination/Pagination';
 import LoaderComponent from '@components/Loader/Loader';
@@ -8,7 +10,7 @@ import { RootState } from '@core/store';
 import Button from '@components/Button/Button';
 import { favoritesActions } from '@core/slices/favorites';
 import { CSVLink } from 'react-csv';
-import { useRouter } from 'next/router';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import styles from './Results.module.scss';
 
 interface CsvDataItem {
@@ -29,13 +31,18 @@ export default function ResultsComponent() {
   const { favorites } = useSelector((state: RootState) => state.favoritesReducer);
   const { pagingResults, isFetching } = useSelector((state: RootState) => state.pagingResultsReducer);
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
   const [csvData, setCsvData] = useState<CsvDataItem[]>([]);
   const { theme } = useContext(ThemeContext);
-  const resultsTheme = `results__${theme}`;
+  const [themeClass, setThemeClass] = useState('');
+
+  useEffect(() => setThemeClass(styles[theme]), [theme]);
 
   const handleUpdatePage = (page: number) => {
-    router.query.page = String(page);
-    router.push({ pathname: router.pathname, query: router.query });
+    const params = new URLSearchParams(searchParams?.toString());
+    params.set('page', String(page));
+    router.push(`${pathname}?${params.toString()}`);
   };
 
   const containerRef = useRef<HTMLDivElement>(null);
@@ -50,8 +57,9 @@ export default function ResultsComponent() {
       const { classList } = event.target as Element;
 
       if (tagName !== 'IMG' && (tagName !== 'BUTTON' || !classList.contains('result-card'))) {
-        delete router.query.detail;
-        router.push({ pathname: router.pathname, query: router.query });
+        const params = new URLSearchParams(searchParams?.toString());
+        params.delete('detail');
+        router.push(`${pathname}?${params.toString()}`);
       }
     };
 
@@ -80,7 +88,7 @@ export default function ResultsComponent() {
   const handleUnselectAll = () => dispatch(clearFavorites());
 
   return (
-    <div ref={containerRef} className={`${styles.results} ${styles[resultsTheme]}`}>
+    <div ref={containerRef} className={`${styles.results} ${themeClass}`}>
       {!isFetching && !pagingResults?.results?.length && (
         <section className={styles.empty}>
           <h2>No results found</h2>
@@ -109,7 +117,7 @@ export default function ResultsComponent() {
             <PaginationComponent
               disabled={!pagingResults.results}
               length={pagingResults.info.pages}
-              page={Number(router.query.page) || 1}
+              page={Number(searchParams?.get('page')) || 1}
               onPageChange={(page) => handleUpdatePage(page)}
             />
 
