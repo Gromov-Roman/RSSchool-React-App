@@ -6,12 +6,12 @@
   gap: min(2dvw, 10px);
   padding: 0.5rem;
 
-  &.disabled {
+  &__disabled {
     pointer-events: none;
     opacity: 0.5;
   }
 
-  &__button {
+  &_button {
     width: min(50px, 10dvw);
     height: min(50px, 10dvw);
     padding: min(0.5rem, 1dvw);
@@ -21,8 +21,8 @@
       opacity: 0.5;
     }
 
-    &.active {
-      opacity: 1;
+    &__active {
+      opacity: 1 !important;
       font-weight: bold;
       box-shadow: 0 0 5px 2px $gray-dark;
       cursor: default;
@@ -30,7 +30,7 @@
     }
   }
 
-  &.dark {
+  &__dark {
     .pagination__button.active {
       box-shadow: 0 0 5px 2px $gray-light;
     }
@@ -38,7 +38,7 @@
 }
 
 @media (max-width: 800px) {
-  .pagination__delimiter {
+  .pagination_delimiter {
     display: none;
   }
 }

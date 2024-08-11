@@ -2,15 +2,22 @@ import { describe, it, expect, afterEach, beforeEach } from 'vitest';
 import { cleanup, fireEvent, screen } from '@testing-library/react';
 import { getResultMock } from '@mocks/result.mock';
 import { renderWithProviders } from '@mocks/test-utils';
-import App from '../../App';
+import { Provider } from 'react-redux';
+import MainPage from '@pages/Main/Main.page';
+import { setupStore } from '@core/store';
 
 const resultMock = getResultMock(1);
+const store = setupStore();
 
 describe('DetailPage', () => {
   afterEach(cleanup);
 
   beforeEach(async () => {
-    renderWithProviders(<App />);
+    renderWithProviders(
+      <Provider store={store}>
+        <MainPage />
+      </Provider>,
+    );
     await screen.findByTestId('result-card');
     fireEvent.click(screen.getByTestId('result-card'));
   });

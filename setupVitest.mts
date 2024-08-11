@@ -1,6 +1,9 @@
 import createFetchMock from 'vitest-fetch-mock';
 import { vi } from 'vitest';
 import { emptyPagingResultsMock, pagingResultsMock, resultMock } from '@mocks/mock-fetch-result';
+import { localStorageMock } from '@mocks/local-storage.mock';
+
+vi.mock('next/router', () => import('next-router-mock'));
 
 const fetchMocker = createFetchMock(vi);
 
@@ -24,3 +27,6 @@ fetchMocker.mockIf(/^https?:\/\/rickandmortyapi.com\/api\/character.*$/, (req: R
 });
 
 fetchMocker.enableMocks();
+
+Object.defineProperty(window, 'localStorage', { value: localStorageMock, });
+Object.defineProperty(window, 'matchMedia', { value: () => true });

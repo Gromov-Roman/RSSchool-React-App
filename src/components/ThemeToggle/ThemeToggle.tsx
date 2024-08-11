@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { ThemeContext } from '@context/ThemeContext';
 import { Theme } from '@enums/Theme.enum';
-import './ThemeToggle.scss';
+import styles from './ThemeToggle.module.scss';
 
 function ThemeToggle() {
   const { theme, toggleThemeHandler } = useContext(ThemeContext);
@@ -13,9 +13,9 @@ function ThemeToggle() {
         onChange={() => toggleThemeHandler()}
         type="checkbox"
         id="themeSwitch"
-        className="theme-switch__input"
+        className={styles['theme-switch__input']}
       />
-      <label htmlFor="themeSwitch" className="theme-switch__label">
+      <label htmlFor="themeSwitch" className={styles['theme-switch__label']}>
         <span />
       </label>
     </>

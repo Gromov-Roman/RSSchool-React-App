@@ -9,9 +9,22 @@ export default defineConfig({
   test: {
     environment: 'jsdom',
     coverage: {
-      provider: 'istanbul', // or 'v8'
+      provider: 'istanbul',
+      exclude: [
+        'dist/*',
+        '**/*.test.tsx',
+        '**/*.test.ts',
+        './src/pages/_app.tsx',
+        './src/pages/_document.tsx',
+        './src/pages/index.tsx',
+        './src/mocks/*',
+        './src/setupVitest.mts',
+        './src/vitest.config.mts',
+        '.eslintrc.cjs',
+        'next.config.mjs',
+      ]
     },
-    setupFiles: ['./setupVitest.ts'],
+    setupFiles: ['./setupVitest.mts']
   },
   resolve: {
     alias: {
@@ -26,7 +39,7 @@ export default defineConfig({
       '@utils': resolve(__dirname, './src/utils/'),
       '@hooks': resolve(__dirname, './src/hooks/'),
       '@context': resolve(__dirname, './src/context/'),
-      '@mocks': resolve(__dirname, './src/mocks/'),
-    },
-  },
+      '@mocks': resolve(__dirname, './src/mocks/')
+    }
+  }
 });

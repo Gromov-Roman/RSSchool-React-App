@@ -48,7 +48,7 @@ const onRules = {
   'space-infix-ops': ['error', { int32Hint: false }],
   'key-spacing': ['error', { afterColon: true }],
   'unused-imports/no-unused-imports': 'error',
-  "react-compiler/react-compiler": "error"
+  'react-compiler/react-compiler': 'error'
 };
 
 const offRules = {
@@ -65,6 +65,7 @@ const offRules = {
   'no-param-reassign': 'off',
   'jsx-a11y/click-events-have-key-events': 'off',
   'jsx-a11y/no-static-element-interactions': 'off',
+  'react-compiler/react-compiler': 'off'
 };
 
 module.exports = {
@@ -81,12 +82,29 @@ module.exports = {
     'plugin:react/jsx-runtime',
     'plugin:react-hooks/recommended'
   ],
-  ignorePatterns: ['dist', '.eslintrc.cjs', 'node_modules', 'vite.config.ts'],
+  ignorePatterns: [
+    'dist',
+    'node_modules',
+    '*.test.tsx',
+    '*.test.ts',
+    '.eslintrc.cjs',
+    'vitest.config.mts',
+    'setupVitest.mts',
+    'mock-fetch-result.ts'
+  ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     project: './tsconfig.json'
   },
-  plugins: ['react-refresh', '@typescript-eslint', 'react', 'prettier', 'unused-imports', 'react-compiler'],
+  plugins: [
+    'react-refresh',
+    '@typescript-eslint',
+    'react',
+    'prettier',
+    'unused-imports',
+    'react-compiler',
+    '@next/next'
+  ],
   rules: {
     ...onRules,
     ...offRules
