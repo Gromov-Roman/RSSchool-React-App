@@ -15,7 +15,6 @@ export default function PaginationComponent({ length, page, onPageChange, disabl
   const [pages, setPages] = useState(generatePages(page, length));
   const [currentPage, setCurrentPage] = useState(page);
   const { theme } = useContext(ThemeContext);
-  const paginationTheme = `pagination__${theme}`;
 
   const handlePageChange = (p: number) => {
     setCurrentPage(p);
@@ -24,7 +23,7 @@ export default function PaginationComponent({ length, page, onPageChange, disabl
   };
 
   return (
-    <nav className={`${styles.pagination} ${disabled ? styles.pagination__disabled : ''} ${styles[paginationTheme]}`}>
+    <nav className={`${styles.pagination} ${disabled ? styles.pagination__disabled : ''} ${styles[theme]}`}>
       <Button
         className={styles.pagination_button}
         disabled={currentPage === 1}
@@ -63,7 +62,7 @@ export default function PaginationComponent({ length, page, onPageChange, disabl
           <Button
             onClick={() => handlePageChange(length)}
             text={String(length)}
-            className="pagination_button"
+            className={styles.pagination_button}
             testId="last-page"
           />
         </>

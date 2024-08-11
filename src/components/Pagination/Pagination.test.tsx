@@ -1,6 +1,6 @@
 import { describe, it, expect, afterEach, vi } from 'vitest';
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
-import MainPage from '@pages/Main/Main.page';
+import MainPage from '@src/app/Main/Main.page';
 import { renderWithProviders } from '@mocks/test-utils';
 import mockRouter from 'next-router-mock';
 import PaginationComponent from '@components/Pagination/Pagination';

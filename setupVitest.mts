@@ -2,8 +2,27 @@ import createFetchMock from 'vitest-fetch-mock';
 import { vi } from 'vitest';
 import { emptyPagingResultsMock, pagingResultsMock, resultMock } from '@mocks/mock-fetch-result';
 import { localStorageMock } from '@mocks/local-storage.mock';
+const nextRouterMock = require('next-router-mock')
 
-vi.mock('next/router', () => import('next-router-mock'));
+vi.mock('next/navigation', () => {
+  const { useRouter } = nextRouterMock;
+
+  const usePathname = () => {
+    const router = useRouter()
+    return router.pathname
+  }
+
+  const useSearchParams = () => {
+    const router = useRouter()
+    return new URLSearchParams(router.query)
+  }
+
+  return {
+    useRouter,
+    usePathname,
+    useSearchParams
+  }
+});
 
 const fetchMocker = createFetchMock(vi);
 

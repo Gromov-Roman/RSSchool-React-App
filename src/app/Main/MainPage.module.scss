@@ -27,7 +27,7 @@
   background-color: $light-secondary-background;
   overflow: hidden;
 
-  &__dark {
+  &.dark {
     background-color: $dark-secondary-background;
   }
 }

@@ -1,6 +1,6 @@
 import { describe, it, expect, afterEach } from 'vitest';
 import { cleanup, fireEvent, screen } from '@testing-library/react';
-import MainPage from '@pages/Main/Main.page';
+import MainPage from '@src/app/Main/Main.page';
 import { pagingResultsMock } from '@mocks/mock-fetch-result';
 import { renderWithProviders } from '@mocks/test-utils';
 import { Provider } from 'react-redux';

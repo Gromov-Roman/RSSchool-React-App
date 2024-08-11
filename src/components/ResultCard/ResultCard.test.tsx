@@ -2,7 +2,7 @@ import { describe, it, expect, vi, afterEach } from 'vitest';
 import { cleanup, fireEvent, screen } from '@testing-library/react';
 import { getResultMock } from '@mocks/result.mock';
 import { renderWithProviders } from '@mocks/test-utils';
-import MainPage from '@pages/Main/Main.page';
+import MainPage from '@src/app/Main/Main.page';
 import { setupStore } from '@core/store';
 import { Provider } from 'react-redux';
 import mockRouter from 'next-router-mock';

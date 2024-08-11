@@ -4,7 +4,7 @@ import { MouseEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@core/store';
 import { favoritesActions } from '@core/slices/favorites';
-import { useRouter } from 'next/router';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import styles from './ResultCard.module.scss';
 
 interface ResultCardProps {
@@ -13,14 +13,17 @@ interface ResultCardProps {
 
 export default function ResultCardComponent({ result }: ResultCardProps) {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
   const dispatch = useDispatch();
   const { toggleFavorite } = favoritesActions;
   const { favorites } = useSelector((state: RootState) => state.favoritesReducer);
   const isFavorite = favorites?.some(({ id }) => id === result.id);
 
   function handleDetailUpdate() {
-    router.query.detail = result.id.toString();
-    router.push({ pathname: router.pathname, query: router.query });
+    const params = new URLSearchParams(searchParams?.toString());
+    params.set('detail', String(result.id));
+    router.push(`${pathname}?${params.toString()}`);
   }
 
   function handleToggleFavorite(event: MouseEvent<HTMLDivElement>) {

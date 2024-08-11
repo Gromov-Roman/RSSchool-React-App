@@ -1,27 +1,31 @@
 import ResultsComponent from '@components/Results/Results';
 import HeaderComponent from '@components/Header/Header';
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import useLocalStorage from '@hooks/LocalStorage';
 import { ThemeContext } from '@context/ThemeContext';
 import { useGetItemsQuery } from '@core/slices/api';
 import { pagingResultsActions } from '@core/slices/pagingResults';
 import { useDispatch } from 'react-redux';
-import { useRouter } from 'next/router';
-import DetailPage from '@pages/Detail/Detail.page';
+import { useSearchParams } from 'next/navigation';
+import DetailPage from '@src/app/Detail/Detail.page';
 import styles from './MainPage.module.scss';
 
 export default function MainPage() {
   const dispatch = useDispatch();
   const { theme } = useContext(ThemeContext);
-  const mainTheme = `main__${theme}`;
-  const mainPageTheme = `main-page__${theme}`;
-
-  const router = useRouter();
+  const searchParams = useSearchParams();
   const { getValue: getSearchQuery } = useLocalStorage<string>('searchQuery');
-  const page = (router.query.page as string) || null;
+  const page = searchParams?.get('page') || null;
   const searchQuery = getSearchQuery();
   const { data: pagingResults, isFetching } = useGetItemsQuery({ page, searchQuery });
   const { setIsFetching, setPagingResults } = pagingResultsActions;
+  const [mainThemeClass, setMainThemeClass] = useState('');
+  const [themeClass, setThemeClass] = useState('');
+
+  useEffect(() => {
+    setThemeClass(styles[theme]);
+    setMainThemeClass(theme);
+  }, [theme]);
 
   useEffect(() => {
     dispatch(setIsFetching(isFetching));
@@ -29,12 +33,12 @@ export default function MainPage() {
   }, [pagingResults, isFetching, dispatch]);
 
   return (
-    <main className={`${styles.main} ${mainTheme}`}>
+    <main className={`${styles.main} ${mainThemeClass}`}>
       <HeaderComponent />
 
-      <article className={`${styles['main-page']} ${styles[mainPageTheme]}`}>
+      <article className={`${styles['main-page']} ${themeClass}`}>
         <ResultsComponent />
-        {!!router.query.detail && <DetailPage />}
+        {!!searchParams?.get('detail') && <DetailPage />}
       </article>
     </main>
   );
