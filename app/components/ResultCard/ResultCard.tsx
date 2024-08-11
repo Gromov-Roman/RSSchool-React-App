@@ -1,10 +1,10 @@
 import { Result } from '@models/result.model';
+import { useLocation, useNavigate } from '@remix-run/react';
 import Button from '@components/Button/Button';
 import { MouseEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@core/store';
 import { favoritesActions } from '@core/slices/favorites';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import styles from './ResultCard.module.scss';
 
 interface ResultCardProps {
@@ -12,18 +12,17 @@ interface ResultCardProps {
 }
 
 export default function ResultCardComponent({ result }: ResultCardProps) {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const pathname = usePathname();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const queryParams = new URLSearchParams(location.search);
   const dispatch = useDispatch();
   const { toggleFavorite } = favoritesActions;
   const { favorites } = useSelector((state: RootState) => state.favoritesReducer);
   const isFavorite = favorites?.some(({ id }) => id === result.id);
 
   function handleDetailUpdate() {
-    const params = new URLSearchParams(searchParams?.toString());
-    params.set('detail', String(result.id));
-    router.push(`${pathname}?${params.toString()}`);
+    queryParams.set('detail', String(result.id));
+    navigate({ search: `?${queryParams.toString()}` });
   }
 
   function handleToggleFavorite(event: MouseEvent<HTMLDivElement>) {

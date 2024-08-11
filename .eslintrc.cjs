@@ -88,7 +88,7 @@ module.exports = {
     '*.test.tsx',
     '*.test.ts',
     '.eslintrc.cjs',
-    'vitest.config.mts',
+    'vite.config.mts',
     'setupVitest.mts',
     'mock-fetch-result.ts'
   ],
@@ -103,7 +103,6 @@ module.exports = {
     'prettier',
     'unused-imports',
     'react-compiler',
-    '@next/next'
   ],
   rules: {
     ...onRules,

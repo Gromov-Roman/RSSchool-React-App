@@ -9,74 +9,51 @@
     ],
     "module": "ESNext",
     "skipLibCheck": true,
+    "baseUrl": "./",
+
     /* Bundler mode */
     "moduleResolution": "Bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "preserve",
-    "allowJs": true,
+    "jsx": "react-jsx",
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "incremental": true,
+    
     "paths": {
-      "@src/*": [
-        "./src/*"
-      ],
-      "@assets/*": [
-        "./src/assets/*"
-      ],
-      "@core/*": [
-        "./src/core/*"
-      ],
-      "@pages/*": [
-        "./src/pages/*"
-      ],
-      "@components/*": [
-        "./src/components/*"
-      ],
-      "@models/*": [
-        "./src/models/*"
-      ],
-      "@enums/*": [
-        "./src/enums/*"
-      ],
-      "@constants/*": [
-        "./src/constants/*"
-      ],
-      "@utils/*": [
-        "./src/utils/*"
-      ],
-      "@hooks/*": [
-        "./src/hooks/*"
-      ],
-      "@context/*": [
-        "./src/context/*"
-      ],
-      "@mocks/*": [
-        "./src/mocks/*"
-      ]
+      "@app/*": ["./app/*"],
+      "@assets/*": ["./app/assets/*"],
+      "@core/*": ["./app/core/*"], "@pages/*": ["./app/pages/*"],
+      "@components/*": ["./app/components/*"],
+      "@models/*": ["./app/models/*"],
+      "@enums/*": ["./app/enums/*"],
+      "@constants/*": ["./app/constants/*"],
+      "@utils/*": ["./app/utils/*"],
+      "@hooks/*": ["./app/hooks/*"],
+      "@context/*": ["./app/context/*"],
+      "@mocks/*": ["./app/mocks/*"]
     },
+
     /* Linting */
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true,
-    /* Plugins */
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ]
+    "noFallthroughCasesInSwitch": true
   },
   "include": [
-    "./src",
-    "./dist/types/**/*.ts",
-    "./next-env.d.ts",
-    ".next/types/**/*.ts"
+    "**/*.ts",
+    "**/*.tsx",
+    "**/.server/**/*.ts",
+    "**/.server/**/*.tsx",
+    "**/.client/**/*.ts",
+    "**/.client/**/*.tsx"
   ],
   "exclude": [
     "./node_modules"
+  ],
+  "references": [
+    {
+      "path": "./tsconfig.node.json"
+    }
   ]
 }

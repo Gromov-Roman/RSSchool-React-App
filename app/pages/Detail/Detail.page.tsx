@@ -1,3 +1,4 @@
+import { useSearchParams } from '@remix-run/react';
 import { useContext, useEffect, useState } from 'react';
 import LoaderComponent from '@components/Loader/Loader';
 import Button from '@components/Button/Button';
@@ -5,7 +6,6 @@ import { ThemeContext } from '@context/ThemeContext';
 import { useGetItemDetailsQuery } from '@core/slices/api';
 import { useDispatch } from 'react-redux';
 import { detailActions } from '@core/slices/detail';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import styles from './DetailPage.module.scss';
 
 interface DetailBlock {
@@ -16,9 +16,7 @@ interface DetailBlock {
 export default function DetailPage() {
   const dispatch = useDispatch();
   const { theme } = useContext(ThemeContext);
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const pathname = usePathname();
+  const [searchParams, setSearchParams] = useSearchParams();
   const detailParam = searchParams?.get('detail') || '';
   const { data: detail, isFetching } = useGetItemDetailsQuery(detailParam, { skip: !detailParam });
   const { setIsFetching, setDetail } = detailActions;
@@ -41,9 +39,8 @@ export default function DetailPage() {
   }, [detail, isFetching, dispatch]);
 
   function handleClose() {
-    const params = new URLSearchParams(searchParams?.toString());
-    params.delete('detail');
-    router.push(`${pathname}?${params.toString()}`);
+    searchParams.delete('detail');
+    setSearchParams(searchParams);
   }
 
   if (!detailParam) {
@@ -63,7 +60,7 @@ export default function DetailPage() {
           <h3 className={styles.detail_title}>
             <span data-testid="detail__title-text">{detail.name}</span>
             <Button className={styles['close-button']} onClick={() => handleClose()} testId="close-button">
-              <img alt="close" src="close.svg" width="20px" />
+              <img alt="close" src="../../../public/close.svg" width="20px" />
             </Button>
           </h3>
 
