@@ -12,10 +12,11 @@ export default defineConfig({
       provider: 'istanbul',
       exclude: [
         'dist/*',
+        '.next/*',
         '**/*.test.tsx',
         '**/*.test.ts',
         './src/app/layout.tsx',
-        './src/app/index.tsx',
+        './src/app/page.tsx',
         './src/mocks/*',
         './src/setupVitest.mts',
         './src/vitest.config.mts',
