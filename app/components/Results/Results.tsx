@@ -1,7 +1,6 @@
-'use client';
-
 import ResultCardComponent from '@components/ResultCard/ResultCard';
 import PaginationComponent from '@components/Pagination/Pagination';
+import { useSearchParams } from '@remix-run/react';
 import LoaderComponent from '@components/Loader/Loader';
 import { useContext, useEffect, useRef, useState } from 'react';
 import { ThemeContext } from '@context/ThemeContext';
@@ -10,7 +9,6 @@ import { RootState } from '@core/store';
 import Button from '@components/Button/Button';
 import { favoritesActions } from '@core/slices/favorites';
 import { CSVLink } from 'react-csv';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import styles from './Results.module.scss';
 
 interface CsvDataItem {
@@ -30,9 +28,7 @@ export default function ResultsComponent() {
   const { clearFavorites } = favoritesActions;
   const { favorites } = useSelector((state: RootState) => state.favoritesReducer);
   const { pagingResults, isFetching } = useSelector((state: RootState) => state.pagingResultsReducer);
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const pathname = usePathname();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [csvData, setCsvData] = useState<CsvDataItem[]>([]);
   const { theme } = useContext(ThemeContext);
   const [themeClass, setThemeClass] = useState('');
@@ -40,9 +36,8 @@ export default function ResultsComponent() {
   useEffect(() => setThemeClass(styles[theme]), [theme]);
 
   const handleUpdatePage = (page: number) => {
-    const params = new URLSearchParams(searchParams?.toString());
-    params.set('page', String(page));
-    router.push(`${pathname}?${params.toString()}`);
+    searchParams.set('page', String(page));
+    setSearchParams(searchParams);
   };
 
   const containerRef = useRef<HTMLDivElement>(null);
@@ -57,9 +52,8 @@ export default function ResultsComponent() {
       const { classList } = event.target as Element;
 
       if (tagName !== 'IMG' && (tagName !== 'BUTTON' || !classList.contains('result-card'))) {
-        const params = new URLSearchParams(searchParams?.toString());
-        params.delete('detail');
-        router.push(`${pathname}?${params.toString()}`);
+        searchParams.delete('detail');
+        setSearchParams(searchParams);
       }
     };
 

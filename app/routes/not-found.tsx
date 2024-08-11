@@ -1,12 +1,10 @@
-'use client';
-
 import Button from '@components/Button/Button';
-import { useRouter } from 'next/navigation';
 import ThemeContextProvider from '@context/ThemeContext';
-import styles from './NotFoundPage.module.scss';
+import { useNavigate } from 'react-router-dom';
+import styles from '@pages/NotFoundPage.module.scss';
 
-export default function NotFoundCatchAll() {
-  const router = useRouter();
+export default function NotFoundPage() {
+  const navigate = useNavigate();
 
   return (
     <ThemeContextProvider>
@@ -17,7 +15,7 @@ export default function NotFoundCatchAll() {
           </div>
           <p>The page you are trying to search has been</p>
           <p>moved to another universe.</p>
-          <Button onClick={() => router.push('/')} testId="to-home-button">
+          <Button onClick={() => navigate('/')} testId="to-home-button">
             GET ME HOME
           </Button>
         </div>

@@ -1,4 +1,5 @@
 import ResultsComponent from '@components/Results/Results';
+import { useSearchParams } from '@remix-run/react';
 import HeaderComponent from '@components/Header/Header';
 import { useContext, useEffect, useState } from 'react';
 import useLocalStorage from '@hooks/LocalStorage';
@@ -6,16 +7,15 @@ import { ThemeContext } from '@context/ThemeContext';
 import { useGetItemsQuery } from '@core/slices/api';
 import { pagingResultsActions } from '@core/slices/pagingResults';
 import { useDispatch } from 'react-redux';
-import { useSearchParams } from 'next/navigation';
-import DetailPage from '@src/app/Detail/Detail.page';
+import DetailPage from '@pages/Detail/Detail.page';
 import styles from './MainPage.module.scss';
 
 export default function MainPage() {
   const dispatch = useDispatch();
   const { theme } = useContext(ThemeContext);
-  const searchParams = useSearchParams();
+  const [params] = useSearchParams();
   const { getValue: getSearchQuery } = useLocalStorage<string>('searchQuery');
-  const page = searchParams?.get('page') || null;
+  const page = params.get('page') || null;
   const searchQuery = getSearchQuery();
   const { data: pagingResults, isFetching } = useGetItemsQuery({ page, searchQuery });
   const { setIsFetching, setPagingResults } = pagingResultsActions;
@@ -38,7 +38,7 @@ export default function MainPage() {
 
       <article className={`${styles['main-page']} ${themeClass}`}>
         <ResultsComponent />
-        {!!searchParams?.get('detail') && <DetailPage />}
+        {!!params.get('detail') && <DetailPage />}
       </article>
     </main>
   );

@@ -1,6 +1,6 @@
 import { describe, it, expect, afterEach } from 'vitest';
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
-import NotFoundPage from '@src/app/not-found';
+import NotFoundPage from 'app/routes/not-found';
 import { BrowserRouter } from 'react-router-dom';
 
 describe('NotFoundPage', () => {

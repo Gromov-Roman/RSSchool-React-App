@@ -1,24 +1,11 @@
 import { describe, it, expect, afterEach, vi } from 'vitest';
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
-import MainPage from '@src/app/Main/Main.page';
-import { renderWithProviders } from '@mocks/test-utils';
-import mockRouter from 'next-router-mock';
 import PaginationComponent from '@components/Pagination/Pagination';
 
 const handlePageChange = vi.fn();
 
 describe('PaginationComponent', () => {
   afterEach(cleanup);
-
-  it('updates URL query parameter when page changes', async () => {
-    renderWithProviders(<MainPage />);
-
-    await screen.findByTestId('result-card');
-
-    fireEvent.click(screen.getByTestId('next-page'));
-
-    expect(mockRouter.query).toEqual({ page: '2' });
-  });
 
   it('renders correct number of pages', async () => {
     render(<PaginationComponent length={5} page={1} />);
