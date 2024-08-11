@@ -63,7 +63,7 @@ export default function DetailPage() {
           <h3 className={styles.detail_title}>
             <span data-testid="detail__title-text">{detail.name}</span>
             <Button className={styles['close-button']} onClick={() => handleClose()} testId="close-button">
-              <img alt="close" src="../../../public/close.svg" width="20px" />
+              <img alt="close" src="close.svg" width="20px" />
             </Button>
           </h3>
 
