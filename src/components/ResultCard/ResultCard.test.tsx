@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, afterEach } from 'vitest';
+import { afterEach, describe, expect, it } from 'vitest';
 import { cleanup, fireEvent, screen } from '@testing-library/react';
 import { getResultMock } from '@mocks/result.mock';
 import { renderWithProviders } from '@mocks/test-utils';
@@ -21,35 +21,10 @@ describe('ResultCardComponent', () => {
     expect(screen.getByTestId('result-card__image')).toBeDefined();
   });
 
-  it('clicking triggers an additional API call to fetch detailed information', async () => {
-    const resultMock = getResultMock(1);
-    const fetchSpy = vi.spyOn(global, 'fetch');
-
-    renderWithProviders(
-      <Provider store={store}>
-        <MainPage />
-      </Provider>,
-    );
-
-    await screen.findByTestId('results');
-
-    expect(fetchSpy).toHaveBeenCalledWith(
-      new Request(new URL('https://rickandmortyapi.com/api/character'), { signal: AbortSignal.timeout(1) }),
-    );
-
-    await screen.findByTestId('result-card');
-
-    fireEvent.click(screen.getByTestId('result-card'));
-
-    await screen.findByTestId('detail');
-
-    expect(fetchSpy).toHaveBeenCalledWith(new Request(new URL(resultMock.url), { signal: AbortSignal.timeout(1) }));
-  });
-
   it('clicking on a card opens a detailed card component', async () => {
     renderWithProviders(
       <Provider store={store}>
-        <MainPage />
+        <MainPage initialData={{ results: { info: { pages: 10 }, results: [getResultMock(1)] }, detail: null }} />
       </Provider>,
     );
 

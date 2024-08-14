@@ -5,6 +5,7 @@ import { pagingResultsMock } from '@mocks/mock-fetch-result';
 import { renderWithProviders } from '@mocks/test-utils';
 import { Provider } from 'react-redux';
 import { setupStore } from '@core/store';
+import { getResultMock } from '@mocks/result.mock';
 
 const store = setupStore();
 
@@ -17,7 +18,7 @@ describe('ResultComponent', () => {
   it('renders the specified number of cards', async () => {
     renderWithProviders(
       <Provider store={store}>
-        <MainPage />
+        <MainPage initialData={{ results: { info: { pages: 10 }, results: [getResultMock()] }, detail: null }} />
       </Provider>,
     );
 
@@ -31,7 +32,7 @@ describe('ResultComponent', () => {
 
     renderWithProviders(
       <Provider store={store}>
-        <MainPage />
+        <MainPage initialData={{ results: { info: { pages: 0 }, results: [] }, detail: null }} />
       </Provider>,
     );
 
@@ -43,7 +44,7 @@ describe('ResultComponent', () => {
   it('displays unselect and download buttons', async () => {
     renderWithProviders(
       <Provider store={store}>
-        <MainPage />
+        <MainPage initialData={{ results: { info: { pages: 10 }, results: [getResultMock()] }, detail: null }} />
       </Provider>,
     );
 

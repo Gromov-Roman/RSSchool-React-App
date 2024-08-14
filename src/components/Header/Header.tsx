@@ -19,6 +19,9 @@ export default function HeaderComponent() {
       router.query.page = '1';
     }
 
+    if (searchQuery !== undefined && searchQuery !== null) {
+      router.query.searchQuery = searchQuery;
+    }
     router.push({ pathname: router.pathname, query: router.query });
   };
 

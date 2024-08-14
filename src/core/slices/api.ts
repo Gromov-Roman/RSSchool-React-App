@@ -26,4 +26,8 @@ export const apiSlice = createApi({
   }),
 });
 
-export const { useGetItemsQuery, useGetItemDetailsQuery } = apiSlice;
+export const {
+  useGetItemsQuery,
+  useGetItemDetailsQuery,
+  util: { getRunningQueriesThunk },
+} = apiSlice;

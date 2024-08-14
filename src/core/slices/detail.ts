@@ -2,12 +2,12 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Result } from '@models/result.model';
 
 interface DetailState {
-  detail: Result | undefined;
+  detail: Result | undefined | null;
   isFetching: boolean;
 }
 
 const initialState: DetailState = {
-  detail: undefined,
+  detail: null,
   isFetching: false,
 };
 
@@ -15,7 +15,7 @@ export const detailSlice = createSlice({
   name: 'detail',
   initialState,
   reducers: {
-    setDetail: (state, action: PayloadAction<Result | undefined>) => {
+    setDetail: (state, action: PayloadAction<Result | undefined | null>) => {
       state.detail = action.payload;
       state.isFetching = false;
     },

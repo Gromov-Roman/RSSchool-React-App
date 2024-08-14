@@ -87,59 +87,61 @@ export default function ResultsComponent() {
         </section>
       )}
 
-      <section className={styles.results_container} data-testid="results">
-        {isFetching && (
-          <section className={styles.empty}>
-            <LoaderComponent />
-          </section>
-        )}
+      {!!pagingResults?.results?.length && (
+        <section className={styles.results_container} data-testid="results">
+          {isFetching && (
+            <section className={styles.empty}>
+              <LoaderComponent />
+            </section>
+          )}
 
-        {!isFetching && !!pagingResults?.results?.length && (
-          <ul className={styles.results_list}>
-            {pagingResults.results.map((result) => (
-              <li key={result.id} className={styles['results_list-item']} data-testid="results__list-item">
-                <ResultCardComponent key={result.id} result={result} />
-              </li>
-            ))}
-          </ul>
-        )}
+          {!isFetching && (
+            <ul className={styles.results_list}>
+              {pagingResults.results.map((result) => (
+                <li key={result.id} className={styles['results_list-item']} data-testid="results__list-item">
+                  <ResultCardComponent key={result.id} result={result} />
+                </li>
+              ))}
+            </ul>
+          )}
 
-        {!!pagingResults?.info && (
-          <footer className={styles.results_footer}>
-            <PaginationComponent
-              disabled={!pagingResults.results}
-              length={pagingResults.info.pages}
-              page={Number(router.query.page) || 1}
-              onPageChange={(page) => handleUpdatePage(page)}
-            />
+          {!!pagingResults?.info && (
+            <footer className={styles.results_footer}>
+              <PaginationComponent
+                disabled={!pagingResults.results}
+                length={pagingResults.info.pages}
+                page={Number(router.query.page) || 1}
+                onPageChange={(page) => handleUpdatePage(page)}
+              />
 
-            {!!favorites.length && (
-              <div className={styles.results_actions}>
-                <span>Selected&nbsp;{csvData.length}&nbsp;items</span>
+              {!!favorites.length && (
+                <div className={styles.results_actions}>
+                  <span>Selected&nbsp;{csvData.length}&nbsp;items</span>
 
-                <div className={styles['results_actions-buttons']}>
-                  <Button
-                    onClick={handleUnselectAll}
-                    text="Unselect&nbsp;all"
-                    type="secondary"
-                    testId="unselect-button"
-                  />
+                  <div className={styles['results_actions-buttons']}>
+                    <Button
+                      onClick={handleUnselectAll}
+                      text="Unselect&nbsp;all"
+                      type="secondary"
+                      testId="unselect-button"
+                    />
 
-                  <CSVLink
-                    data={csvData}
-                    filename={`${csvData.length}_characters.csv`}
-                    className={styles['results_download-button']}
-                  >
-                    <Button type="accent" text="Download" testId="download-button">
-                      Download
-                    </Button>
-                  </CSVLink>
+                    <CSVLink
+                      data={csvData}
+                      filename={`${csvData.length}_characters.csv`}
+                      className={styles['results_download-button']}
+                    >
+                      <Button type="accent" text="Download" testId="download-button">
+                        Download
+                      </Button>
+                    </CSVLink>
+                  </div>
                 </div>
-              </div>
-            )}
-          </footer>
-        )}
-      </section>
+              )}
+            </footer>
+          )}
+        </section>
+      )}
     </div>
   );
 }

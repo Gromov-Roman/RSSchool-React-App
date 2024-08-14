@@ -11,6 +11,7 @@ export default defineConfig({
     coverage: {
       provider: 'istanbul',
       exclude: [
+        '.next/*',
         'dist/*',
         '**/*.test.tsx',
         '**/*.test.ts',

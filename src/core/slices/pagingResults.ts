@@ -2,12 +2,12 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { PagingResults } from '@models/result.model';
 
 interface PagingResultState {
-  pagingResults: PagingResults | undefined;
+  pagingResults: PagingResults | undefined | null;
   isFetching: boolean;
 }
 
 const initialState: PagingResultState = {
-  pagingResults: undefined,
+  pagingResults: null,
   isFetching: false,
 };
 
@@ -18,7 +18,7 @@ export const pagingResultsSlice = createSlice({
     setIsFetching: (state, action: PayloadAction<boolean>) => {
       state.isFetching = action.payload;
     },
-    setPagingResults: (state, action: PayloadAction<PagingResults | undefined>) => {
+    setPagingResults: (state, action: PayloadAction<PagingResults | undefined | null>) => {
       state.pagingResults = action.payload;
     },
   },

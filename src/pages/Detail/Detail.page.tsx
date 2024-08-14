@@ -2,10 +2,9 @@ import { useContext, useEffect, useState } from 'react';
 import LoaderComponent from '@components/Loader/Loader';
 import Button from '@components/Button/Button';
 import { ThemeContext } from '@context/ThemeContext';
-import { useGetItemDetailsQuery } from '@core/slices/api';
-import { useDispatch } from 'react-redux';
-import { detailActions } from '@core/slices/detail';
+import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
+import { RootState } from '@core/store';
 import styles from './DetailPage.module.scss';
 
 interface DetailBlock {
@@ -14,14 +13,12 @@ interface DetailBlock {
 }
 
 export default function DetailPage() {
-  const dispatch = useDispatch();
   const { theme } = useContext(ThemeContext);
   const detailTheme = `detail__${theme}`;
   const router = useRouter();
-  const detailParam = router.query.detail as string;
-  const { data: detail, isFetching } = useGetItemDetailsQuery(detailParam, { skip: !detailParam });
-  const { setIsFetching, setDetail } = detailActions;
   const [detailBlocks, setDetailBlocks] = useState<DetailBlock[]>([]);
+
+  const { detail, isFetching } = useSelector((state: RootState) => state.detailReducer);
 
   useEffect(() => {
     if (detail) {
@@ -34,17 +31,14 @@ export default function DetailPage() {
         { title: 'Episodes:', text: detail.episode.length.toString() },
       ]);
     }
-
-    dispatch(setIsFetching(isFetching));
-    dispatch(setDetail(detail));
-  }, [detail, isFetching, dispatch]);
+  }, [detail]);
 
   function handleClose() {
     delete router.query.detail;
     router.push({ pathname: router.pathname, query: router.query });
   }
 
-  if (!detailParam) {
+  if (!detail) {
     return null;
   }
 

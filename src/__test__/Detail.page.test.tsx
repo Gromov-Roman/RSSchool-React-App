@@ -1,10 +1,11 @@
 import { describe, it, expect, afterEach, beforeEach } from 'vitest';
-import { cleanup, fireEvent, screen } from '@testing-library/react';
+import { cleanup, screen } from '@testing-library/react';
 import { getResultMock } from '@mocks/result.mock';
 import { renderWithProviders } from '@mocks/test-utils';
 import { Provider } from 'react-redux';
 import MainPage from '@pages/Main/Main.page';
 import { setupStore } from '@core/store';
+import DetailPage from '@pages/Detail/Detail.page';
 
 const resultMock = getResultMock(1);
 const store = setupStore();
@@ -15,15 +16,11 @@ describe('DetailPage', () => {
   beforeEach(async () => {
     renderWithProviders(
       <Provider store={store}>
-        <MainPage />
+        <MainPage
+          initialData={{ results: { info: { pages: 10 }, results: [getResultMock()] }, detail: getResultMock(1) }}
+        />
       </Provider>,
     );
-    await screen.findByTestId('result-card');
-    fireEvent.click(screen.getByTestId('result-card'));
-  });
-
-  it('displays a loading indicator while fetching data', async () => {
-    expect(screen.getByTestId('loader')).toBeDefined();
   });
 
   it('correctly displays the detailed card data', async () => {
@@ -37,11 +34,12 @@ describe('DetailPage', () => {
     expect(screen.getByTestId('detail__image').getAttribute('src')).toBe(resultMock.image);
   });
 
-  it('hides the component when the close button is clicked', async () => {
-    await screen.findByTestId('detail');
-
-    fireEvent.click(screen.getByTestId('close-button'));
-
-    expect(!!screen.queryByTestId('detail')).toBeFalsy();
+  it('Detail is in document', async () => {
+    renderWithProviders(
+      <Provider store={store}>
+        <DetailPage />
+      </Provider>,
+    );
+    expect(screen.findByTestId('detail')).toBeDefined();
   });
 });

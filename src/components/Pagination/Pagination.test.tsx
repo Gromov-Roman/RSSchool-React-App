@@ -4,6 +4,7 @@ import MainPage from '@pages/Main/Main.page';
 import { renderWithProviders } from '@mocks/test-utils';
 import mockRouter from 'next-router-mock';
 import PaginationComponent from '@components/Pagination/Pagination';
+import { getResultMock } from '@mocks/result.mock';
 
 const handlePageChange = vi.fn();
 
@@ -11,7 +12,9 @@ describe('PaginationComponent', () => {
   afterEach(cleanup);
 
   it('updates URL query parameter when page changes', async () => {
-    renderWithProviders(<MainPage />);
+    renderWithProviders(
+      <MainPage initialData={{ results: { info: { pages: 10 }, results: [getResultMock()] }, detail: null }} />,
+    );
 
     await screen.findByTestId('result-card');
 

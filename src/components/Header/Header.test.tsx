@@ -3,7 +3,7 @@ import { describe, it, expect, afterEach, vi } from 'vitest';
 import ThemeContextProvider from '@context/ThemeContext';
 import mockRouter from 'next-router-mock';
 import HeaderComponent from './Header';
-import { localStorageMock } from '@mocks/local-storage.mock';
+import Cookies from 'js-cookie';
 
 describe('HeaderComponent', () => {
   afterEach(cleanup);
@@ -15,7 +15,7 @@ describe('HeaderComponent', () => {
 
   it('calls setSearchQuery on input change', () => {
     render(<HeaderComponent />, { wrapper: ThemeContextProvider });
-    const setItemSpy = vi.spyOn(localStorageMock, 'setItem');
+    const setItemSpy = vi.spyOn(Cookies, 'set');
 
     fireEvent.change(screen.getByTestId('search-input'), { target: { value: 'test' } });
     expect(setItemSpy).toHaveBeenCalledWith('searchQuery', '"test"');
@@ -25,14 +25,6 @@ describe('HeaderComponent', () => {
     render(<HeaderComponent />, { wrapper: ThemeContextProvider });
     fireEvent.change(screen.getByTestId('search-input'), { target: { value: 'test' } });
     fireEvent.click(screen.getByTestId('search-button'));
-    expect(mockRouter.query).toEqual({ page: '1' });
-  });
-
-  it('refreshes page if it is 1', () => {
-    render(<HeaderComponent />, { wrapper: ThemeContextProvider });
-    mockRouter.query = { page: '1' };
-    fireEvent.change(screen.getByTestId('search-input'), { target: { value: 'test' } });
-    fireEvent.click(screen.getByTestId('search-button'));
-    expect(mockRouter.query).toEqual({});
+    expect(mockRouter.query).toEqual({ searchQuery: 'test', page: '1' });
   });
 });

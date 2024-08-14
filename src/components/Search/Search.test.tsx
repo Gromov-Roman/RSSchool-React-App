@@ -2,6 +2,7 @@ import { describe, it, expect, afterEach, vi } from 'vitest';
 import { render, screen, fireEvent, cleanup } from '@testing-library/react';
 import SearchComponent from './Search';
 import HeaderComponent from '@components/Header/Header';
+import Cookies from 'js-cookie';
 
 const onInputChange = vi.fn();
 const onSearch = vi.fn();
@@ -20,7 +21,7 @@ describe('SearchComponent', () => {
     fireEvent.change(searchInput, { target: { value: 'test query' } });
     fireEvent.click(searchButton);
 
-    expect(window.localStorage.getItem('searchQuery')).toBe('"test query"');
+    expect(Cookies.get('searchQuery')).toBe('"test query"');
   });
 
   it('retrieves the value from local storage upon mounting', () => {

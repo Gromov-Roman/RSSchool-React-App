@@ -3,6 +3,7 @@ import { apiSlice } from '@core/slices/api';
 import { pagingResultsReducer } from '@core/slices/pagingResults';
 import { detailReducer } from '@core/slices/detail';
 import { favoritesReducer } from '@core/slices/favorites';
+import { createWrapper } from 'next-redux-wrapper';
 
 const rootReducer = combineReducers({
   [apiSlice.reducerPath]: apiSlice.reducer,
@@ -19,3 +20,4 @@ export const setupStore = () =>
 
 export type RootState = ReturnType<typeof rootReducer>;
 export type AppStore = ReturnType<typeof setupStore>;
+export const appStoreWrapper = createWrapper<AppStore>(setupStore);
