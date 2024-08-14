@@ -8,7 +8,19 @@ import cookie from 'cookie';
 // eslint-disable-next-line react-refresh/only-export-components
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const cookies = cookie.parse(context.req?.headers.cookie || '');
-  context.query.searchQuery ??= JSON.parse(cookies.searchQuery);
+
+  if (context.query.searchQuery !== undefined) {
+    context.res.setHeader(
+      'Set-Cookie',
+      cookie.serialize('searchQuery', JSON.stringify(context.query.searchQuery), {
+        httpOnly: false,
+        // eslint-disable-next-line no-magic-numbers
+        maxAge: 60 * 60 * 24 * 7,
+      }),
+    );
+  } else {
+    context.query.searchQuery = cookies.searchQuery ? JSON.parse(cookies.searchQuery) : null;
+  }
 
   const props = await fetchData(context.query);
 
