@@ -1,0 +1,147 @@
+@import '../../variables';
+
+.detail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  position: relative;
+  width: 40%;
+  padding: 1rem;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-gutter: stable;
+  box-shadow: 0 0 10px 5px $gray-dark;
+  border-radius: 1rem;
+  background-color: $dark-secondary-background;
+  z-index: 2;
+  animation: slideLeft 0.7s ease-in-out;
+
+  .close-button {
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+    padding: 0;
+    background-color: transparent !important;
+  }
+
+  &__image {
+    width: 100%;
+    max-width: 350px;
+    border-radius: 1rem;
+    box-shadow: 0 0 10px 5px $light-accent;
+  }
+
+  &__info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+
+    &-block {
+      padding: 0.5rem 1rem;
+      border-radius: 1rem;
+      border: 2px $light-accent solid;
+      background-color: $dark-background;
+      color: $dark-text-primary;
+    }
+  }
+
+  &__title,
+  &__info-block-title,
+  &__info-block-text {
+    margin: 0;
+  }
+
+  &__title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    background-color: $dark-background;
+    color: $dark-text-primary;
+    border-radius: 1rem;
+    padding: 3px 10px;
+  }
+
+  &.dark {
+    background-color: $light-secondary-background;
+    box-shadow: 0 0 10px 5px $gray-light;
+
+    .detail__title {
+      background-color: $light-background;
+      color: $light-text-primary;
+    }
+
+    .detail__info-block {
+      background-color: $light-background;
+      color: $light-text-primary;
+      border-color: $dark-accent;
+    }
+
+    .detail__image {
+      box-shadow: 0 0 10px 5px $dark-accent;
+    }
+  }
+}
+
+@media (max-width: 800px) {
+  .detail {
+    animation: slideDown 0.7s ease-in-out;
+  }
+
+  .detail,
+  .empty-detail {
+    width: 100%;
+    height: 400px;
+    position: sticky;
+    top: 37px;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .detail__image {
+    min-height: auto;
+  }
+}
+
+@keyframes slideLeft {
+  0% {
+    transform: translateX(150%);
+  }
+  50% {
+    transform: translateX(-8%);
+  }
+  65% {
+    transform: translateX(4%);
+  }
+  80% {
+    transform: translateX(-4%);
+  }
+  95% {
+    transform: translateX(2%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+@keyframes slideDown {
+  0% {
+    transform: translateY(-100%);
+  }
+  50% {
+    transform: translateY(8%);
+  }
+  65% {
+    transform: translateY(-4%);
+  }
+  80% {
+    transform: translateY(4%);
+  }
+  95% {
+    transform: translateY(-2%);
+  }
+  100% {
+    transform: translateY(0%);
+  }
+}

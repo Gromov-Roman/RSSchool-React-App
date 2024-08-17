@@ -1,0 +1,78 @@
+@import url('https://fonts.googleapis.com/css?family=Merriweather:400,400i,700');
+@import '../../variables';
+
+.theme-switch__input,
+.theme-switch__label {
+  position: relative;
+  z-index: 1;
+
+  &:hover,
+  &:focus {
+    span::after {
+      box-shadow: 0 0 10px 10px rgba(0, 0, 0, 0.2);
+    }
+  }
+}
+
+.theme-switch__input {
+  display: none;
+}
+
+.theme-switch__label {
+  transition: background-color 200ms ease-in-out;
+  min-width: 60px;
+  height: 30px;
+  margin: 0 10px;
+  border-radius: 40px;
+  text-align: center;
+  background-color: yellow;
+  box-shadow: 10px 0 5px 1px $gray-dark;
+  cursor: pointer;
+
+  span {
+    position: absolute;
+    top: -5px;
+    left: -10px;
+  }
+
+  span::after {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    content: '';
+    background: center no-repeat url('/sun.webp');
+    border-radius: 50%;
+    color: yellow;
+    font-size: 1.5rem;
+    transition:
+      transform 200ms,
+      background-color 200ms;
+  }
+}
+
+.theme-switch__input:checked ~ .theme-switch__label {
+  background-color: lightSlateGray;
+  box-shadow: -10px 0 5px 1px $gray-light;
+
+  span {
+    left: -5px;
+
+    &::after {
+      transform: translateX(40px);
+      background: left / 90% no-repeat url('/moon.webp');
+      color: lightSlateGray;
+    }
+  }
+}
+
+@media (max-width: 800px) {
+  .theme-switch__label {
+    height: 20px;
+
+    span {
+      top: -10px;
+    }
+  }
+}
