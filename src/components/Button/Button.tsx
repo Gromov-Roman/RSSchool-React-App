@@ -9,12 +9,22 @@ interface ButtonProps {
   className?: string;
   disabled?: boolean;
   testId?: string;
-  type?: 'primary' | 'secondary' | 'accent';
+  view?: 'primary' | 'secondary' | 'accent';
+  type?: 'button' | 'submit' | 'reset';
 }
 
-export default function Button({ onClick, children, text, className, disabled = false, testId, type }: ButtonProps) {
+export default function Button({
+  onClick,
+  children,
+  text,
+  className,
+  disabled = false,
+  testId,
+  view,
+  type = 'button',
+}: ButtonProps) {
   const { theme } = useContext(ThemeContext);
-  const buttonType = type ? `button__${type}` : '';
+  const buttonType = view ? `button__${view}` : '';
 
   return (
     <button
@@ -22,6 +32,7 @@ export default function Button({ onClick, children, text, className, disabled = 
       onClick={onClick}
       disabled={disabled}
       data-testid={testId}
+      type={type}
     >
       {text || children}
     </button>

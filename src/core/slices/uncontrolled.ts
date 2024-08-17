@@ -2,19 +2,19 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Data } from '@models/data.model';
 
 interface DataState {
-  data: Data | null;
+  data: Data[];
 }
 
 const initialState: DataState = {
-  data: null,
+  data: [],
 };
 
 export const uncontrolledSlice = createSlice({
   name: 'uncontrolled',
   initialState,
   reducers: {
-    setData: (state, action: PayloadAction<Data>) => {
-      state.data = action.payload;
+    addData: (state, action: PayloadAction<Data>) => {
+      state.data.push(action.payload);
     },
   },
 });

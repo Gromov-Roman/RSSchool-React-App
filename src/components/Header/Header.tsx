@@ -17,10 +17,10 @@ export default function HeaderComponent() {
           <Button>Result</Button>
         </Link>
         <Link to="/controlled">
-          <Button type="secondary">Controlled Form</Button>
+          <Button view="secondary">Controlled Form</Button>
         </Link>
         <Link to="/uncontrolled">
-          <Button type="accent">Uncontrolled Form</Button>
+          <Button view="accent">Uncontrolled Form</Button>
         </Link>
       </nav>
     </header>

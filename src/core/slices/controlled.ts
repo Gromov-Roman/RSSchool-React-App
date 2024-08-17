@@ -2,11 +2,11 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Data } from '@models/data.model';
 
 interface DataState {
-  data: Data | null;
+  data: Data[];
 }
 
 const initialState: DataState = {
-  data: null,
+  data: [],
 };
 
 export const controlledSlice = createSlice({
@@ -14,7 +14,7 @@ export const controlledSlice = createSlice({
   initialState,
   reducers: {
     setData: (state, action: PayloadAction<Data>) => {
-      state.data = action.payload;
+      state.data.push(action.payload);
     },
   },
 });

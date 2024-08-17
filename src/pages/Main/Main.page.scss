@@ -6,7 +6,7 @@
   padding: 0.5rem;
   border-radius: 1rem;
   background-color: $light-secondary-background;
-  overflow: hidden;
+  overflow: auto;
 
   &.dark {
     background-color: $dark-secondary-background;
