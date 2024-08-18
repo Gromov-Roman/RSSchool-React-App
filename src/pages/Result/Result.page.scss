@@ -40,6 +40,21 @@
 
       p {
         margin: 0;
+        border-radius: 1rem;
+        padding: 0.2rem 0.5rem;
+        position: relative;
+
+        &.new {
+          border: 1px $red solid;
+
+          &:after {
+            content: 'New';
+            position: absolute;
+            right: 10px;
+            font-size: 0.8rem;
+            color: $red;
+          }
+        }
       }
 
       img {
