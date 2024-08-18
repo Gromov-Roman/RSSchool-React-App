@@ -9,6 +9,9 @@ export default function ResultPage() {
   const uncontrolledData = useSelector((state: RootState) => state.uncontrolledReducer.data);
   const controlledData = useSelector((state: RootState) => state.controlledReducer.data);
 
+  const lastUncontrolledData = uncontrolledData.at(-1);
+  const lastControlledData = controlledData.at(-1);
+
   return (
     <div className={`result-page ${theme}`}>
       <div className="result-column">
@@ -16,18 +19,15 @@ export default function ResultPage() {
         {uncontrolledData.length === 0 ? (
           <p className="result-no-data">No Data</p>
         ) : (
-          uncontrolledData.map((item, index) => (
-            // eslint-disable-next-line react/no-array-index-key
-            <div key={index} className="result-form-data">
-              <p>Name: {item.name || 'N/A'}</p>
-              <p>Age: {item.age || 'N/A'}</p>
-              <p>Email: {item.email || 'N/A'}</p>
-              <p>Gender: {item.gender || 'N/A'}</p>
-              <p>Country: {item.country || 'N/A'}</p>
-              <p>Picture: </p>
-              {item.picture && <img src={item.picture} alt="Uploaded" />}
-            </div>
-          ))
+          <div className="result-form-data">
+            <p>Name: {lastUncontrolledData?.name || 'N/A'}</p>
+            <p>Age: {lastUncontrolledData?.age || 'N/A'}</p>
+            <p>Email: {lastUncontrolledData?.email || 'N/A'}</p>
+            <p>Gender: {lastUncontrolledData?.gender || 'N/A'}</p>
+            <p>Country: {lastUncontrolledData?.country || 'N/A'}</p>
+            <p>Picture: </p>
+            {lastUncontrolledData?.picture && <img src={lastUncontrolledData.picture} alt="Uploaded" />}
+          </div>
         )}
       </div>
 
@@ -36,17 +36,14 @@ export default function ResultPage() {
         {controlledData.length === 0 ? (
           <p className="result-no-data">No Data</p>
         ) : (
-          controlledData.map((item, index) => (
-            // eslint-disable-next-line react/no-array-index-key
-            <div key={index} className="result-form-data">
-              <p>Name: {item.name || 'N/A'}</p>
-              <p>Age: {item.age || 'N/A'}</p>
-              <p>Email: {item.email || 'N/A'}</p>
-              <p>Gender: {item.gender || 'N/A'}</p>
-              <p>Country: {item.country || 'N/A'}</p>
-              {item.picture && <img src={item.picture} alt="Uploaded" />}
-            </div>
-          ))
+          <div className="result-form-data">
+            <p>Name: {lastControlledData?.name || 'N/A'}</p>
+            <p>Age: {lastControlledData?.age || 'N/A'}</p>
+            <p>Email: {lastControlledData?.email || 'N/A'}</p>
+            <p>Gender: {lastControlledData?.gender || 'N/A'}</p>
+            <p>Country: {lastControlledData?.country || 'N/A'}</p>
+            {lastControlledData?.picture && <img src={lastControlledData.picture} alt="Uploaded" />}
+          </div>
         )}
       </div>
     </div>

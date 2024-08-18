@@ -1,5 +1,5 @@
-import { FormEvent, useContext, useRef, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { FormEvent, useContext, useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { uncontrolledActions } from '@core/slices/uncontrolled';
 import { ValidationError } from 'yup';
@@ -8,12 +8,15 @@ import { ThemeContext } from '@context/ThemeContext';
 import { validationSchema } from '@src/shared/validation/schema';
 import './Uncontrolled.page.scss';
 import AutocompleteCountry from '@components/AutocompleteCountry/AutocompleteCountry';
+import { RootState } from '@core/store';
 
 export default function UncontrolledPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { addData } = uncontrolledActions;
   const { theme } = useContext(ThemeContext);
+
+  const uncontrolledData = useSelector((state: RootState) => state.uncontrolledReducer.data);
 
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
@@ -25,7 +28,38 @@ export default function UncontrolledPage() {
   const genderRef = useRef<HTMLSelectElement>(null);
   const termsRef = useRef<HTMLInputElement>(null);
   const pictureRef = useRef<HTMLInputElement>(null);
-  const countryRef = useRef<HTMLInputElement>(null);
+  const countryRef = useRef<HTMLInputElement & { setValue: (value: string) => void }>(null);
+
+  useEffect(() => {
+    if (uncontrolledData.length) {
+      const lastData = uncontrolledData.at(-1);
+
+      if (nameRef.current) {
+        nameRef.current.value = lastData?.name || '';
+      }
+      if (ageRef.current) {
+        ageRef.current.value = lastData?.age?.toString() || '';
+      }
+      if (emailRef.current) {
+        emailRef.current.value = lastData?.email || '';
+      }
+      if (passwordRef.current) {
+        passwordRef.current.value = lastData?.password || '';
+      }
+      if (confirmPasswordRef.current) {
+        confirmPasswordRef.current.value = lastData?.confirmPassword || '';
+      }
+      if (genderRef.current) {
+        genderRef.current.value = lastData?.gender || '';
+      }
+      if (termsRef.current) {
+        termsRef.current.checked = lastData?.termsAccepted || false;
+      }
+      if (countryRef.current) {
+        countryRef.current.value = lastData?.country || '';
+      }
+    }
+  }, [uncontrolledData]);
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
@@ -38,7 +72,7 @@ export default function UncontrolledPage() {
       confirmPassword: confirmPasswordRef.current?.value,
       gender: genderRef.current?.value,
       country: countryRef.current?.value,
-      picture: pictureRef.current?.files?.[0],
+      picture: pictureRef.current?.files,
       termsAccepted: termsRef.current?.checked,
     };
 
@@ -50,7 +84,7 @@ export default function UncontrolledPage() {
         setErrors({});
         navigate('/');
       };
-      reader.readAsDataURL(formData.picture as Blob);
+      reader.readAsDataURL(formData.picture?.[0] as Blob);
     } catch (validationErrors) {
       const formattedErrors: Record<string, string> = {};
 
@@ -128,7 +162,6 @@ export default function UncontrolledPage() {
           <label className="form-control">
             <span className="form-control_name">Country</span>
             <AutocompleteCountry ref={countryRef} />
-            {/* <input name="country" type="text" ref={countryRef} /> */}
           </label>
 
           <div className="error">{errors.country}</div>

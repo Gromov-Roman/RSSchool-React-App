@@ -38,11 +38,22 @@ const AutocompleteCountry = forwardRef(({ value, onChange }: AutocompleteCountry
     setQuery(country);
     setSelected(country);
     setFilteredCountries([]);
-    setDropdownVisible(true);
+    setDropdownVisible(false);
     onChange?.(country);
   };
 
-  useImperativeHandle(ref, () => ({ value: query }));
+  useImperativeHandle(ref, () => ({
+    get value() {
+      return selected || '';
+    },
+    set value(newValue: string) {
+      setQuery(newValue);
+      setSelected(newValue);
+      setFilteredCountries([]);
+      setDropdownVisible(false);
+      onChange?.(newValue || '');
+    },
+  }));
 
   const handleClickOutside = (event: MouseEvent) => {
     if (containerRef.current && !containerRef.current.contains(event.target as Node)) {

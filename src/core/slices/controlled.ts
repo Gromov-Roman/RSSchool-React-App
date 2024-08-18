@@ -13,7 +13,7 @@ export const controlledSlice = createSlice({
   name: 'controlled',
   initialState,
   reducers: {
-    setData: (state, action: PayloadAction<Data>) => {
+    addData: (state, action: PayloadAction<Data>) => {
       state.data.push(action.payload);
     },
   },

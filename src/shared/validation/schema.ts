@@ -1,23 +1,30 @@
-import { boolean, mixed, number, object, ref, string } from 'yup';
+import { boolean, mixed, number, object, ObjectSchema, ref, string } from 'yup';
+import { FormFieldsData } from '@models/data.model';
 
-export const validationSchema = object().shape({
+const MIN_PASSWORD_LENGTH = 8;
+
+export const validationSchema: ObjectSchema<FormFieldsData> = object().shape({
   name: string()
     .matches(/^[A-Z]/, 'First letter must be uppercase')
     .required('Name is required'),
   age: number().positive('Age must be a positive number').required('Age is required'),
   email: string().email('Invalid email').required('Email is required'),
   password: string()
-    .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/, 'Password must be strong')
+    .test('has-uppercase', 'Password must contain at least one uppercase letter', (value) => /[A-Z]/.test(value || ''))
+    .test('has-lowercase', 'Password must contain at least one lowercase letter', (value) => /[a-z]/.test(value || ''))
+    .test('has-number', 'Password must contain at least one number', (value) => /\d/.test(value || ''))
+    .test('has-special', 'Password must contain at least one special character', (value) =>
+      /[@$!%*?&]/.test(value || ''),
+    )
+    .min(MIN_PASSWORD_LENGTH, 'Password must be at least 8 characters long')
     .required('Password is required'),
   confirmPassword: string()
     .oneOf([ref('password'), undefined], 'Passwords must match')
     .required('Confirm Password is required'),
   gender: string().required('Gender is required'),
   termsAccepted: boolean().oneOf([true], 'Terms must be accepted'),
-  picture: mixed().test(
-    'fileType',
-    'Unsupported File Format',
-    (value) => value && ['image/jpeg', 'image/png'].includes((value as { type: string }).type),
+  picture: mixed<FileList>().test('fileType', 'Unsupported File Format', (value) =>
+    ['image/jpeg', 'image/png'].includes(value?.[0]?.type || ''),
   ),
   country: string().required('Country is required'),
 });
