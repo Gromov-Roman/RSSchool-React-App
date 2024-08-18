@@ -28,7 +28,7 @@ export default function Button({
 
   return (
     <button
-      className={`button ${theme} ${className || ''} ${buttonType}`}
+      className={`button ${theme} ${className || ''} ${buttonType} ${disabled ? 'disabled' : ''}`}
       onClick={onClick}
       disabled={disabled}
       data-testid={testId}

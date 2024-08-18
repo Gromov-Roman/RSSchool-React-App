@@ -24,7 +24,7 @@ export default function ControlledFormPage() {
     handleSubmit,
     control,
     setValue,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm<FormFieldsData>({ resolver: yupResolver<FormFieldsData>(validationSchema), mode: 'onTouched' });
 
   const onSubmit = async (data: FormFieldsData) => {
@@ -47,7 +47,6 @@ export default function ControlledFormPage() {
       setValue('confirmPassword', lastData?.confirmPassword || '');
       setValue('gender', lastData?.gender || '');
       setValue('termsAccepted', lastData?.termsAccepted || false);
-      setValue('country', lastData?.country || '');
     }
   }, [controlledData]);
 
@@ -132,7 +131,9 @@ export default function ControlledFormPage() {
         </div>
       </div>
 
-      <Button type="submit">Submit</Button>
+      <Button type="submit" disabled={!isValid}>
+        Submit
+      </Button>
     </form>
   );
 }

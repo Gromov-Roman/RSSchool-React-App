@@ -55,9 +55,6 @@ export default function UncontrolledPage() {
       if (termsRef.current) {
         termsRef.current.checked = lastData?.termsAccepted || false;
       }
-      if (countryRef.current) {
-        countryRef.current.value = lastData?.country || '';
-      }
     }
   }, [uncontrolledData]);
 
