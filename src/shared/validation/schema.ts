@@ -2,7 +2,7 @@ import { boolean, mixed, number, object, ObjectSchema, ref, string } from 'yup';
 import { FormFieldsData } from '@models/data.model';
 
 const MIN_PASSWORD_LENGTH = 8;
-const MAX_FILE_SIZE = 3072;
+const MAX_FILE_SIZE = 1048576;
 
 export const validationSchema: ObjectSchema<FormFieldsData> = object().shape({
   name: string()
