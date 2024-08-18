@@ -2,6 +2,7 @@ import { boolean, mixed, number, object, ObjectSchema, ref, string } from 'yup';
 import { FormFieldsData } from '@models/data.model';
 
 const MIN_PASSWORD_LENGTH = 8;
+const MAX_FILE_SIZE = 3072;
 
 export const validationSchema: ObjectSchema<FormFieldsData> = object().shape({
   name: string()
@@ -23,8 +24,10 @@ export const validationSchema: ObjectSchema<FormFieldsData> = object().shape({
     .required('Confirm Password is required'),
   gender: string().required('Gender is required'),
   termsAccepted: boolean().oneOf([true], 'Terms must be accepted'),
-  picture: mixed<FileList>().test('fileType', 'Unsupported File Format', (value) =>
-    ['image/jpeg', 'image/png'].includes(value?.[0]?.type || ''),
-  ),
+  picture: mixed<FileList>()
+    .test('fileType', 'Unsupported File Format', (value) =>
+      ['image/jpeg', 'image/png'].includes(value?.[0]?.type || ''),
+    )
+    .test('fileSize', 'File size must be less than 1MB', (value) => (value?.[0]?.size || 0) <= MAX_FILE_SIZE || false),
   country: string().required('Country is required'),
 });
