@@ -1,0 +1,57 @@
+@import '../../variables';
+
+.uncontrolled-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1rem;
+  flex: 1;
+  padding: 1rem;
+  border-radius: 1rem;
+  z-index: 1;
+  background-color: $light-background;
+  overflow: auto;
+
+  &_controls {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    row-gap: 0.5rem;
+    column-gap: 1rem;
+  }
+
+  .form-control-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .form-control {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+
+    &_name {
+      color: $light-text-secondary;
+      font-size: 0.875rem;
+    }
+  }
+
+  .upload-file {
+    padding-left: 0;
+  }
+
+  &.dark {
+    background-color: $dark-background;
+
+    .form-control_name {
+      color: $dark-text-secondary;
+    }
+  }
+}
+
+.error {
+  min-height: 1rem;
+  line-height: 1rem;
+  color: red;
+  font-size: 0.875rem;
+}

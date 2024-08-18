@@ -1,0 +1,43 @@
+@import '../../variables';
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem;
+  border-radius: 1rem;
+  background-color: $light-secondary-background;
+  z-index: 2;
+
+  .navigation {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+
+    a {
+      text-decoration: none;
+      border-radius: 8px;
+
+      &.active {
+        box-shadow: 0 0 5px 2px $black;
+      }
+    }
+  }
+
+  &.dark {
+    background-color: $dark-secondary-background;
+
+    .navigation a.active {
+      box-shadow: 0 0 5px 2px $white;
+    }
+  }
+}
+
+@media (max-width: 800px) {
+  .header {
+    position: sticky;
+    top: -0.5rem;
+    padding: 0.5rem;
+  }
+}
