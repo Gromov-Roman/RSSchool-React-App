@@ -12,10 +12,3 @@
     background-color: $dark-secondary-background;
   }
 }
-
-@media (max-width: 800px) {
-  .main-page {
-    flex-direction: column-reverse;
-    overflow: visible;
-  }
-}
