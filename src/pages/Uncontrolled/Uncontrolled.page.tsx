@@ -7,6 +7,7 @@ import Button from '@components/Button/Button';
 import { ThemeContext } from '@context/ThemeContext';
 import { validationSchema } from '@src/shared/validation/schema';
 import './Uncontrolled.page.scss';
+import AutocompleteCountry from '@components/AutocompleteCountry/AutocompleteCountry';
 
 export default function UncontrolledPage() {
   const dispatch = useDispatch();
@@ -38,7 +39,7 @@ export default function UncontrolledPage() {
       gender: genderRef.current?.value,
       country: countryRef.current?.value,
       picture: pictureRef.current?.files?.[0],
-      termsAccepted: termsRef.current?.value,
+      termsAccepted: termsRef.current?.checked,
     };
 
     try {
@@ -46,8 +47,10 @@ export default function UncontrolledPage() {
       const reader = new FileReader();
       reader.onloadend = () => {
         dispatch(addData({ ...formData, picture: reader.result as string }));
+        setErrors({});
         navigate('/');
       };
+      reader.readAsDataURL(formData.picture as Blob);
     } catch (validationErrors) {
       const formattedErrors: Record<string, string> = {};
 
@@ -124,7 +127,8 @@ export default function UncontrolledPage() {
         <div className="form-control-container">
           <label className="form-control">
             <span className="form-control_name">Country</span>
-            <input name="country" type="text" ref={countryRef} />
+            <AutocompleteCountry ref={countryRef} />
+            {/* <input name="country" type="text" ref={countryRef} /> */}
           </label>
 
           <div className="error">{errors.country}</div>

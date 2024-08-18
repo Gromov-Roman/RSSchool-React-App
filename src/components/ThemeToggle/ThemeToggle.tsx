@@ -13,7 +13,7 @@ function ThemeToggle() {
         onChange={() => toggleThemeHandler()}
         type="checkbox"
         id="themeSwitch"
-        className="theme-switch__input"
+        className="theme-switch__input custom-checkbox"
       />
       <label htmlFor="themeSwitch" className="theme-switch__label">
         <span />
