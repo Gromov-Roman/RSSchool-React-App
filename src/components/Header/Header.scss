@@ -10,10 +10,6 @@
   background-color: $light-secondary-background;
   z-index: 2;
 
-  &.dark {
-    background-color: $dark-secondary-background;
-  }
-
   .navigation {
     display: flex;
     flex-wrap: wrap;
@@ -21,6 +17,19 @@
 
     a {
       text-decoration: none;
+      border-radius: 8px;
+
+      &.active {
+        box-shadow: 0 0 5px 2px $black;
+      }
+    }
+  }
+
+  &.dark {
+    background-color: $dark-secondary-background;
+
+    .navigation a.active {
+      box-shadow: 0 0 5px 2px $white;
     }
   }
 }

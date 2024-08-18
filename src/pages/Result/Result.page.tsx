@@ -14,7 +14,7 @@ export default function ResultPage() {
       <div className="result-column">
         <h2 className="result-title">Uncontrolled Form Data</h2>
         {uncontrolledData.length === 0 ? (
-          <p>No Data</p>
+          <p className="result-no-data">No Data</p>
         ) : (
           uncontrolledData.map((item, index) => (
             // eslint-disable-next-line react/no-array-index-key

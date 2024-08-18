@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import ThemeToggle from '@components/ThemeToggle/ThemeToggle';
 import { ThemeContext } from '@context/ThemeContext';
 import './Header.scss';
@@ -13,15 +13,15 @@ export default function HeaderComponent() {
       <ThemeToggle />
 
       <nav className="navigation">
-        <Link to="/">
+        <NavLink to="/">
           <Button>Result</Button>
-        </Link>
-        <Link to="/controlled">
-          <Button view="secondary">Controlled Form</Button>
-        </Link>
-        <Link to="/uncontrolled">
-          <Button view="accent">Uncontrolled Form</Button>
-        </Link>
+        </NavLink>
+        <NavLink to="/uncontrolled">
+          <Button view="secondary">Uncontrolled Form</Button>
+        </NavLink>
+        <NavLink to="/controlled">
+          <Button view="accent">Controlled Form</Button>
+        </NavLink>
       </nav>
     </header>
   );
