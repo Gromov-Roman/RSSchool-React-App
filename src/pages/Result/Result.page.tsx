@@ -19,7 +19,7 @@ export default function ResultPage() {
       {lastData.map(({ title, data }) => (
         <div key={title} className="result-column">
           <h2 className="result-title">{title}</h2>
-          {!data ? (
+          {!data.length ? (
             <p className="result-no-data">No Data</p>
           ) : (
             [...data].reverse().map(({ id, name, age, email, gender, country, picture }, index) => (
