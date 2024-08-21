@@ -37,24 +37,26 @@
       background-color: $light-secondary-background;
       border: 1px $light-accent solid;
       border-radius: 1rem;
+      position: relative;
+
+      &.new {
+        box-shadow: 0 0 10px $red;
+
+        &:after {
+          content: 'New';
+          position: absolute;
+          right: 10px;
+          top: 5px;
+          font-size: 0.8rem;
+          color: $red;
+        }
+      }
 
       p {
         margin: 0;
         border-radius: 1rem;
         padding: 0.2rem 0.5rem;
         position: relative;
-
-        &.new {
-          border: 1px $red solid;
-
-          &:after {
-            content: 'New';
-            position: absolute;
-            right: 10px;
-            font-size: 0.8rem;
-            color: $red;
-          }
-        }
       }
 
       img {

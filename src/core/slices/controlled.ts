@@ -14,6 +14,7 @@ export const controlledSlice = createSlice({
   initialState,
   reducers: {
     addData: (state, action: PayloadAction<Data>) => {
+      action.payload.id = Math.random();
       state.data.push(action.payload);
     },
   },

@@ -2,15 +2,19 @@ import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { validationSchema } from '@src/shared/validation/schema';
+import { passwordSchema, validationSchema } from '@src/shared/validation/schema';
 import Button from '@components/Button/Button';
 import AutocompleteCountry from '@components/AutocompleteCountry/AutocompleteCountry';
 import { ThemeContext } from '@context/ThemeContext';
-import { useContext, useEffect } from 'react';
+import { ChangeEvent, useContext, useEffect, useState } from 'react';
 import { FormFieldsData } from '@models/data.model';
-import './Controlled.page.scss';
 import { controlledActions } from '@core/slices/controlled';
 import { RootState } from '@core/store';
+import { ValidationError } from 'yup';
+import PasswordStrengthComponent from '@components/PasswordStrength/PasswordStrength';
+import './Controlled.page.scss';
+
+const MAX_STRENGTH = 6;
 
 export default function ControlledFormPage() {
   const dispatch = useDispatch();
@@ -18,6 +22,7 @@ export default function ControlledFormPage() {
   const { addData } = controlledActions;
   const { theme } = useContext(ThemeContext);
   const controlledData = useSelector((state: RootState) => state.controlledReducer.data);
+  const [strength, setStrength] = useState(0);
 
   const {
     register,
@@ -34,6 +39,12 @@ export default function ControlledFormPage() {
       navigate('/');
     };
     reader.readAsDataURL(data.picture?.[0] as Blob);
+  };
+
+  const handlePasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
+    passwordSchema
+      .validate(event.target.value, { abortEarly: false })
+      .catch((error: ValidationError) => setStrength(MAX_STRENGTH - error.inner.length));
   };
 
   useEffect(() => {
@@ -91,8 +102,9 @@ export default function ControlledFormPage() {
         <div className="form-control-container">
           <label className="form-control">
             <span className="form-control_name">Password</span>
-            <input type="password" {...register('password')} />
+            <input type="password" {...register('password')} onChange={handlePasswordChange} />
           </label>
+          <PasswordStrengthComponent strength={strength} />
           <div className="error">{errors.password?.message}</div>
         </div>
 

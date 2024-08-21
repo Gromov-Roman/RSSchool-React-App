@@ -1,20 +1,24 @@
-import { FormEvent, useContext, useEffect, useRef, useState } from 'react';
+import { ChangeEvent, FormEvent, useContext, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { uncontrolledActions } from '@core/slices/uncontrolled';
 import { ValidationError } from 'yup';
 import Button from '@components/Button/Button';
 import { ThemeContext } from '@context/ThemeContext';
-import { validationSchema } from '@src/shared/validation/schema';
-import './Uncontrolled.page.scss';
+import { passwordSchema, validationSchema } from '@src/shared/validation/schema';
 import AutocompleteCountry from '@components/AutocompleteCountry/AutocompleteCountry';
 import { RootState } from '@core/store';
+import PasswordStrengthComponent from '@components/PasswordStrength/PasswordStrength';
+import './Uncontrolled.page.scss';
+
+const MAX_STRENGTH = 6;
 
 export default function UncontrolledPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { addData } = uncontrolledActions;
   const { theme } = useContext(ThemeContext);
+  const [strength, setStrength] = useState(0);
 
   const uncontrolledData = useSelector((state: RootState) => state.uncontrolledReducer.data);
 
@@ -95,6 +99,12 @@ export default function UncontrolledPage() {
     }
   };
 
+  const handlePasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
+    passwordSchema
+      .validate(event.target.value, { abortEarly: false })
+      .catch((error: ValidationError) => setStrength(MAX_STRENGTH - error.inner.length));
+  };
+
   return (
     <form onSubmit={handleSubmit} className={`uncontrolled-form ${theme}`}>
       <div className="uncontrolled-form_controls">
@@ -140,8 +150,9 @@ export default function UncontrolledPage() {
         <div className="form-control-container">
           <label className="form-control">
             <span className="form-control_name">Password</span>
-            <input name="password" type="password" ref={passwordRef} />
+            <input name="password" type="password" ref={passwordRef} onChange={handlePasswordChange} />
           </label>
+          <PasswordStrengthComponent strength={strength} />
 
           <div className="error">{errors.password}</div>
         </div>
