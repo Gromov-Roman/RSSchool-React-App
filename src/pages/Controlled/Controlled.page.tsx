@@ -44,6 +44,7 @@ export default function ControlledFormPage() {
   const handlePasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
     passwordSchema
       .validate(event.target.value, { abortEarly: false })
+      .then(() => setStrength(MAX_STRENGTH))
       .catch((error: ValidationError) => setStrength(MAX_STRENGTH - error.inner.length));
   };
 
